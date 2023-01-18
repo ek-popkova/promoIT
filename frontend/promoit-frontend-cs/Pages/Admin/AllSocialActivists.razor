@@ -2,12 +2,13 @@
 @attribute [Authorize(Roles = "Admin")]
 @using System.Text.Json
 @using System.Text.Json.Serialization
+@using promoit_frontend_cs.Services;
 @using System.Net.Http.Headers
 @using Newtonsoft.Json;
 @inject IHttpClientFactory ClientFactory
 @inject Microsoft​.AspNetCore​.Http.IHttpContextAccessor HttpContextAccessor
 @inject HttpClient Http
-@inject promoit_backend_cs_api.Data.promo_itContext DbContext
+@inject SocialActivistService socialActivistService
 
 
 <h3>Social activists</h3>
