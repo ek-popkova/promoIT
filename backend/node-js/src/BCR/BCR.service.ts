@@ -6,7 +6,7 @@ import { ProductModel } from './../Product/product.model';
 import { SocialActivistModel } from './../SA/socialactivist.model';
 import { SocialActivistTransactionModel } from './../SA_Transaction/sa_transaction.model';
 import { include, reject } from "underscore";
-import { ISocialActivistTransaction } from "../entities";
+import { ISocialActivistTransaction, ISocialActivistTransactionAdd } from "../entities";
 import { BusinessCompanyRepresentativeModel } from "./BCR.model";
 import { AppError, Status } from '../enums';
 import socialactivistService from '../SA/socialactivist.service';
@@ -15,6 +15,7 @@ interface IBcrService {
     getSocialActivistTransactionByBCRId(id: number): Promise<SocialActivistTransactionModel[]>
     getSocialActivistTransactionById(id: number): Promise<SocialActivistTransactionModel>
     addSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction, userId: number): Promise<ISocialActivistTransaction>
+    addSocialActivistTransactionNew(socialActivistTransaction: ISocialActivistTransactionAdd, userId: number): Promise<ISocialActivistTransaction>
     updateSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction, userId: number): Promise<number>
     deleteSocialActivistTransaction(id: number, userId: number): Promise<number>
 }
@@ -88,13 +89,12 @@ class BcrService implements IBcrService {
                     reject(ErrorHelper.getError(AppError.QueryError)))
         })
     }
-
     public addSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction, userId: number): Promise<ISocialActivistTransaction> {
         return new Promise<ISocialActivistTransaction>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
             SocialActivistTransactionModel.create({
-                SA_id: socialActivistTransaction.SA_id,
-                BCR_id: socialActivistTransaction.BCR_id,
+                SA_id: socialActivistTransaction.SA_id ? socialActivistTransaction.SA_id : socialActivistTransaction.sA_id,
+                BCR_id: socialActivistTransaction.BCR_id ? socialActivistTransaction.BCR_id : socialActivistTransaction.bcR_id,
                 product_id: socialActivistTransaction.product_id,
                 products_number: socialActivistTransaction.products_number,
                 price: socialActivistTransaction.price,
@@ -105,7 +105,32 @@ class BcrService implements IBcrService {
                 update_date: createDate,
                 status_id: Status.Active
             })
-            .then((result: SocialActivistTransactionModel) => {
+                .then((result: SocialActivistTransactionModel) => {
+                    console.log(result);
+                resolve(this.parseLocalSocialActivistModel(result));
+            })
+                .catch(error =>
+                reject(ErrorHelper.getError(AppError.QueryError)))
+        })
+    }
+    public addSocialActivistTransactionNew(socialActivistTransaction: ISocialActivistTransactionAdd, userId: number): Promise<ISocialActivistTransaction> {
+        return new Promise<ISocialActivistTransaction>((resolve, reject) => {
+            const createDate: string = DateHelper.dateToString(new Date());
+            SocialActivistTransactionModel.create({
+                SA_id: socialActivistTransaction.sA_id,
+                BCR_id: socialActivistTransaction.bcR_id,
+                product_id: socialActivistTransaction.product_id,
+                products_number: socialActivistTransaction.products_number,
+                price: socialActivistTransaction.price,
+                transaction_status_id: Order.Ordered,
+                create_user_id: userId,
+                update_user_id: userId,
+                create_date: createDate,
+                update_date: createDate,
+                status_id: Status.Active
+            })
+                .then((result: SocialActivistTransactionModel) => {
+                    console.log(result);
                 resolve(this.parseLocalSocialActivistModel(result));
             })
                 .catch(error =>
