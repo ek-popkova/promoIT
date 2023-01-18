@@ -18,9 +18,9 @@ namespace promoit_backend_cs_api.Controllers
         }
 
         // GET: api/Campaigns
-/*        [Authorize]
-*/        [HttpGet]
-        public async Task<ActionResult<IEnumerable<CampaignDTO>>> GetCampaigns()
+        [HttpGet]
+		[Authorize(Roles = "Social activist, Admin")]
+		public async Task<ActionResult<IEnumerable<CampaignDTO>>> GetCampaigns()
         {
             var allCampaigns = await _campaignService.GetAllCampaigns();
             return Ok(allCampaigns);
@@ -35,7 +35,8 @@ namespace promoit_backend_cs_api.Controllers
         }
 
         [HttpGet("/api/Campaigns/CampaignsWithNPR")]
-        public async Task<ActionResult<object>> GetCampaignsWithNPR()
+		[Authorize(Roles = "Business company representative, Admin")]
+		public async Task<ActionResult<object>> GetCampaignsWithNPR()
         {
             var listOfCampaignsWithNPR = await _campaignService.GetCampaignsWithNPR();
             return Ok(listOfCampaignsWithNPR);

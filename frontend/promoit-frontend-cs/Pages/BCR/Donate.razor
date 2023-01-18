@@ -87,7 +87,7 @@
 @if (showDonationForm)
 {
 	<div>
-		<EditForm Model="@initialNumber" OnValidSubmit="@(async() => CheckAndDonateProduct())">
+		<EditForm Model="@initialNumber" OnValidSubmit="@(async() => await CheckAndDonateProduct())">
 			<DataAnnotationsValidator />
 			<div class="form-group">
 				<label for="InititalNumber">Iniitial Number</label>

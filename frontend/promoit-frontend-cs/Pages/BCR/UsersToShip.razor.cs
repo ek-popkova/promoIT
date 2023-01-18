@@ -10,8 +10,10 @@ namespace promoit_frontend_cs.Pages.BCR
         PopupService popupService { get; set; }
         [Inject]
         BusinessCompanyRepresentativeService businessCompanyRepresentativeService { get; set; }
+		[Inject]
+		AuthService authService { get; set; }
 
-        private IEnumerable<SaTransactionSharedSAInfo> transactionsByBcrId = System.Array.Empty<SaTransactionSharedSAInfo>();
+		private IEnumerable<SaTransactionSharedSAInfo> transactionsByBcrId = System.Array.Empty<SaTransactionSharedSAInfo>();
 
         private bool showTransactionForm { get; set; } = false;
         private int BCR_id { get; set; } = 2;

@@ -15,7 +15,7 @@ interface IBcrService {
     getSocialActivistTransactionByBCRId(id: number): Promise<SocialActivistTransactionModel[]>
     getSocialActivistTransactionById(id: number): Promise<SocialActivistTransactionModel>
     addSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction, userId: number): Promise<ISocialActivistTransaction>
-    addSocialActivistTransactionNew(socialActivistTransaction: ISocialActivistTransactionAdd, userId: number): Promise<ISocialActivistTransaction>
+    // addSocialActivistTransactionNew(socialActivistTransaction: ISocialActivistTransactionAdd, userId: number): Promise<ISocialActivistTransaction>
     updateSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction, userId: number): Promise<number>
     deleteSocialActivistTransaction(id: number, userId: number): Promise<number>
 }
@@ -51,11 +51,11 @@ class BcrService implements IBcrService {
                 })
                     .then((queryResult: SocialActivistTransactionModel[]) => {
 
-                if (queryResult.length > 0) {
-                    queryResult.forEach((socialActivistTransaction: SocialActivistTransactionModel) => {
-                        result.push(socialActivistTransaction);
-                    });
-                    resolve(result)
+                        if (queryResult.length > 0) {
+                            queryResult.forEach((socialActivistTransaction: SocialActivistTransactionModel) => {
+                                result.push(socialActivistTransaction);
+                            });
+                            resolve(result)
                 }
                 else {
                     reject(ErrorHelper.getError(AppError.NoData))
@@ -106,37 +106,36 @@ class BcrService implements IBcrService {
                 status_id: Status.Active
             })
                 .then((result: SocialActivistTransactionModel) => {
-                    console.log(result);
                 resolve(this.parseLocalSocialActivistModel(result));
             })
                 .catch(error =>
                 reject(ErrorHelper.getError(AppError.QueryError)))
         })
     }
-    public addSocialActivistTransactionNew(socialActivistTransaction: ISocialActivistTransactionAdd, userId: number): Promise<ISocialActivistTransaction> {
-        return new Promise<ISocialActivistTransaction>((resolve, reject) => {
-            const createDate: string = DateHelper.dateToString(new Date());
-            SocialActivistTransactionModel.create({
-                SA_id: socialActivistTransaction.sA_id,
-                BCR_id: socialActivistTransaction.bcR_id,
-                product_id: socialActivistTransaction.product_id,
-                products_number: socialActivistTransaction.products_number,
-                price: socialActivistTransaction.price,
-                transaction_status_id: Order.Ordered,
-                create_user_id: userId,
-                update_user_id: userId,
-                create_date: createDate,
-                update_date: createDate,
-                status_id: Status.Active
-            })
-                .then((result: SocialActivistTransactionModel) => {
-                    console.log(result);
-                resolve(this.parseLocalSocialActivistModel(result));
-            })
-                .catch(error =>
-                reject(ErrorHelper.getError(AppError.QueryError)))
-        })
-    }
+    // public addSocialActivistTransactionNew(socialActivistTransaction: ISocialActivistTransactionAdd, userId: number): Promise<ISocialActivistTransaction> {
+    //     return new Promise<ISocialActivistTransaction>((resolve, reject) => {
+    //         const createDate: string = DateHelper.dateToString(new Date());
+    //         SocialActivistTransactionModel.create({
+    //             SA_id: socialActivistTransaction.sA_id,
+    //             BCR_id: socialActivistTransaction.bcR_id,
+    //             product_id: socialActivistTransaction.product_id,
+    //             products_number: socialActivistTransaction.products_number,
+    //             price: socialActivistTransaction.price,
+    //             transaction_status_id: Order.Ordered,
+    //             create_user_id: userId,
+    //             update_user_id: userId,
+    //             create_date: createDate,
+    //             update_date: createDate,
+    //             status_id: Status.Active
+    //         })
+    //             .then((result: SocialActivistTransactionModel) => {
+    //                 console.log(result);
+    //             resolve(this.parseLocalSocialActivistModel(result));
+    //         })
+    //             .catch(error =>
+    //             reject(ErrorHelper.getError(AppError.QueryError)))
+    //     })
+    // }
 
     public updateSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction, userId: number): Promise<number> {
         return new Promise<number>((resolve, reject) => {

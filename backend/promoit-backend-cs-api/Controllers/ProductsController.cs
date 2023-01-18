@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using promoit_backend_cs.Services;
 using promoit_backend_cs_api.Models;
 using promoit_backend_cs_api.ModelsDTO;
@@ -40,7 +41,8 @@ namespace promoit_backend_cs_api.Controllers
         }
 
         [HttpGet("/api/allProductsToCampaigns")]
-        public async Task<ActionResult<IEnumerable<ProductToCampaignDTO>>> GetAllProductsToCampaigns()
+		[Authorize(Roles = "Business company representative, Admin")]
+		public async Task<ActionResult<IEnumerable<ProductToCampaignDTO>>> GetAllProductsToCampaigns()
         {
             var products = await _productService.GetAllProductsToCampaigns();
             return Ok(products);
@@ -62,7 +64,9 @@ namespace promoit_backend_cs_api.Controllers
         }
 
         [HttpGet("/api/ProductToCampaignInfo")]
-        public async Task<ActionResult<object>> GetProductToCampaignInfo()
+		[Authorize(Roles = "Social activist, Admin")]
+
+		public async Task<ActionResult<object>> GetProductToCampaignInfo()
         {
             var productsAndCampaigns = await _productService.GetAllProductsAndCampaigns();
             return Ok(productsAndCampaigns);
@@ -92,7 +96,8 @@ namespace promoit_backend_cs_api.Controllers
         }
 
         [HttpPost("/api/PostProductToCampaign")]
-        public async Task<ActionResult<ProductToCampaign>> PostProductToCampaign(ProductToCampaignDTOShared productToCampaignDTO)
+		[Authorize(Roles = "Business company representative, Social activist, Admin")]
+		public async Task<ActionResult<ProductToCampaign>> PostProductToCampaign(ProductToCampaignDTOShared productToCampaignDTO)
         {
             var newProductToCampaign = new ProductToCampaignDTO();
             if (ModelState.IsValid)
@@ -103,7 +108,8 @@ namespace promoit_backend_cs_api.Controllers
         }
 
         [HttpPut("/api/PutProductToCampaign/{id}")]
-        public async Task<IActionResult> PutProductToCampaign(int id, ProductToCampaignDTOShared productToCampaign)
+		[Authorize(Roles = "Business company representative, Social activist, Admin")]
+		public async Task<IActionResult> PutProductToCampaign(int id, ProductToCampaignDTOShared productToCampaign)
         {
             var editedProductToCampaign = await _productService.EditProductToCampaign(id, productToCampaign);
             return NoContent();

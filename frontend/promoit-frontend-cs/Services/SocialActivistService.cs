@@ -5,16 +5,18 @@ namespace promoit_frontend_cs.Services
 {
     public class SocialActivistService
     {
-        private readonly HttpClient _http;
 		private readonly ILogger<SocialActivistService> _logger;
+		private readonly AuthService _authservice;
+		private readonly HttpClient _http;
 
-		public SocialActivistService(HttpClient Http, ILogger<SocialActivistService> logger) 
-        {
-            _http = Http;
-            _logger = logger;
-        }
+		public SocialActivistService(HttpClient Http, ILogger<SocialActivistService> logger, AuthService authservice)
+		{
+			_http = Http;
+			_logger = logger;
+			_authservice = authservice;
+		}
 
-        public async Task<IEnumerable<SpResults>> GetCampaignsAndMoney(int id)
+		public async Task<IEnumerable<SpResults>> GetCampaignsAndMoney(int id)
         {
             try
             {
