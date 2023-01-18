@@ -4,6 +4,7 @@ import { RouteConfig } from "../common/common.route.config";
 import  BusinessCompanyRepresentativeController from "./BCR.controller"
 import BCRController from './BCR.controller';
 import { requiresAuth } from 'express-openid-connect';
+import AuthMiddleware from "../authentication/authentication.middleware"
 
 export class BcrRoutes extends RouteConfig {
     constructor(app: Application) {
@@ -15,7 +16,7 @@ export class BcrRoutes extends RouteConfig {
 
         this.app.get(`/business-company-representative/:id`, [
             check('id').isInt().withMessage("The id must be an integer"),],
-            [BusinessCompanyRepresentativeController.getSocialActivistTransactionByBCRId])
+            [AuthMiddleware.authenticateAccessToken, AuthMiddleware.checkRoles(["Business company representative", "Admin"]),BusinessCompanyRepresentativeController.getSocialActivistTransactionByBCRId])
         
         this.app.post(`/business-company-representative`, [
             // body('SA_id').isInt().withMessage("The 'SA_id' parameter must be an integer"),
@@ -23,7 +24,7 @@ export class BcrRoutes extends RouteConfig {
             body('product_id').isInt().withMessage("The 'product_id' parameter must be an integer"),
             body('products_number').isInt().withMessage("The 'products_number' parameter must be an integer"),
             body('price').isInt().withMessage("The 'price' parameter must be an integer")
-        ], [BCRController.addSocialActivistTransaction])
+        ], [AuthMiddleware.authenticateAccessToken, AuthMiddleware.checkRoles(["Social activist", "Admin"]),BCRController.addSocialActivistTransaction])
         
         this.app.put(`/business-company-representative/:id`, [
             body('SA_id').isInt().withMessage("The 'SA_id' parameter must be an integer"),
@@ -36,7 +37,7 @@ export class BcrRoutes extends RouteConfig {
 
         this.app.delete(`/business-company-representative/ship/:id`, [
             check('id').isInt().withMessage("The id must be an integer"),],
-            [BusinessCompanyRepresentativeController.ShipSocialActivistTransaction])
+            [AuthMiddleware.authenticateAccessToken, AuthMiddleware.checkRoles(["Business company representative", "Admin"]), BusinessCompanyRepresentativeController.ShipSocialActivistTransaction])
 
         this.app.delete(`/business-company-representative/:id`, [
             check('id').isInt().withMessage("The id must be an integer"),],

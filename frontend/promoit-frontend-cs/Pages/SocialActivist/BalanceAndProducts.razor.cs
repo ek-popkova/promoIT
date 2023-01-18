@@ -14,8 +14,10 @@ namespace promoit_frontend_cs.Pages.SocialActivist
         PopupService popupService { get; set; }
         [Inject]
         SocialActivistService socialActivistService { get; set; }
+		[Inject]
+		AuthService authService { get; set; }
 
-        private IEnumerable<ProductsAndCampaignsShared> productsAndCampaigns = Array.Empty<ProductsAndCampaignsShared>();
+		private IEnumerable<ProductsAndCampaignsShared> productsAndCampaigns = Array.Empty<ProductsAndCampaignsShared>();
         private IEnumerable<CampaignShared> allCampaigns = Array.Empty<CampaignShared>();
         private IEnumerable<SpResults> campaignsAndMoney = Array.Empty<SpResults>();
 
