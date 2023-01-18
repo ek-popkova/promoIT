@@ -1,4 +1,5 @@
 ﻿@page "/userstoship"
+@attribute [Authorize(Roles = "Business company representative")]
 @using global::Shared;
 @using Services
 @inject BusinessCompanyRepresentativeService _businessCompanyRepresentativeService;

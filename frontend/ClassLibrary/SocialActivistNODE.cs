@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-public class SocialActivist
+public class SocialActivistDTO
 {
     public int Id { get; set; }
         public string User_id { get; set; } = null!;
