@@ -1,7 +1,6 @@
 ﻿@page "/add-social-activist/"
 @attribute [Authorize]
 @using System.Security.Claims;
-@using BlazorWeb.Models.DataTransferModels;
 @inject Microsoft​.AspNetCore​.Http.IHttpContextAccessor HttpContextAccessor
 @inject HttpClient Http
 @inject IHttpClientFactory ClientFactory
@@ -106,7 +105,7 @@ else
 @code {
 
 
-	private SocialActivist newSocialActivist = new();
+	private SocialActivistDTO newSocialActivist = new();
 
 	string messageFromServer = string.Empty;
 	bool flag = false;
@@ -124,7 +123,7 @@ else
 		}
 		else
 		{
-			SocialActivist addedSocialActivist = await response.Content.ReadFromJsonAsync<SocialActivist>();
+			SocialActivistDTO addedSocialActivist = await response.Content.ReadFromJsonAsync<SocialActivistDTO>();
 			messageFromServer = addedSocialActivist.Id.ToString();
 			flag = true;
 		}

@@ -1,6 +1,5 @@
 ﻿@page "/allcampaigns"
-@attribute [Authorize]
-@*@using promoit_frontend_cs.Data*@
+@attribute [Authorize(Roles = "Admin")]
 @using System.Text.Json
 @using System.Text.Json.Serialization
 @using System.Net.Http.Headers

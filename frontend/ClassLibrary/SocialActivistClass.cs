@@ -17,7 +17,7 @@ using System.Text.Json.Serialization;
             _httpClient = httpClient;
         }
 
-        public async Task<SocialActivist[]> GetSocialActivistsFromBackEnd()
+        public async Task<SocialActivistDTO[]> GetSocialActivistsFromBackEnd()
         {
             try
             {
@@ -25,7 +25,7 @@ using System.Text.Json.Serialization;
             var response = await _httpClient.GetAsync("http://localhost:7000/social-activists");
             //    _httpClient.DefaultRequestHeaders.Authorization = new AuhenticationHeaderValue("Bearer", "Your Oauth token");
                var json = await response.Content.ReadAsStringAsync();
-               var data = JsonConvert.DeserializeObject<SocialActivist[]>(json);
+               var data = JsonConvert.DeserializeObject<SocialActivistDTO[]>(json);
                 return data;
             }
             catch (Exception ex)

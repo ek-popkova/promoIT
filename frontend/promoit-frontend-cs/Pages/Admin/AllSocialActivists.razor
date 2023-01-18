@@ -1,6 +1,5 @@
 ﻿@page "/allactivists"
-@attribute [Authorize]
-@*@using promoit_frontend_cs.Data*@
+@attribute [Authorize(Roles = "Admin")]
 @using System.Text.Json
 @using System.Text.Json.Serialization
 @using System.Net.Http.Headers
@@ -43,7 +42,7 @@
 
 @functions {
 
-    private IEnumerable<SocialActivist> socialActivists = Array.Empty<SocialActivist>();
+    private IEnumerable<SocialActivistDTO> socialActivists = Array.Empty<SocialActivistDTO>();
     //private SocialActivist[] socialActivists = Array.Empty<SocialActivist>();
 
     protected override async Task OnInitializedAsync()
@@ -60,7 +59,7 @@
         var response = await Http.GetAsync("http://localhost:7000/social-activists");
         //_httpClient.DefaultRequestHeaders.Authorization = new AuhenticationHeaderValue("Bearer", "Your Oauth token");
         var json = await response.Content.ReadAsStringAsync();
-        socialActivists = JsonConvert.DeserializeObject<IEnumerable<SocialActivist>>(json);
+        socialActivists = JsonConvert.DeserializeObject<IEnumerable<SocialActivistDTO>>(json);
 
     }
 }
