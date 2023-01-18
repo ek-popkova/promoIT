@@ -39,10 +39,10 @@ class BusinessCompanyRepresentativeController {
 
     async addSocialActivistTransaction(req: Request, res: Response, next: NextFunction) {
         const errors = validationResult(req);
-        // if (!errors.isEmpty()) {
-        //     return ErrorHelper.handleValidationError(res, errors);
-        // }
-        // else {
+        if (!errors.isEmpty()) {
+            return ErrorHelper.handleValidationError(res, errors);
+        }
+        else {
             const body: ISocialActivistTransaction = req.body;
             body.id = NON_EXISTENT_ID;
             BcrService.addSocialActivistTransaction(body, DEMO_USER)
@@ -52,7 +52,7 @@ class BusinessCompanyRepresentativeController {
                 .catch((error: systemError) => {
                     return ErrorHelper.handleError(res, error);
                 })
-       // }
+       }
     }
 
     async updateSocialActivistTransaction(req: Request, res: Response, next: NextFunction) {

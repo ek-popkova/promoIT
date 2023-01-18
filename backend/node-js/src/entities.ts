@@ -42,7 +42,19 @@ export interface ITwitterReport {
 export interface ISocialActivistTransaction {
     id: number;
     SA_id: number;
+    sA_id?: number;
+    bcR_id?: number;
     BCR_id: number;
+    product_id: number;
+    products_number: number;
+    price: number;
+    transaction_status_id: Order;
+}
+
+export interface ISocialActivistTransactionAdd {
+    id: number;
+    sA_id: number;
+    bcR_id: number;
     product_id: number;
     products_number: number;
     price: number;
