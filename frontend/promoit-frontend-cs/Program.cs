@@ -27,6 +27,7 @@ builder.Services.AddScoped<PopupService>();
 builder.Services.AddSingleton<BusinessCompanyRepresentativeService>();
 builder.Services.AddSingleton<CampaignService>();
 builder.Services.AddSingleton<SocialActivistService>();
+builder.Services.AddSingleton<RoleService>();
 builder.Services.AddSingleton<HttpClient>();
 builder.Services.AddLogging();
 //builder.Services.AddSingleton<BalanceAndProduct>();

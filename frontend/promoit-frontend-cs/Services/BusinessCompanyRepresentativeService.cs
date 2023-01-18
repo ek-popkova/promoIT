@@ -71,5 +71,24 @@ namespace promoit_frontend_cs.Services
 			}
 		}
 
-	}
+        public async Task<HttpResponseMessage> AddNewBCR(BcrDTO newBCR, string user_id)
+        {
+            newBCR.UserId = user_id;
+            newBCR.CreateUserId = user_id;
+            newBCR.UpdateUserId = user_id;
+
+            try
+            {
+                return await _http.PostAsJsonAsync("https://localhost:7263/api/Bcrs", newBCR);
+
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, $"Error sending the data of business company representative");
+                throw new Exception($"Error sending the data of business company representative", exception);
+            }
+        }
+
+
+    }
 }

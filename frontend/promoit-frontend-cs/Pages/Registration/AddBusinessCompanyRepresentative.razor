@@ -1,10 +1,14 @@
 ﻿@page "/add-business-company/"
 @attribute [Authorize]
 @using System.Security.Claims;
-@*@using BlazorWeb.Models.DataTransferModels;*@
+@using promoit_frontend_cs.Services;
 @inject Microsoft​.AspNetCore​.Http.IHttpContextAccessor HttpContextAccessor
 @inject HttpClient Http
 @inject IHttpClientFactory ClientFactory
+@inject RoleService roleService
+@inject BusinessCompanyRepresentativeService businessCompanyRepresentativeService
+
+
 
 
 
@@ -59,7 +63,7 @@ else
 {
 	<div class="row">
 		<div class="row col-6 offset-1">
-			<h3>Great! Now you need to log out and login back to enjoy the whole functionality of being a business company representative in PromoIT. Your id is @messageFromServer</h3>
+			<h4>@respond</h4>
 		</div>
 	</div>
 }
@@ -67,51 +71,25 @@ else
 
 @code {
 
-
 	private BcrDTO newBCR = new();
-
-	string messageFromServer = string.Empty;
 	bool flag = false;
+	string respond;
 
 
 	public async Task sendNewBCR()
 	{
 		string user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
-		newBCR.UserId = user_id;
-		newBCR.CreateUserId = user_id;
-		newBCR.UpdateUserId = user_id;
-
-		var response = await Http.PostAsJsonAsync("https://localhost:7263/api/Bcrs", newBCR);
-		if (!response.IsSuccessStatusCode)
+		var message = await businessCompanyRepresentativeService.AddNewBCR(newBCR, user_id);
+		respond = message.ReasonPhrase;
+		if (message.ReasonPhrase == "Created")
 		{
-			messageFromServer = response.ReasonPhrase;
-			flag = true;
-			return;
+			respond = "Great! Now you need to log out and login back to enjoy the whole functionality of being a business company representative in PromoIT.";
 		}
-		else
-		{
-			BcrDTO addedBcr = await response.Content.ReadFromJsonAsync<BcrDTO>();
-			messageFromServer = addedBcr.Id.ToString();
-			flag = true;
+		else {
+			respond = message.ReasonPhrase;
 		}
-		await RoleAdder(roles["BCR"]);
+		flag = true;
+		await roleService.RoleAdder(user_id, "BCR");
 	}
 
-	public Dictionary<string, string> roles = new Dictionary<string, string>(){
-    {"Activist", "rol_Kfj83rfyJDGlIhEq"},
-    {"BCR", "rol_rvrE4kaUwM1ZmDyc"},
-    {"NPCR", "rol_E36SwZN0k609LcpS"}
-    };
-	
-	private async Task RoleAdder(string role_id)
-    {
-        string user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
-        string req_string = $"https://localhost:7263/add-role/{user_id}/{role_id}";
-        var request = new HttpRequestMessage(HttpMethod.Put, req_string);
-        var client = ClientFactory.CreateClient();
-        var response = await client.SendAsync(request);
-    }
-
-
-	
 }
