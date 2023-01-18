@@ -1,0 +1,107 @@
+﻿@page "/donate"
+
+<PageTitle>Donate</PageTitle>
+
+<h3>Want to donate something?</h3>
+
+<div>
+	<button class="btn btn-primary" @onclick="GetCampaignsAndNPR">See campaigns and representatives</button>
+</div>
+&nbsp;
+
+@if (showTableCampaignsAndNRP)
+{
+	<div>
+		<table class="table table-hover table-striped">
+			<thead class="table-dark">
+				<tr>
+					<th>Campaign Name</th>
+					<th>Campaign Link</th>
+					<th>Campaign Hashtag</th>
+					<th>Organization Name</th>
+					<th>Campaign Link</th>
+					<th>Representative Email</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var campaign in listOfCampaignsAndNPR)
+				{
+					<tr>
+						<td>@campaign.Name</td>
+						<td>@campaign.Link</td>
+						<td>@campaign.Hashtag</td>
+						<td>@campaign.OrganizationName</td>
+						<td>@campaign.OrganizationLink</td>
+						<td>@campaign.NPR_email</td>
+						<div>
+							<button class="btn btn-outline-success" @onclick="() => 
+								SelectCampaignToDonateTo(campaign)">Choose this campaign to donate a product
+							</button>
+						</div>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+}
+
+<div>
+	<button class="btn btn-primary" @onclick="() => GetProductsAndBCRInfo(BCR_id)">See my products</button>
+</div>
+&nbsp;
+
+@if (showTableProductsAndBCRInfo)
+{
+	<div>
+		<table class="table table-hover table-striped">
+			<thead class="table-dark">
+				<tr>
+					<th>Product Name</th>
+					<th>Product Value</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var product in listOfProductsByBCR)
+				{
+					<tr>
+						<td>@product.Name</td>
+						<td>@product.Value</td>
+						<div>
+							<button class="btn btn-outline-success" @onclick="async () => {
+								await SelectProductToDonate(product);
+								await GetAllProductsToCampaigns(); }">
+								Choose this product
+							</button>
+						</div>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+}
+
+@if (showDonationForm)
+{
+	<div>
+		<EditForm Model="@initialNumber" OnValidSubmit="@(async() => CheckAndDonateProduct())">
+			<DataAnnotationsValidator />
+			<div class="form-group">
+				<label for="InititalNumber">Iniitial Number</label>
+				<InputNumber id="InititalNumber" @bind-Value="initialNumber" class="form-control" />
+			</div>
+			&nbsp;
+			<div>
+				<button type="submit" class="btn btn-primary">Donate!</button>
+			</div>
+			&nbsp;
+		</EditForm>
+	</div>
+}
+
+@code {
+
+
+	
+}

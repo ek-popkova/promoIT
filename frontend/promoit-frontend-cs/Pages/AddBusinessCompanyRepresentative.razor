@@ -1,0 +1,117 @@
+﻿@page "/add-business-company/"
+@attribute [Authorize]
+@using System.Security.Claims;
+@using BlazorWeb.Models.DataTransferModels;
+@inject Microsoft​.AspNetCore​.Http.IHttpContextAccessor HttpContextAccessor
+@inject HttpClient Http
+@inject IHttpClientFactory ClientFactory
+
+
+
+@if (!flag)
+{
+
+	<div class="row mb-5">
+		<div class="col-1 text-start">
+			<a class="btn btn-primary"
+		   href="/"
+		   role="button">
+				<span class="oi oi-arrow-left" aria-hidden="true"></span>
+			</a>
+		</div>
+		<div class="col-6">
+			<h3>Adding new business company representative:</h3>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-6 offset-1">
+
+			<EditForm Model="@newBCR" OnValidSubmit="@sendNewBCR">
+
+				<DataAnnotationsValidator />
+
+				<div class="row mb-4">
+					<label for="bcrCompany" class="col-sm-3 col-form-label">Company</label>
+					<div class="col-sm-9">
+						<InputText type="text"
+							   class="form-control"
+							   id="bcrCompany"
+							   placeholder="Write your companie's name here"
+							   @bind-Value="newBCR.CompanyName" />
+						<ValidationMessage For="() => newBCR.CompanyName" />
+					</div>
+				</div>
+				
+
+				<div class="row mb-4">
+					<div class="col-sm-6 offset-3">
+						<button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addingCompetition">Register</button>
+						<button type="reset" class="btn btn-danger">Clear fields</button>
+					</div>
+				</div>
+
+			</EditForm>
+		</div>
+	</div>
+}
+else
+{
+	<div class="row">
+		<div class="row col-6 offset-1">
+			<h3>Great! Now you need to log out and login back to enjoy the whole functionality of being a business company representative in PromoIT. Your id is @messageFromServer</h3>
+		</div>
+	</div>
+}
+
+
+@code {
+
+
+	private BcrDTO newBCR = new();
+
+	string messageFromServer = string.Empty;
+	bool flag = false;
+
+
+	public async Task sendNewBCR()
+	{
+		string user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
+		newBCR.UserId = user_id;
+		newBCR.CreateUserId = user_id;
+		newBCR.UpdateUserId = user_id;
+
+		var response = await Http.PostAsJsonAsync("https://localhost:7263/api/Bcrs", newBCR);
+		if (!response.IsSuccessStatusCode)
+		{
+			messageFromServer = response.ReasonPhrase;
+			flag = true;
+			return;
+		}
+		else
+		{
+			BcrDTO addedBcr = await response.Content.ReadFromJsonAsync<BcrDTO>();
+			messageFromServer = addedBcr.Id.ToString();
+			flag = true;
+		}
+		await RoleAdder(roles["BCR"]);
+	}
+
+	public Dictionary<string, string> roles = new Dictionary<string, string>(){
+    {"Activist", "rol_Kfj83rfyJDGlIhEq"},
+    {"BCR", "rol_rvrE4kaUwM1ZmDyc"},
+    {"NPCR", "rol_E36SwZN0k609LcpS"}
+    };
+	
+	private async Task RoleAdder(string role_id)
+    {
+        string user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
+        string req_string = $"https://localhost:7263/add-role/{user_id}/{role_id}";
+        var request = new HttpRequestMessage(HttpMethod.Put, req_string);
+        var client = ClientFactory.CreateClient();
+        var response = await client.SendAsync(request);
+    }
+
+
+	
+}
