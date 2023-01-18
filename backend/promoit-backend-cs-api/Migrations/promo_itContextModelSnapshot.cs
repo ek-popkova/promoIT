@@ -257,7 +257,7 @@ namespace promoit_backend_cs_api.Migrations
                         .HasColumnName("create_date");
 
                     b.Property<int>("CreateUserId")
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("create_user_id");
 
                     b.Property<string>("Name")
@@ -275,7 +275,7 @@ namespace promoit_backend_cs_api.Migrations
                         .HasColumnName("update_date");
 
                     b.Property<int>("UpdateUserId")
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("update_user_id");
 
                     b.Property<int>("Value")
@@ -333,7 +333,7 @@ namespace promoit_backend_cs_api.Migrations
                         .HasColumnName("create_date");
 
                     b.Property<int>("CreateUserId")
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("create_user_id");
 
                     b.Property<int>("InititalNumber")
@@ -353,7 +353,7 @@ namespace promoit_backend_cs_api.Migrations
                         .HasColumnName("update_date");
 
                     b.Property<int>("UpdateUserId")
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("update_user_id");
 
                     b.HasKey("Id");

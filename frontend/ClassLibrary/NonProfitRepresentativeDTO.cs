@@ -16,6 +16,7 @@ public partial class NonProfitRepresentativeDTO
     
         [Required]
         [MaxLength(250, ErrorMessage = "Link is too long, 250 charachters maximum.")]
+        [DataType(DataType.Url)]
         public string OrganizationLink { get; set; } = null!;
         public string UserId { get; set; }
         public DateTime CreateDate { get; set; }

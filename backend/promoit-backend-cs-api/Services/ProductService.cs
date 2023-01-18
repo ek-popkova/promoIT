@@ -206,8 +206,8 @@ namespace promoit_backend_cs.Services
                 UpdateDate = DateTime.Now,
 				/*                CreateUserId = productToCampaignDTO.CreateUserId,
 								UpdateUserId = productToCampaignDTO.UpdateUserId,*/
-				CreateUserId = 2,
-				UpdateUserId = 5,
+				CreateUserId = "2",
+				UpdateUserId = "5",
 				StatusId = 1,
                 
             };

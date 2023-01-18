@@ -17,6 +17,8 @@ public class SocialActivistDTO
     
         [Required]
         [MaxLength(15, ErrorMessage = "Phone is too long, 15 charachters maximum.")]
+        [DataType(DataType.PhoneNumber)]
+        [Phone]
         public string Phone { get; set; }
 
         [Required]

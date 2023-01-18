@@ -190,8 +190,8 @@ namespace promoit_backend_cs_api.Migrations
                     BCR_id = table.Column<int>(type: "int", nullable: false),
                     create_date = table.Column<DateTime>(type: "datetime", nullable: false),
                     update_date = table.Column<DateTime>(type: "datetime", nullable: false),
-                    create_user_id = table.Column<int>(type: "int", nullable: false),
-                    update_user_id = table.Column<int>(type: "int", nullable: false),
+                    create_user_id = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    update_user_id = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     status_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -334,8 +334,8 @@ namespace promoit_backend_cs_api.Migrations
                     bought_number = table.Column<int>(type: "int", nullable: false),
                     create_date = table.Column<DateTime>(type: "datetime", nullable: false),
                     update_date = table.Column<DateTime>(type: "datetime", nullable: false),
-                    create_user_id = table.Column<int>(type: "int", nullable: false),
-                    update_user_id = table.Column<int>(type: "int", nullable: false),
+                    create_user_id = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    update_user_id = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     status_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

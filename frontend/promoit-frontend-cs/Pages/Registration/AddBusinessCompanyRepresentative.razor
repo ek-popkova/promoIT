@@ -50,7 +50,7 @@
 
 				<div class="row mb-4">
 					<div class="col-sm-6 offset-3">
-						<button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addingCompetition">Register</button>
+						<button type="submit" class="btn btn-primary">Register</button>
 						<button type="reset" class="btn btn-danger">Clear fields</button>
 					</div>
 				</div>
@@ -80,7 +80,6 @@ else
 	{
 		string user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
 		var message = await businessCompanyRepresentativeService.AddNewBCR(newBCR, user_id);
-		respond = message.ReasonPhrase;
 		if (message.ReasonPhrase == "Created")
 		{
 			respond = "Great! Now you need to log out and login back to enjoy the whole functionality of being a business company representative in PromoIT.";

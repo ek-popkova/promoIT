@@ -40,6 +40,13 @@ namespace promoit_backend_cs_api.Controllers
             return Ok(bcrById);
         }
 
+        [HttpGet("/api/Bcrs/BcrIdByUserId/{user_id}")]
+        public async Task<ActionResult<Bcr>> GetBcrIdByUserId(string user_id)
+        {
+            var id = await _bcrService.GetBcrIdByUserId(user_id);
+            return Ok(id);
+        }
+
         // PUT: api/Bcrs/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBcr(int id, BcrDTO bcr)
