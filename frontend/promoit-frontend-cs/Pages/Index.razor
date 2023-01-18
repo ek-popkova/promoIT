@@ -1,0 +1,69 @@
+﻿@page "/"
+@attribute [Authorize]
+@using System.Reflection;
+@using Microsoft.AspNetCore.Http
+@using System.IdentityModel.Tokens.Jwt;
+@using System.Security.Claims;
+@using Newtonsoft.Json;
+@using System.Web;
+@inject Microsoft​.AspNetCore​.Http.IHttpContextAccessor HttpContextAccessor
+@inject IHttpClientFactory ClientFactory
+
+<PageTitle>Main Page</PageTitle>
+
+<AuthorizeView Policy="NoRolePolicy">
+     <Authorized >
+        <h1>Choose your role</h1>
+
+        <a role="button" class="btn btn-primary" href="/add-social-activist/">Social Activist</a>
+        <a role="button" class="btn btn-success" href="/add-business-company/">Business company representative</a>
+        <a role="button" class="btn btn-warning" href="/add-non-profit/">Non-profit company representative</a>
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="Social activist">
+    <Authorized>
+        This content can be seen only if you are a social activist
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="Business company representative">
+    <Authorized>
+        This content can be seen only if you are a business company representative
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="Non-profit company representative">
+    <Authorized>
+        This content can be seen only if you are a non-profit company representative
+    </Authorized>
+</AuthorizeView>
+
+
+<p style="word-break:break-word">Your token is @token</p>
+
+@foreach (var claim in user.Claims)
+{
+    <span>
+        @claim.Type
+    </span>
+    <span>:</span>
+    <span>
+        @claim.Value
+    </span>
+    <br />
+}
+
+
+@code {
+    public string token;
+    public ClaimsPrincipal user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        token = HttpContextAccessor.HttpContext.Request.Cookies["auth_token"];
+        user = HttpContextAccessor.HttpContext.User;
+    }
+
+}
+

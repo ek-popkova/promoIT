@@ -1,0 +1,155 @@
+﻿@page "/add-social-activist/"
+@attribute [Authorize]
+@using System.Security.Claims;
+@using BlazorWeb.Models.DataTransferModels;
+@inject Microsoft​.AspNetCore​.Http.IHttpContextAccessor HttpContextAccessor
+@inject HttpClient Http
+@inject IHttpClientFactory ClientFactory
+
+
+
+@if (!flag)
+{
+
+	<div class="row mb-5">
+		<div class="col-1 text-start">
+			<a class="btn btn-primary"
+		   href="/"
+		   role="button">
+				<span class="oi oi-arrow-left" aria-hidden="true"></span>
+			</a>
+		</div>
+		<div class="col-6">
+			<h3>Adding new social activist:</h3>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-6 offset-1">
+
+			<EditForm Model="@newSocialActivist" OnValidSubmit="@sendNewSocialActivist">
+
+				<DataAnnotationsValidator />
+
+				<div class="row mb-4">
+					<label for="saEmail" class="col-sm-3 col-form-label">Email</label>
+					<div class="col-sm-9">
+						<InputText type="email"
+							   class="form-control"
+							   id="saEmail"
+							   placeholder="Check your contact email"
+							   @bind-Value="newSocialActivist.Email" />
+						<ValidationMessage For="() => newSocialActivist.Email" />
+						<small id="emailHelp" class="form-text text-muted">Check your e-mail address.</small>
+					</div>
+				</div>
+
+				<div class="row mb-4">
+					<label for="saAddress" class="col-sm-3 col-form-label">Address</label>
+					<div class="col-sm-9">
+						<InputText type="text"
+							   class="form-control"
+							   id="saAddress"
+							   placeholder="Enter your shipping address"
+							   @bind-Value="newSocialActivist.Address"/>
+						<ValidationMessage For=" ()=> newSocialActivist.Address" />
+					</div>
+				</div>
+
+				<div class="row mb-4">
+					<label for="saAddress" class="col-sm-3 col-form-label">Phone</label>
+					<div class="col-sm-9">
+						<InputText type="text"
+							   class="form-control"
+							   id="saPhone"
+							   placeholder="Enter your cell number"
+							   @bind-Value="newSocialActivist.Phone"/>
+						<ValidationMessage For=" ()=> newSocialActivist.Phone" />
+					</div>
+				</div>
+
+				<div class="row mb-4">
+					<label for="saTwitter" class="col-sm-3 col-form-label">Twitter</label>
+					<div class="col-sm-9">
+						<InputText type="text"
+							   class="form-control"
+							   id="saTwitter"
+							   placeholder="Enter your twitter-account"
+							   @bind-Value="newSocialActivist.Twitter" />
+						<ValidationMessage For=" ()=> newSocialActivist.Twitter" />
+					</div>
+				</div>
+
+				
+
+				<div class="row mb-4">
+					<div class="col-sm-6 offset-3">
+						<button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addingCompetition">Register</button>
+						<button type="reset" class="btn btn-danger">Clear fields</button>
+					</div>
+				</div>
+
+			</EditForm>
+		</div>
+	</div>
+}
+else
+{
+	<div class="row">
+		<div class="row col-6 offset-1">
+			<h3>Great! Now you need to log out and login back to enjoy the whole functionality of being a social activist in PromoIT. Your id is @messageFromServer</h3>
+		</div>
+	</div>
+}
+
+
+@code {
+
+
+	private SocialActivist newSocialActivist = new();
+
+	string messageFromServer = string.Empty;
+	bool flag = false;
+
+
+	public async Task sendNewSocialActivist()
+	{
+		newSocialActivist.User_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value.Remove(0, 14);
+		var response = await Http.PostAsJsonAsync("http://localhost:7000/social-activists", newSocialActivist);
+		if (!response.IsSuccessStatusCode)
+		{
+			messageFromServer = response.ReasonPhrase;
+			flag = true;
+			return;
+		}
+		else
+		{
+			SocialActivist addedSocialActivist = await response.Content.ReadFromJsonAsync<SocialActivist>();
+			messageFromServer = addedSocialActivist.Id.ToString();
+			flag = true;
+		}
+		await RoleAdder(roles["Activist"]);
+	}
+
+	public Dictionary<string, string> roles = new Dictionary<string, string>(){
+    {"Activist", "rol_Kfj83rfyJDGlIhEq"},
+    {"BCR", "rol_rvrE4kaUwM1ZmDyc"},
+    {"NPCR", "rol_E36SwZN0k609LcpS"}
+    };
+
+	private async Task RoleAdder(string role_id)
+    {
+        string user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
+        string req_string = $"https://localhost:7263/add-role/{user_id}/{role_id}";
+        var request = new HttpRequestMessage(HttpMethod.Put, req_string);
+        var client = ClientFactory.CreateClient();
+        var response = await client.SendAsync(request);
+    }
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		newSocialActivist.Email = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
+	}
+	
+}

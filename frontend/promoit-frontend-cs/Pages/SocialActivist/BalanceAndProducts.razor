@@ -1,0 +1,152 @@
+﻿@page "/balanceandproducts"
+
+<PageTitle>Buy or donate</PageTitle>
+<h3>Want to buy something? Or maybe to donate?</h3>
+
+<div>
+<button class="btn btn-primary" @onclick="GetCampaignsAndMoney">Click to get see campaigns and money</button>
+</div>
+&nbsp;
+
+@if (ShowTableCampaignsAndMoney == true)
+{
+    <div>
+        <table class="table table-hover table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Social Activist Id</th>
+                <th>Campaign</th>
+                <th>Hashatg</th>
+                <th>Campaign Id</th>
+                <th>Balance</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var campaign in campaignsAndMoney)
+            {
+                <tr>
+                    <td>@campaign.social_activist_id</td>
+                    <td>@campaign.campaignName</td>
+                    <td>@campaign.Hashtag</td>
+                    <td>@campaign.campaign_id</td>
+                    <td>@campaign.money</td>
+                    <div>
+                        <button class="btn btn-primary" @onclick="() => ChooseCampaign(campaign)">Choose this campaign</button>
+                    </div>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+}
+
+&nbsp;
+&nbsp;
+<div>
+    <button class="btn btn-primary" @onclick="GetProductsAndCampaignsNames">Click to see products and campaigns</button>
+</div>
+&nbsp;
+
+@if (ShowTableProductsAndCampaigns == true)
+{
+    <div>
+    <table class="table table-hover table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Campaign Name</th>
+                <th>Product Name</th>
+                <th>Product Value</th>
+                <th>Initial Number</th>
+                <th>Bought Number</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in productsAndCampaigns)
+            {
+                <tr>
+                    <td>@product.campaignName</td>
+                    <td>@product.productName</td>
+                    <td>@product.productValue</td>
+                    <td>@product.InititalNumber</td>
+                    <td>@product.BoughtNumber</td>
+                    <div>
+                            <button class="btn btn-info" @onclick="() => EditProduct(product)">I want to buy it!</button>
+                    </div>
+                    <div>
+                            <button class="btn btn-success" @onclick="async() => { 
+                                                                                    await SelectProductToDonate(product); 
+                                                                                    await GetAllCampaigns();
+                                                                                 }">I want to donate it!
+                            </button>
+                    </div>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>  
+}
+
+    @if (ShowFormBuy)
+    {
+<div>
+        <EditForm Model="@saTransactionShared" OnValidSubmit="@(async() => { 
+                                                                               await BuyProduct(saTransactionShared,productFromForeach);
+                                                                            })">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label for="products_number">Products Number</label>
+                <InputNumber id="products_number" @bind-Value="saTransactionShared.products_number" class="form-control" />
+            </div>
+            &nbsp;
+            <div>
+                <button type="submit" class="btn btn-primary">Buy this product</button>
+            </div>
+            &nbsp;
+            <ValidationSummary />
+        </EditForm>
+</div>
+    }
+
+    @if (ShowFormDonate)
+    {
+<div>
+        <EditForm Model="@boughtNumber" OnValidSubmit="@(async() => {
+                                                                        await AnalizeProductAndCampaignAndDonate(productsAndCampaigns,
+                                                                                                                 chosenCampaign,
+                                                                                                                 boughtNumber);
+                                                                    })">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label for="BoughtNumber">How many products to donate</label>
+                <InputNumber id="BoughtNumber" @bind-Value="boughtNumber" class="form-control" />
+            </div>
+            &nbsp;
+            <div>
+                <div>Choose a campaign to donate to</div>
+                <InputSelect id="campaigns" class="form-group" @bind-Value="@selectedCampaignName">
+                    @foreach(var campaign in allCampaigns)
+                    {
+                        <option value="@campaign.Name">@campaign.Name</option>
+                    }
+                    </InputSelect>
+            </div>
+            &nbsp;
+            <div>
+                <button type="submit" class="btn btn-primary" @onclick="@(async() => 
+                                                              { await ChooseCampaignFromDropDown(selectedCampaignName); 
+                                                              })">Donate to this campaign
+                </button>
+            </div>
+            &nbsp;
+            <ValidationSummary />
+        </EditForm>
+</div>
+    }
+
+@functions {
+
+}
+
+
