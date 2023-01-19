@@ -13,40 +13,48 @@
 
 @if (showTableCampaignsAndNRP)
 {
-	<div>
-		<table class="table table-hover table-striped">
-			<thead class="table-dark">
-				<tr>
-					<th>Campaign Name</th>
-					<th>Campaign Link</th>
-					<th>Campaign Hashtag</th>
-					<th>Organization Name</th>
-					<th>Campaign Link</th>
-					<th>Representative Email</th>
-					<th>Action</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var campaign in listOfCampaignsAndNPR)
-				{
+	if (listOfCampaignsAndNPR.Count() != 0)
+	{
+		<div>
+			<table class="table table-hover table-striped">
+				<thead class="table-dark">
 					<tr>
-						<td>@campaign.Name</td>
-						<td>@campaign.Link</td>
-						<td>@campaign.Hashtag</td>
-						<td>@campaign.OrganizationName</td>
-						<td>@campaign.OrganizationLink</td>
-						<td>@campaign.NPR_email</td>
-						<div>
-							<button class="btn btn-outline-success" @onclick="() => 
-								SelectCampaignToDonateTo(campaign)">Choose this campaign to donate a product
-							</button>
-						</div>
+						<th>Campaign Name</th>
+						<th>Campaign Link</th>
+						<th>Campaign Hashtag</th>
+						<th>Organization Name</th>
+						<th>Campaign Link</th>
+						<th>Representative Email</th>
+						<th>Action</th>
 					</tr>
-				}
-			</tbody>
-		</table>
-	</div>
+				</thead>
+				<tbody>
+					@foreach (var campaign in listOfCampaignsAndNPR)
+					{
+						<tr>
+							<td>@campaign.Name</td>
+							<td>@campaign.Link</td>
+							<td>@campaign.Hashtag</td>
+							<td>@campaign.OrganizationName</td>
+							<td>@campaign.OrganizationLink</td>
+							<td>@campaign.NPR_email</td>
+							<div>
+								<button class="btn btn-outline-success" @onclick="() => 
+									SelectCampaignToDonateTo(campaign)">Choose this campaign to donate a product
+								</button>
+							</div>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	} else
+	{
+		<div>Loading ...</div>
+	}
 }
+
+&nbsp;
 
 <div>
 	<button class="btn btn-primary" @onclick="() => GetProductsAndBCRInfo(BCR_id)">See my products</button>
@@ -55,33 +63,39 @@
 
 @if (showTableProductsAndBCRInfo)
 {
-	<div>
-		<table class="table table-hover table-striped">
-			<thead class="table-dark">
-				<tr>
-					<th>Product Name</th>
-					<th>Product Value</th>
-					<th>Action</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var product in listOfProductsByBCR)
-				{
+	if (listOfProductsByBCR.Count() != 0)
+	{
+		<div>
+			<table class="table table-hover table-striped">
+				<thead class="table-dark">
 					<tr>
-						<td>@product.Name</td>
-						<td>@product.Value</td>
-						<div>
-							<button class="btn btn-outline-success" @onclick="async () => {
-								await SelectProductToDonate(product);
-								await GetAllProductsToCampaigns(); }">
-								Choose this product
-							</button>
-						</div>
+						<th>Product Name</th>
+						<th>Product Value</th>
+						<th>Action</th>
 					</tr>
-				}
-			</tbody>
-		</table>
-	</div>
+				</thead>
+				<tbody>
+					@foreach (var product in listOfProductsByBCR)
+					{
+						<tr>
+							<td>@product.Name</td>
+							<td>@product.Value</td>
+							<div>
+								<button class="btn btn-outline-success" @onclick="async () => {
+									await SelectProductToDonate(product);
+									await GetAllProductsToCampaigns(); }">
+									Choose this product
+								</button>
+							</div>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	} else
+	{
+		<div>Loading ...</div>
+	}
 }
 
 @if (showDonationForm)
