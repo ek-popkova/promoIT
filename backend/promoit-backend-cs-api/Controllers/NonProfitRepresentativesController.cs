@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using promoit_backend_cs.Services;
 using promoit_backend_cs_api.Models;
 using promoit_backend_cs_api.ModelsDTO;
@@ -30,6 +31,13 @@ namespace promoit_backend_cs_api.Controllers
         {
             var nprById = await _nonProfitRepresentativeService.GetNPRById(id);
             return Ok(nprById);
+        }
+
+        [HttpGet("/api/NonProfitRepresentatives/NpcrIdByUserId/{user_id}")]
+        public async Task<ActionResult<int>> GetNpcrIdByUserId(string user_id)
+        {
+            var id = await _nonProfitRepresentativeService.GetNpcrIdByUserId(user_id);
+            return Ok(id);
         }
 
         // PUT: api/NonProfitRepresentatives/5

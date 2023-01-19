@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using promoit_frontend_cs.Services;
 using Shared;
+using System;
 
 namespace promoit_frontend_cs.Pages.BCR
 {
@@ -14,6 +15,9 @@ namespace promoit_frontend_cs.Pages.BCR
 		AuthService authService { get; set; }
         [Inject]
         PopupService popupService { get; set; }
+        [Inject]
+        Microsoft​.AspNetCore​.Http.IHttpContextAccessor HttpContextAccessor { get; set; }
+
 
         private IEnumerable<ProductToCampaignDTOShared> allProductsAndCampaigns = System.Array.Empty<ProductToCampaignDTOShared>();
         private IEnumerable<ProductsAndBcrInfo> listOfProductsByBCR = System.Array.Empty<ProductsAndBcrInfo>();
@@ -23,11 +27,18 @@ namespace promoit_frontend_cs.Pages.BCR
         private CampaignsAndNpr campaignToDonateTo;
         private ProductsAndBcrInfo productToDonate;
 
+        private ProductDTO newProduct = new();
+
         private bool showTableProductsAndBCRInfo { get; set; } = false;
         private bool showTableCampaignsAndNRP { get; set; } = false;
         private bool showDonationForm { get; set; } = false;
+        private bool showAddProductForm { get; set; } = false;
+
         private int initialNumber { get; set; }
-        private int BCR_id { get; set; } = 2;
+
+        private string product_respond { get; set; }
+
+        private bool product_flag { get; set; } = false;
 
         protected override async Task OnInitializedAsync() { }
 
@@ -44,9 +55,12 @@ namespace promoit_frontend_cs.Pages.BCR
 
 		private async Task SelectCampaignToDonateTo(CampaignsAndNpr campaign) => campaignToDonateTo = campaign;
 
-		private async Task<IEnumerable<ProductsAndBcrInfo>> GetProductsAndBCRInfo(int bcr_id)
+    private async Task<IEnumerable<ProductsAndBcrInfo>> GetProductsAndBCRInfo()
         {
+            
             showTableProductsAndBCRInfo = !showTableProductsAndBCRInfo;
+            string user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
+            var bcr_id = await businessCompanyRepresentativeService.GetBCRidByUserId(user_id);
             return listOfProductsByBCR = await businessCompanyRepresentativeService.GetProductsAndBCRInfo(bcr_id);
         }
 
@@ -95,6 +109,31 @@ namespace promoit_frontend_cs.Pages.BCR
                 }
 
             }
+        }
+
+        private void ShowProductForm()
+        {
+            showAddProductForm = !showAddProductForm;
+            product_flag = false;
+        }
+
+        private async Task sendNewProduct()
+        {
+            string user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
+            var bcr_id = await businessCompanyRepresentativeService.GetBCRidByUserId(user_id);
+            newProduct.BcrId = bcr_id;
+            newProduct.CreateUserId = user_id;
+            newProduct.UpdateUserId = user_id;
+            var message = await businessCompanyRepresentativeService.AddNewProduct(newProduct);
+            if (message.ReasonPhrase == "Created")
+            {
+                product_respond = "Great! You have successfully created a product and now can donate it to any campaign you want";
+            }
+            else
+            {
+                product_respond = message.ReasonPhrase;
+            }
+            product_flag = true;
         }
     }
 }

@@ -57,7 +57,7 @@
 &nbsp;
 
 <div>
-	<button class="btn btn-primary" @onclick="() => GetProductsAndBCRInfo(BCR_id)">See my products</button>
+	<button class="btn btn-primary" @onclick="() => GetProductsAndBCRInfo()">See my products</button>
 </div>
 &nbsp;
 
@@ -115,6 +115,63 @@
 		</EditForm>
 	</div>
 }
+
+<div>
+	<button class="btn btn-primary" @onclick="ShowProductForm">Add a new product</button>
+</div>
+&nbsp;
+
+@if (showAddProductForm)
+{
+	@if (!product_flag)
+	{
+		<div class="row">
+			<div class="col-6 offset-1">
+
+				<EditForm Model="@newProduct" OnValidSubmit="@sendNewProduct">
+
+					<DataAnnotationsValidator />
+					<div class="row mb-4">
+						<label for="productName" class="col-sm-3 col-form-label">Name</label>
+						<div class="col-sm-9">
+							<InputText type="text"
+							   class="form-control"
+							   id="productName"
+							   placeholder="Write the product's name here"
+							   @bind-Value="newProduct.Name" />
+							<ValidationMessage For="() => newProduct.Name" />
+						</div>
+					</div>
+					<div class="row mb-4">
+						<label for="productValue" class="col-sm-3 col-form-label">Value</label>
+						<div class="col-sm-9">
+							<InputNumber type="number"
+							   class="form-control"
+							   id="productValue"
+							   placeholder="Write the product's value here"
+							   @bind-Value="newProduct.Value" />
+							<ValidationMessage For="() => newProduct.Value" />
+						</div>
+					</div>
+					<div class="row mb-4">
+						<div class="col-sm-6 offset-3">
+							<button type="submit" class="btn btn-primary">Submit</button>
+							<button type="reset" class="btn btn-danger">Clear fields</button>
+						</div>
+					</div>
+
+				</EditForm>
+			</div>
+		</div>
+	}
+	<div class="row">
+		<div class="row col-6 offset-1">
+			<h4>@product_respond</h4>
+		</div>
+	</div>
+
+}
+
 
 @code {
 

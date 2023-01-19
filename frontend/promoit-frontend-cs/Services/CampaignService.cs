@@ -31,6 +31,21 @@ namespace promoit_frontend_cs.Services
 			}
 		}
 
+        public async Task<IEnumerable<CampaignDTO>> GetCampaignsByNPCRId(int npr_id)
+        {
+            try
+            {
+                var response = await _http.GetAsync($"https://localhost:7263/api/Campaigns/CampaignsByNPRId/{npr_id}");
+                var json = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<IEnumerable<CampaignDTO>>(json);
+            }
+            catch (NullReferenceException exception)
+            {
+                _logger.LogError(exception, $"Error getting campaigns");
+                throw new Exception($"Error getting campaigns", exception);
+            }
+        }
+
         public async Task<IEnumerable<ProductToCampaignDTOShared>> GetAllProductsToCampaigns()
         {
             try
@@ -101,6 +116,20 @@ namespace promoit_frontend_cs.Services
 				throw new Exception($"Error posting products to campaigns", exception);
 			}
 		}
+
+        public async Task<HttpResponseMessage> AddNewCampaign(CampaignDTO newCampaign)
+        {
+            try
+            {
+                return await _http.PostAsJsonAsync("https://localhost:7263/api/Campaigns", newCampaign);
+
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, $"Error sending the data of new product");
+                throw new Exception($"Error sending the data of new product", exception);
+            }
+        }
 
     }
 }

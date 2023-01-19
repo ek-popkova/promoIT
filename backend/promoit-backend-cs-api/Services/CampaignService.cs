@@ -54,6 +54,22 @@ namespace promoit_backend_cs.Services
             }
         }
 
+        public async Task<IEnumerable<CampaignDTO>> GetCampaignsByNPCRId(int npr_id)
+        {
+            try
+            {
+                return await _context.Campaigns.Where(x => x.StatusId == 1 && x.NprId == npr_id)
+                                               .Select(x => DTOService.CampaignToDTO(x))
+                                               .ToListAsync();
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, $"Error getting campaigns");
+                throw new Exception($"Error getting campaigns", exception);
+            }
+        }
+
+
         public async Task<IEnumerable<object>> GetCampaignsWithNPR()
         {
             var listofCampaignsWithNPR = new List<object>();

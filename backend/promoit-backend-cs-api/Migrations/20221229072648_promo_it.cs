@@ -48,61 +48,6 @@ namespace promoit_backend_cs_api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "role",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    role_name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    create_date = table.Column<DateTime>(type: "datetime", nullable: false),
-                    update_date = table.Column<DateTime>(type: "datetime", nullable: false),
-                    create_user_id = table.Column<int>(type: "int", nullable: false),
-                    update_user_id = table.Column<int>(type: "int", nullable: false),
-                    status_id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_role", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_role_status",
-                        column: x => x.status_id,
-                        principalTable: "status",
-                        principalColumn: "id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "user",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    first_name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    last_name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    login = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    password = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    role_id = table.Column<int>(type: "int", nullable: false),
-                    create_date = table.Column<DateTime>(type: "datetime", nullable: false),
-                    update_date = table.Column<DateTime>(type: "datetime", nullable: false),
-                    create_user_id = table.Column<int>(type: "int", nullable: false),
-                    update_user_id = table.Column<int>(type: "int", nullable: false),
-                    status_id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_user", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_user_role",
-                        column: x => x.role_id,
-                        principalTable: "role",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_user_status",
-                        column: x => x.status_id,
-                        principalTable: "status",
-                        principalColumn: "id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "BCR",
                 columns: table => new
                 {
@@ -190,8 +135,8 @@ namespace promoit_backend_cs_api.Migrations
                     BCR_id = table.Column<int>(type: "int", nullable: false),
                     create_date = table.Column<DateTime>(type: "datetime", nullable: false),
                     update_date = table.Column<DateTime>(type: "datetime", nullable: false),
-                    create_user_id = table.Column<int>(type: "int", nullable: false),
-                    update_user_id = table.Column<int>(type: "int", nullable: false),
+                    create_user_id = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    update_user_id = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     status_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -221,8 +166,8 @@ namespace promoit_backend_cs_api.Migrations
                     NPR_id = table.Column<int>(type: "int", nullable: false),
                     create_date = table.Column<DateTime>(type: "datetime", nullable: false),
                     update_date = table.Column<DateTime>(type: "datetime", nullable: false),
-                    create_user_id = table.Column<int>(type: "int", nullable: false),
-                    update_user_id = table.Column<int>(type: "int", nullable: false),
+                    create_user_id = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    update_user_id = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     status_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -252,8 +197,8 @@ namespace promoit_backend_cs_api.Migrations
                     transaction_status_id = table.Column<int>(type: "int", nullable: false),
                     create_date = table.Column<DateTime>(type: "datetime", nullable: false),
                     update_date = table.Column<DateTime>(type: "datetime", nullable: false),
-                    create_user_id = table.Column<int>(type: "int", nullable: false),
-                    update_user_id = table.Column<int>(type: "int", nullable: false),
+                    create_user_id = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    update_user_id = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     status_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -299,8 +244,8 @@ namespace promoit_backend_cs_api.Migrations
                     product_price = table.Column<int>(type: "int", nullable: false),
                     create_date = table.Column<DateTime>(type: "datetime", nullable: false),
                     update_date = table.Column<DateTime>(type: "datetime", nullable: false),
-                    create_user_id = table.Column<int>(type: "int", nullable: false),
-                    update_user_id = table.Column<int>(type: "int", nullable: false)
+                    create_user_id = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    update_user_id = table.Column<string>(type: "nvarchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -334,8 +279,8 @@ namespace promoit_backend_cs_api.Migrations
                     bought_number = table.Column<int>(type: "int", nullable: false),
                     create_date = table.Column<DateTime>(type: "datetime", nullable: false),
                     update_date = table.Column<DateTime>(type: "datetime", nullable: false),
-                    create_user_id = table.Column<int>(type: "int", nullable: false),
-                    update_user_id = table.Column<int>(type: "int", nullable: false),
+                    create_user_id = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    update_user_id = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     status_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -362,13 +307,13 @@ namespace promoit_backend_cs_api.Migrations
                 name: "user_to_campaign",
                 columns: table => new
                 {
-                    user_id = table.Column<int>(type: "int", nullable: false),
+                    user_id = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     campaign_id = table.Column<int>(type: "int", nullable: false),
                     money = table.Column<int>(type: "int", nullable: true),
                     create_date = table.Column<DateTime>(type: "datetime", nullable: false),
                     update_date = table.Column<DateTime>(type: "datetime", nullable: false),
-                    create_user_id = table.Column<int>(type: "int", nullable: false),
-                    update_user_id = table.Column<int>(type: "int", nullable: false),
+                    create_user_id = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    update_user_id = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     status_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -383,22 +328,12 @@ namespace promoit_backend_cs_api.Migrations
                         column: x => x.status_id,
                         principalTable: "status",
                         principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_user_to_campaign_user",
-                        column: x => x.user_id,
-                        principalTable: "user",
-                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BCR_status_id",
                 table: "BCR",
                 column: "status_id");
-
-            //migrationBuilder.CreateIndex(
-            //    name: "IX_BCR_user_id",
-            //    table: "BCR",
-            //    column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BCR_ship_BCR_id",
@@ -429,11 +364,6 @@ namespace promoit_backend_cs_api.Migrations
                 name: "IX_non_profit_representative_status_id",
                 table: "non_profit_representative",
                 column: "status_id");
-
-            //migrationBuilder.CreateIndex(
-            //    name: "IX_non_profit_representative_user_id",
-            //    table: "non_profit_representative",
-            //    column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_product_BCR_id",
@@ -470,11 +400,6 @@ namespace promoit_backend_cs_api.Migrations
                 table: "SA",
                 column: "status_id");
 
-            //migrationBuilder.CreateIndex(
-            //    name: "IX_SA_user_id",
-            //    table: "SA",
-            //    column: "user_id");
-
             migrationBuilder.CreateIndex(
                 name: "IX_SA_transaction_BCR_id",
                 table: "SA_transaction",
@@ -500,15 +425,6 @@ namespace promoit_backend_cs_api.Migrations
                 table: "SA_transaction",
                 column: "transaction_status_id");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_user_role_id",
-                table: "user",
-                column: "role_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_user_status_id",
-                table: "user",
-                column: "status_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_user_to_campaign_campaign_id",
@@ -519,11 +435,6 @@ namespace promoit_backend_cs_api.Migrations
                 name: "IX_user_to_campaign_status_id",
                 table: "user_to_campaign",
                 column: "status_id");
-
-            //migrationBuilder.CreateIndex(
-            //    name: "IX_user_to_campaign_user_id",
-            //    table: "user_to_campaign",
-            //    column: "user_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -560,12 +471,6 @@ namespace promoit_backend_cs_api.Migrations
 
             migrationBuilder.DropTable(
                 name: "non_profit_representative");
-
-            migrationBuilder.DropTable(
-                name: "user");
-
-            migrationBuilder.DropTable(
-                name: "role");
 
             migrationBuilder.DropTable(
                 name: "status");

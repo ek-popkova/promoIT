@@ -1,9 +1,12 @@
 ﻿@page "/add-non-profit/"
 @attribute [Authorize]
 @using System.Security.Claims;
+@using promoit_frontend_cs.Services;
 @inject Microsoft​.AspNetCore​.Http.IHttpContextAccessor HttpContextAccessor
 @inject HttpClient Http
 @inject IHttpClientFactory ClientFactory
+@inject RoleService roleService
+@inject NonProfitRepresentativeService nonProfitRepresentativeService
 
 
 
@@ -69,7 +72,7 @@
 
 				<div class="row mb-4">
 					<div class="col-sm-6 offset-3">
-						<button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addingCompetition">Register</button>
+						<button type="submit" class="btn btn-primary">Register</button>
 						<button type="reset" class="btn btn-danger">Clear fields</button>
 					</div>
 				</div>
@@ -82,7 +85,7 @@ else
 {
 	<div class="row">
 		<div class="row col-6 offset-1">
-			<h3>Great! Now you need to log out and login back to enjoy the whole functionality of being a non-profit company representative in PromoIT. Your id is @messageFromServer</h3>
+			<h4>@respond</h4>
 		</div>
 	</div>
 }
@@ -92,48 +95,27 @@ else
 
 
 	private NonProfitRepresentativeDTO newNPCR = new();
-
-	string messageFromServer = string.Empty;
 	bool flag = false;
-
+	string respond;
 
 	public async Task sendNewNPCR()
 	{
 		string user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
-		newNPCR.UserId = user_id;
-		newNPCR.CreateUserId = user_id;
-		newNPCR.UpdateUserId = user_id;
-
-		var response = await Http.PostAsJsonAsync("https://localhost:7263/api/NonProfitRepresentatives", newNPCR);
-		if (!response.IsSuccessStatusCode)
+		var message = await nonProfitRepresentativeService.AddNewNPCR(newNPCR, user_id);
+		respond = message.ReasonPhrase;
+		if (message.ReasonPhrase == "Created")
 		{
-			messageFromServer = response.ReasonPhrase;
-			flag = true;
-			return;
+			respond = "Great! Now you need to log out and login back to enjoy the whole functionality of being a non-profit organization representative in PromoIT.";
 		}
 		else
 		{
-			NonProfitRepresentativeDTO addedNPCR = await response.Content.ReadFromJsonAsync<NonProfitRepresentativeDTO>();
-			messageFromServer = addedNPCR.Id.ToString();
-			flag = true;
+			respond = message.ReasonPhrase;
 		}
-		await RoleAdder(roles["NPCR"]);
+		flag = true;
+		await roleService.RoleAdder(user_id, "NPCR");
 	}
 
-	public Dictionary<string, string> roles = new Dictionary<string, string>(){
-    {"Activist", "rol_Kfj83rfyJDGlIhEq"},
-    {"BCR", "rol_rvrE4kaUwM1ZmDyc"},
-    {"NPCR", "rol_E36SwZN0k609LcpS"}
-    };
 	
-	private async Task RoleAdder(string role_id)
-    {
-        string user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
-        string req_string = $"https://localhost:7263/add-role/{user_id}/{role_id}";
-        var request = new HttpRequestMessage(HttpMethod.Put, req_string);
-        var client = ClientFactory.CreateClient();
-        var response = await client.SendAsync(request);
-    }
 
 	protected override async Task OnInitializedAsync()
 	{

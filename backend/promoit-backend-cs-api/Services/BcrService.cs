@@ -77,6 +77,26 @@ namespace promoit_backend_cs.Services
             }
         }
 
+        public async Task<int> GetBcrIdByUserId(string user_id)
+        {
+            try
+            {
+                var bcr = await _context.Bcrs.Where(bcr => bcr.UserId == user_id)
+                                             .FirstOrDefaultAsync();
+                if (bcr == null)
+                {
+                    throw new Exception($"Cannot find business company representative with {user_id}");
+                }
+                return bcr.Id;
+
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, $"Error getting business company representative with ID {user_id}");
+                throw new Exception($"Error getting business company representative with ID {user_id}", exception);
+            }
+        }
+
         public async Task<BcrDTO> CreateBcr(BcrDTO bcrDTO)
         {
             var bcr = new Bcr

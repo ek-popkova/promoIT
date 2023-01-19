@@ -117,7 +117,7 @@ namespace promoit_backend_cs_api.Controllers
 
 
         [HttpPost("/api/PostProductAndCampaign")]
-        public async Task<ActionResult<ProductToCampaign>> PostProductAndCampaign(string product_name, int product_value, int Bcr_id, int initial_number, int campaign_id, int user_id)
+        public async Task<ActionResult<ProductToCampaign>> PostProductAndCampaign(string product_name, int product_value, int Bcr_id, int initial_number, int campaign_id, string user_id)
         {
             var newProduct = new ProductDTO();
             var resultProduct = new ProductDTO();

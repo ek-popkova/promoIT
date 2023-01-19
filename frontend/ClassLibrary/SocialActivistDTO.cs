@@ -17,6 +17,8 @@ public class SocialActivistDTO
     
         [Required]
         [MaxLength(15, ErrorMessage = "Phone is too long, 15 charachters maximum.")]
+        [DataType(DataType.PhoneNumber)]
+        [Phone]
         public string Phone { get; set; }
 
         [Required]
@@ -24,4 +26,11 @@ public class SocialActivistDTO
         [MaxLength(15, ErrorMessage = "Twitter account is too long, 15 charachters maximum.")]
         public string Twitter { get; set; }
 
-    }
+        public string UserId { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public string CreateUserId { get; set; }
+        public string UpdateUserId { get; set; }
+        public int StatusId { get; set; }
+
+}

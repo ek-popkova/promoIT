@@ -24,6 +24,8 @@ builder.Services.AddHttpClient();
 /*builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:7000/") });
 */
 builder.Services.AddScoped<PopupService>();
+builder.Services.AddScoped<RoleService>();
+builder.Services.AddScoped<NonProfitRepresentativeService>();
 builder.Services.AddScoped<BusinessCompanyRepresentativeService>();
 builder.Services.AddScoped<CampaignService>();
 builder.Services.AddScoped<SocialActivistService>();

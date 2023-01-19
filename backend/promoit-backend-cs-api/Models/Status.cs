@@ -9,9 +9,7 @@ namespace promoit_backend_cs_api.Models
             Campaigns = new HashSet<Campaign>();
             NonProfitRepresentatives = new HashSet<NonProfitRepresentative>();
             Products = new HashSet<Product>();
-            Roles = new HashSet<Role>();
             Sas = new HashSet<Sa>();
-            Users = new HashSet<User>();
         }
 
         public int Id { get; set; }
@@ -21,8 +19,6 @@ namespace promoit_backend_cs_api.Models
         public virtual ICollection<Campaign> Campaigns { get; set; }
         public virtual ICollection<NonProfitRepresentative> NonProfitRepresentatives { get; set; }
         public virtual ICollection<Product> Products { get; set; }
-        public virtual ICollection<Role> Roles { get; set; }
         public virtual ICollection<Sa> Sas { get; set; }
-        public virtual ICollection<User> Users { get; set; }
     }
 }
