@@ -31,16 +31,6 @@ namespace promoit_backend_cs.Services
             return _context.Products.Any(e => e.Id == id);
         }
 
-        public bool RoleExists(int id)
-        {
-            return _context.Roles.Any(e => e.Id == id);
-        }
-
-        public bool UserExists(int id)
-        {
-            return _context.Users.Any(e => e.Id == id);
-        }
-
         public bool ProductToCampaignExists(int id)
         {
             return _context.Products.Any(e => e.Id == id);

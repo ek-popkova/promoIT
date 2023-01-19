@@ -71,31 +71,7 @@ namespace promoit_backend_cs.Services
             StatusId = productToCampaign.StatusId
         };
 
-        public static RoleDTO RoleToDTO(Role role) => new RoleDTO
-        {
-            Id = role.Id,
-            RoleName = role.RoleName,
-            CreateDate = role.CreateDate,
-            UpdateDate = role.UpdateDate,
-            CreateUserId = role.CreateUserId,
-            UpdateUserId = role.UpdateUserId,
-            StatusId = role.StatusId
-        };
 
-        //public static UserDTO UserToDTO(User user) => new UserDTO
-        //{
-        //    Id = user.Id,
-        //    FirstName = user.FirstName,
-        //    LastName = user.LastName,
-        //    Login = user.Login,
-        //    Password = user.Password,
-        //    RoleId = user.RoleId,
-        //    CreateDate = user.CreateDate,
-        //    UpdateDate = user.UpdateDate,
-        //    CreateUserId = user.CreateUserId,
-        //    UpdateUserId = user.UpdateUserId,
-        //    StatusId = user.StatusId
-        //};
 
         public static SaToCampaignDTO SaToCampaignDTO(SaToCampaign saToCampaign) => new SaToCampaignDTO
         {

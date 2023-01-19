@@ -21,7 +21,6 @@ builder.Configuration.GetConnectionString("DefaultConnection")
 // Services dependency injection
 //builder.Services.AddTransient<UserService>();
 builder.Services.AddTransient<NonProfitRepresentativesService>();
-builder.Services.AddTransient<RoleService>();
 builder.Services.AddTransient<ProductService>();
 builder.Services.AddTransient<CampaignService>();
 builder.Services.AddTransient<BcrService>();

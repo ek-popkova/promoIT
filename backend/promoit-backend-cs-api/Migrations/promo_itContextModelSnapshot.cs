@@ -83,7 +83,7 @@ namespace promoit_backend_cs_api.Migrations
                         .HasColumnName("create_date");
 
                     b.Property<int>("CreateUserId")
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("create_user_id");
 
                     b.Property<int>("ProductBought")
@@ -107,7 +107,7 @@ namespace promoit_backend_cs_api.Migrations
                         .HasColumnName("update_date");
 
                     b.Property<int>("UpdateUserId")
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("update_user_id");
 
                     b.HasIndex("BcrId");
@@ -133,7 +133,7 @@ namespace promoit_backend_cs_api.Migrations
                         .HasColumnName("create_date");
 
                     b.Property<int>("CreateUserId")
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("create_user_id");
 
                     b.Property<string>("Hashtag")
@@ -167,7 +167,7 @@ namespace promoit_backend_cs_api.Migrations
                         .HasColumnName("update_date");
 
                     b.Property<int>("UpdateUserId")
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("update_user_id");
 
                     b.HasKey("Id");
@@ -367,48 +367,6 @@ namespace promoit_backend_cs_api.Migrations
                     b.ToTable("product_to_campaign", (string)null);
                 });
 
-            modelBuilder.Entity("promoit_backend_cs_api.Models.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("create_date");
-
-                    b.Property<int>("CreateUserId")
-                        .HasColumnType("int")
-                        .HasColumnName("create_user_id");
-
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("role_name");
-
-                    b.Property<int>("StatusId")
-                        .HasColumnType("int")
-                        .HasColumnName("status_id");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("update_date");
-
-                    b.Property<int>("UpdateUserId")
-                        .HasColumnType("int")
-                        .HasColumnName("update_user_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StatusId");
-
-                    b.ToTable("role", (string)null);
-                });
-
             modelBuilder.Entity("promoit_backend_cs_api.Models.Sa", b =>
                 {
                     b.Property<int>("Id")
@@ -429,7 +387,7 @@ namespace promoit_backend_cs_api.Migrations
                         .HasColumnName("create_date");
 
                     b.Property<int>("CreateUserId")
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("create_user_id");
 
                     b.Property<string>("Email")
@@ -463,7 +421,7 @@ namespace promoit_backend_cs_api.Migrations
                         .HasColumnName("update_user_id");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id");
@@ -486,7 +444,7 @@ namespace promoit_backend_cs_api.Migrations
                         .HasColumnName("create_date");
 
                     b.Property<int>("CreateUserId")
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("create_user_id");
 
                     b.Property<int>("Price")
@@ -518,7 +476,7 @@ namespace promoit_backend_cs_api.Migrations
                         .HasColumnName("update_date");
 
                     b.Property<int>("UpdateUserId")
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("update_user_id");
 
                     b.HasIndex("BcrId");
@@ -572,73 +530,6 @@ namespace promoit_backend_cs_api.Migrations
                     b.ToTable("transaction_status", (string)null);
                 });
 
-            modelBuilder.Entity("promoit_backend_cs_api.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("create_date");
-
-                    b.Property<int>("CreateUserId")
-                        .HasColumnType("int")
-                        .HasColumnName("create_user_id");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)")
-                        .HasColumnName("first_name");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)")
-                        .HasColumnName("last_name");
-
-                    b.Property<string>("Login")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)")
-                        .HasColumnName("login");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("password");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int")
-                        .HasColumnName("role_id");
-
-                    b.Property<int>("StatusId")
-                        .HasColumnType("int")
-                        .HasColumnName("status_id");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("update_date");
-
-                    b.Property<int>("UpdateUserId")
-                        .HasColumnType("int")
-                        .HasColumnName("update_user_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("StatusId");
-
-                    b.ToTable("user", (string)null);
-                });
-
             modelBuilder.Entity("promoit_backend_cs_api.Models.SaToCampaign", b =>
                 {
                     b.Property<int>("CampaignId")
@@ -650,7 +541,7 @@ namespace promoit_backend_cs_api.Migrations
                         .HasColumnName("create_date");
 
                     b.Property<int>("CreateUserId")
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("create_user_id");
 
                     b.Property<int?>("Money")
@@ -666,11 +557,11 @@ namespace promoit_backend_cs_api.Migrations
                         .HasColumnName("update_date");
 
                     b.Property<int>("UpdateUserId")
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("update_user_id");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("user_id");
 
                     b.HasIndex("CampaignId");
@@ -804,16 +695,6 @@ namespace promoit_backend_cs_api.Migrations
                     b.Navigation("Status");
                 });
 
-            modelBuilder.Entity("promoit_backend_cs_api.Models.Role", b =>
-                {
-                    b.HasOne("promoit_backend_cs_api.Models.Status", "Status")
-                        .WithMany("Roles")
-                        .HasForeignKey("StatusId")
-                        .IsRequired()
-                        .HasConstraintName("FK_role_status");
-
-                    b.Navigation("Status");
-                });
 
             modelBuilder.Entity("promoit_backend_cs_api.Models.Sa", b =>
                 {
@@ -822,12 +703,6 @@ namespace promoit_backend_cs_api.Migrations
                         .HasForeignKey("StatusId")
                         .IsRequired()
                         .HasConstraintName("FK_SA_status");
-
-                    b.HasOne("promoit_backend_cs_api.Models.User", "User")
-                        .WithMany("Sas")
-                        .HasForeignKey("UserId")
-                        .IsRequired()
-                        .HasConstraintName("FK_SA_user");
 
                     b.Navigation("Status");
 
@@ -877,25 +752,6 @@ namespace promoit_backend_cs_api.Migrations
                     b.Navigation("TransactionStatus");
                 });
 
-            modelBuilder.Entity("promoit_backend_cs_api.Models.User", b =>
-                {
-                    b.HasOne("promoit_backend_cs_api.Models.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .IsRequired()
-                        .HasConstraintName("FK_user_role");
-
-                    b.HasOne("promoit_backend_cs_api.Models.Status", "Status")
-                        .WithMany("Users")
-                        .HasForeignKey("StatusId")
-                        .IsRequired()
-                        .HasConstraintName("FK_user_status");
-
-                    b.Navigation("Role");
-
-                    b.Navigation("Status");
-                });
-
             modelBuilder.Entity("promoit_backend_cs_api.Models.SaToCampaign", b =>
                 {
                     b.HasOne("promoit_backend_cs_api.Models.Campaign", "Campaign")
@@ -910,11 +766,6 @@ namespace promoit_backend_cs_api.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_sar_to_campaign_status");
 
-                    b.HasOne("promoit_backend_cs_api.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("SaId")
-                        .IsRequired()
-                        .HasConstraintName("FK_sa_to_campaign_sa");
 
                     b.Navigation("Campaign");
 
@@ -933,11 +784,6 @@ namespace promoit_backend_cs_api.Migrations
                     b.Navigation("Campaigns");
                 });
 
-            modelBuilder.Entity("promoit_backend_cs_api.Models.Role", b =>
-                {
-                    b.Navigation("Users");
-                });
-
             modelBuilder.Entity("promoit_backend_cs_api.Models.Status", b =>
                 {
                     b.Navigation("Bcrs");
@@ -948,11 +794,8 @@ namespace promoit_backend_cs_api.Migrations
 
                     b.Navigation("Products");
 
-                    b.Navigation("Roles");
-
                     b.Navigation("Sas");
 
-                    b.Navigation("Users");
                 });
 
 #pragma warning restore 612, 618

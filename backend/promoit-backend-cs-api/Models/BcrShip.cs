@@ -15,8 +15,8 @@ namespace promoit_backend_cs_api.Models
         public int ProductPrice { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
-        public int CreateUserId { get; set; }
-        public int UpdateUserId { get; set; }
+        public string CreateUserId { get; set; }
+        public string UpdateUserId { get; set; }
 
         public virtual Bcr Bcr { get; set; } = null!;
         public virtual Campaign Campaign { get; set; } = null!;

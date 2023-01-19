@@ -23,12 +23,10 @@ namespace promoit_backend_cs_api.Data
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<ProductStatus> ProductStatuses { get; set; } = null!;
         public virtual DbSet<ProductToCampaign> ProductToCampaigns { get; set; } = null!;
-        public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<Sa> Sas { get; set; } = null!;
         public virtual DbSet<SaTransaction> SaTransactions { get; set; } = null!;
         public virtual DbSet<Status> Statuses { get; set; } = null!;
         public virtual DbSet<TransactionStatus> TransactionStatuses { get; set; } = null!;
-        public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<SaToCampaign> SaToCampaigns { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -36,7 +34,7 @@ namespace promoit_backend_cs_api.Data
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=.;Database=promo_it_Kate;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.;Database=promo_it;Trusted_Connection=True;");
             }
         }
 
@@ -56,7 +54,9 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("create_date");
 
-                entity.Property(e => e.CreateUserId).HasColumnName("create_user_id");
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("create_user_id");
 
                 entity.Property(e => e.StatusId).HasColumnName("status_id");
 
@@ -64,9 +64,13 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("update_date");
 
-                entity.Property(e => e.UpdateUserId).HasColumnName("update_user_id");
+                entity.Property(e => e.UpdateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("update_user_id");
 
-                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("user_id");
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Bcrs)
@@ -92,7 +96,9 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("create_date");
 
-                entity.Property(e => e.CreateUserId).HasColumnName("create_user_id");
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("create_user_id");
 
                 entity.Property(e => e.ProductBought).HasColumnName("product_bought");
 
@@ -106,7 +112,9 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("update_date");
 
-                entity.Property(e => e.UpdateUserId).HasColumnName("update_user_id");
+                entity.Property(e => e.UpdateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("update_user_id");
 
                 entity.HasOne(d => d.Bcr)
                     .WithMany()
@@ -137,7 +145,9 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("create_date");
 
-                entity.Property(e => e.CreateUserId).HasColumnName("create_user_id");
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("create_user_id");
 
                 entity.Property(e => e.Hashtag)
                     .HasMaxLength(50)
@@ -159,7 +169,9 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("update_date");
 
-                entity.Property(e => e.UpdateUserId).HasColumnName("update_user_id");
+                entity.Property(e => e.UpdateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("update_user_id");
 
                 entity.HasOne(d => d.Npr)
                     .WithMany(p => p.Campaigns)
@@ -184,7 +196,9 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("create_date");
 
-                entity.Property(e => e.CreateUserId).HasColumnName("create_user_id");
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("create_user_id");
 
                 entity.Property(e => e.Email)
                     .HasMaxLength(50)
@@ -204,9 +218,13 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("update_date");
 
-                entity.Property(e => e.UpdateUserId).HasColumnName("update_user_id");
+                entity.Property(e => e.UpdateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("update_user_id");
 
-                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("user_id");
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.NonProfitRepresentatives)
@@ -227,7 +245,9 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("create_date");
 
-                entity.Property(e => e.CreateUserId).HasColumnName("create_user_id");
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("create_user_id");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
@@ -239,7 +259,9 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("update_date");
 
-                entity.Property(e => e.UpdateUserId).HasColumnName("update_user_id");
+                entity.Property(e => e.UpdateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("update_user_id");
 
                 entity.Property(e => e.Value).HasColumnName("value");
 
@@ -281,7 +303,9 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("create_date");
 
-                entity.Property(e => e.CreateUserId).HasColumnName("create_user_id");
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("create_user_id");
 
                 entity.Property(e => e.InititalNumber).HasColumnName("initital_number");
 
@@ -293,7 +317,9 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("update_date");
 
-                entity.Property(e => e.UpdateUserId).HasColumnName("update_user_id");
+                entity.Property(e => e.UpdateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("update_user_id");
 
                 entity.HasOne(d => d.Campaign)
                     .WithMany()
@@ -314,37 +340,6 @@ namespace promoit_backend_cs_api.Data
                     .HasConstraintName("FK_product_to_campaign_status");
             });
 
-            modelBuilder.Entity<Role>(entity =>
-            {
-                entity.ToTable("role");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.CreateDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("create_date");
-
-                entity.Property(e => e.CreateUserId).HasColumnName("create_user_id");
-
-                entity.Property(e => e.RoleName)
-                    .HasMaxLength(50)
-                    .HasColumnName("role_name");
-
-                entity.Property(e => e.StatusId).HasColumnName("status_id");
-
-                entity.Property(e => e.UpdateDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("update_date");
-
-                entity.Property(e => e.UpdateUserId).HasColumnName("update_user_id");
-
-                entity.HasOne(d => d.Status)
-                    .WithMany(p => p.Roles)
-                    .HasForeignKey(d => d.StatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_role_status");
-            });
-
             modelBuilder.Entity<Sa>(entity =>
             {
                 entity.ToTable("SA");
@@ -359,7 +354,9 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("create_date");
 
-                entity.Property(e => e.CreateUserId).HasColumnName("create_user_id");
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("create_user_id");
 
                 entity.Property(e => e.Email)
                     .HasMaxLength(50)
@@ -379,9 +376,13 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("update_date");
 
-                entity.Property(e => e.UpdateUserId).HasColumnName("update_user_id");
+                entity.Property(e => e.UpdateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("update_user_id");
 
-                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("user_id");
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Sas)
@@ -403,7 +404,9 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("create_date");
 
-                entity.Property(e => e.CreateUserId).HasColumnName("create_user_id");
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("create_user_id");
 
                 entity.Property(e => e.Price).HasColumnName("price");
 
@@ -421,7 +424,9 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("update_date");
 
-                entity.Property(e => e.UpdateUserId).HasColumnName("update_user_id");
+                entity.Property(e => e.UpdateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("update_user_id");
 
                 entity.HasOne(d => d.Bcr)
                     .WithMany()
@@ -474,58 +479,6 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnName("transaction_status");
             });
 
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.ToTable("user");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.CreateDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("create_date");
-
-                entity.Property(e => e.CreateUserId).HasColumnName("create_user_id");
-
-                entity.Property(e => e.FirstName)
-                    .HasMaxLength(25)
-                    .HasColumnName("first_name");
-
-                entity.Property(e => e.LastName)
-                    .HasMaxLength(25)
-                    .HasColumnName("last_name");
-
-                entity.Property(e => e.Login)
-                    .HasMaxLength(25)
-                    .HasColumnName("login");
-
-                entity.Property(e => e.Password)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("password");
-
-                entity.Property(e => e.RoleId).HasColumnName("role_id");
-
-                entity.Property(e => e.StatusId).HasColumnName("status_id");
-
-                entity.Property(e => e.UpdateDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("update_date");
-
-                entity.Property(e => e.UpdateUserId).HasColumnName("update_user_id");
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_user_role");
-
-                entity.HasOne(d => d.Status)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.StatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_user_status");
-            });
-
             modelBuilder.Entity<SaToCampaign>(entity =>
             {
                 entity.HasNoKey();
@@ -538,7 +491,9 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("create_date");
 
-                entity.Property(e => e.CreateUserId).HasColumnName("create_user_id");
+                entity.Property(e => e.CreateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("create_user_id");
 
                 entity.Property(e => e.Money).HasColumnName("money");
 
@@ -548,7 +503,9 @@ namespace promoit_backend_cs_api.Data
                     .HasColumnType("datetime")
                     .HasColumnName("update_date");
 
-                entity.Property(e => e.UpdateUserId).HasColumnName("update_user_id");
+                entity.Property(e => e.UpdateUserId)
+                    .HasMaxLength(50)
+                    .HasColumnName("update_user_id");
 
                 entity.Property(e => e.SocialActivistId).HasColumnName("social_activist_id");
 
@@ -564,7 +521,7 @@ namespace promoit_backend_cs_api.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_user_to_campaign_status");
 
-                entity.HasOne(d => d.User)
+                entity.HasOne(d => d.Sa)
                     .WithMany()
                     .HasForeignKey(d => d.SocialActivistId)
                     .OnDelete(DeleteBehavior.ClientSetNull)

@@ -12,8 +12,8 @@ namespace promoit_backend_cs_api.ModelsDTO
         public int? Money { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
-        public int CreateUserId { get; set; }
-        public int UpdateUserId { get; set; }
+        public string CreateUserId { get; set; }
+        public string UpdateUserId { get; set; }
         public int StatusId { get; set; }
 
     }
