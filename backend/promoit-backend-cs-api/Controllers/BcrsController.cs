@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using promoit_backend_cs.Services;
 using promoit_backend_cs_api.Models;
 using promoit_backend_cs_api.ModelsDTO;
@@ -25,7 +26,8 @@ namespace promoit_backend_cs_api.Controllers
         }
 
         [HttpGet("/api/Bcrs/productByBcrId/{id}")]
-        public async Task<ActionResult<IEnumerable<object>>> GetProductsByBcrId(int id)
+		[Authorize(Roles = "Business company representative, Admin")]
+		public async Task<ActionResult<IEnumerable<object>>> GetProductsByBcrId(int id)
         {
             var productsByBcrId = await _bcrService.GetProductsByBcrId(id);
             return Ok(productsByBcrId);

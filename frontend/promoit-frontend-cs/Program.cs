@@ -24,12 +24,13 @@ builder.Services.AddHttpClient();
 /*builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:7000/") });
 */
 builder.Services.AddScoped<PopupService>();
-builder.Services.AddSingleton<BusinessCompanyRepresentativeService>();
-builder.Services.AddSingleton<CampaignService>();
-builder.Services.AddSingleton<SocialActivistService>();
-builder.Services.AddSingleton<RoleService>();
-builder.Services.AddSingleton<NonProfitRepresentativeService>();
+builder.Services.AddScoped<RoleService>();
+builder.Services.AddScoped<NonProfitRepresentativeService>();
+builder.Services.AddScoped<BusinessCompanyRepresentativeService>();
+builder.Services.AddScoped<CampaignService>();
+builder.Services.AddScoped<SocialActivistService>();
 builder.Services.AddSingleton<HttpClient>();
+builder.Services.AddScoped<AuthService>();
 builder.Services.AddLogging();
 //builder.Services.AddSingleton<BalanceAndProduct>();
 builder.Services.AddHttpContextAccessor();
@@ -55,8 +56,13 @@ builder.Services
                     Secure = true,
                     SameSite = SameSiteMode.Strict
                 });
-                var refresh_token = context.TokenEndpointResponse.RefreshToken;
-                context.Response.Cookies.Append("refresh_token", refresh_token, new CookieOptions());
+    //            var refresh_token = context.TokenEndpointResponse.RefreshToken;
+    //            context.Response.Cookies.Append("refresh_token", refresh_token, new CookieOptions
+    //            {
+				//	HttpOnly = true,
+				//	Secure = true,
+				//	SameSite = SameSiteMode.Strict
+				//});
 
 
                 return Task.CompletedTask;

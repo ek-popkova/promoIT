@@ -1,23 +1,29 @@
 ﻿using Newtonsoft.Json;
 using Shared;
+using System;
+using System.Net.Http.Headers;
 using static System.Net.WebRequestMethods;
 
 namespace promoit_frontend_cs.Services
 {
     public class BusinessCompanyRepresentativeService
     {
-        private readonly HttpClient _http;
 		private readonly ILogger<BusinessCompanyRepresentativeService> _logger;
+		private readonly IHttpContextAccessor _httpContextAccessor;
+		private readonly AuthService _authservice;
+		private readonly HttpClient _http;
 
-		public BusinessCompanyRepresentativeService(HttpClient http, ILogger<BusinessCompanyRepresentativeService> logger)
-        {
-            _http = http;
+		public BusinessCompanyRepresentativeService(HttpClient http, ILogger<BusinessCompanyRepresentativeService> logger, IHttpContextAccessor HttpContextAccessor, AuthService authservice)
+		{
+			_http = http;
 			_logger = logger;
-        }
+			_httpContextAccessor = HttpContextAccessor;
+			_authservice = authservice;
+		}
 
-        public async Task<IEnumerable<SaTransactionSharedSAInfo>> GetTransactionWithSAInfo(int id)
+		public async Task<IEnumerable<SaTransactionSharedSAInfo>> GetTransactionWithSAInfo(int id)
         {
-            try
+			try
             {
                 var response = await _http.GetAsync($"http://localhost:7000/business-company-representative/{id}");
                 var json = await response.Content.ReadAsStringAsync();

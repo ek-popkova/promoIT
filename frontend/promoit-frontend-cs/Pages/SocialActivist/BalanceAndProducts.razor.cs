@@ -4,18 +4,20 @@ using Shared;
 
 namespace promoit_frontend_cs.Pages.SocialActivist
 {
-	public partial class BalanceAndProducts
-	{
-		[Inject]
-		BusinessCompanyRepresentativeService businessCompanyRepresentativeService { get; set; }
-		[Inject]
+    public partial class BalanceAndProducts
+    {
+        [Inject]
+        BusinessCompanyRepresentativeService businessCompanyRepresentativeService { get; set; }
+        [Inject]
         CampaignService campaignService { get; set; }
-		[Inject]
+        [Inject]
         PopupService popupService { get; set; }
-		[Inject]
+        [Inject]
         SocialActivistService socialActivistService { get; set; }
+		[Inject]
+		AuthService authService { get; set; }
 
-        private IEnumerable<ProductsAndCampaignsShared> productsAndCampaigns = Array.Empty<ProductsAndCampaignsShared>();
+		private IEnumerable<ProductsAndCampaignsShared> productsAndCampaigns = Array.Empty<ProductsAndCampaignsShared>();
         private IEnumerable<CampaignShared> allCampaigns = Array.Empty<CampaignShared>();
         private IEnumerable<SpResults> campaignsAndMoney = Array.Empty<SpResults>();
 
@@ -129,7 +131,7 @@ namespace promoit_frontend_cs.Pages.SocialActivist
 
             if (productsAndCampaigns.Any(x => x.campaignId == ChosenCampaign.Id && x.productId == productFromForeach.productId))
             {
-                var pac = productsAndCampaigns.Where(x => x.campaignId == ChosenCampaign.Id).FirstOrDefault();
+                var pac = productsAndCampaigns.Where(x => x.campaignId == ChosenCampaign.Id && x.productId == productFromForeach.productId).FirstOrDefault();
                 var ptc = new ProductToCampaignDTOShared()
                 {
                     CampaignId = pac.campaignId,

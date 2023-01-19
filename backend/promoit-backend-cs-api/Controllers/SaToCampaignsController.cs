@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using promoit_backend_cs.Services;
@@ -23,6 +24,8 @@ namespace promoit_backend_cs_api.Controllers
 		}
 
 		[HttpGet("/api/SaToCampaignWithCampaignInfo/{id}")]
+		[Authorize(Roles = "Social activist, Admin")]
+
 		public async Task<ActionResult<SaToCampaign>> GetSocialActToCampaignWithCampaignInfoBySocialActId(int id)
 		{
 			var socialActoWithCampaign = await _saToCampaignService.GetSocialActToCampaignWithCampaignInfoBySocialActId(id);

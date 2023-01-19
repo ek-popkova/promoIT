@@ -7,11 +7,13 @@ namespace promoit_frontend_cs.Services
     public class CampaignService
     {
 		private readonly ILogger<CampaignService> _logger;
+		private readonly AuthService _authservice;
 		private readonly HttpClient _http;
-        public CampaignService(HttpClient Http, ILogger<CampaignService> logger)
+        public CampaignService(HttpClient Http, ILogger<CampaignService> logger, AuthService authservice)
         {
             _http = Http;
 			_logger = logger;
+			_authservice = authservice;
         }
 
         public async Task<IEnumerable<CampaignShared>> GetAllCampaigns()

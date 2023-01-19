@@ -9,8 +9,10 @@ namespace promoit_frontend_cs.Pages.BCR
     {
         [Inject]
         BusinessCompanyRepresentativeService businessCompanyRepresentativeService { get; set; }
-        [Inject]
-        CampaignService campaignService { get; set; }
+		[Inject]
+		CampaignService campaignService { get; set; }
+		[Inject]
+		AuthService authService { get; set; }
         [Inject]
         PopupService popupService { get; set; }
         [Inject]
@@ -40,20 +42,20 @@ namespace promoit_frontend_cs.Pages.BCR
 
         protected override async Task OnInitializedAsync() { }
 
-        private async Task<IEnumerable<CampaignsAndNpr>> GetCampaignsAndNPR()
+		private async Task<IEnumerable<CampaignsAndNpr>> GetCampaignsAndNPR()
         {
-            showTableCampaignsAndNRP = !showTableCampaignsAndNRP;
+			showTableCampaignsAndNRP = !showTableCampaignsAndNRP;
             return listOfCampaignsAndNPR = await campaignService.GetCampaignsAndNpr();
         }
 
-        private async Task<IEnumerable<ProductToCampaignDTOShared>> GetAllProductsToCampaigns()
+		private async Task<IEnumerable<ProductToCampaignDTOShared>> GetAllProductsToCampaigns()
         {
             return allProductsAndCampaigns = await campaignService.GetAllProductsToCampaigns();
         }
 
-        private async Task SelectCampaignToDonateTo(CampaignsAndNpr campaign) => campaignToDonateTo = campaign;
+		private async Task SelectCampaignToDonateTo(CampaignsAndNpr campaign) => campaignToDonateTo = campaign;
 
-        private async Task<IEnumerable<ProductsAndBcrInfo>> GetProductsAndBCRInfo()
+    private async Task<IEnumerable<ProductsAndBcrInfo>> GetProductsAndBCRInfo()
         {
             
             showTableProductsAndBCRInfo = !showTableProductsAndBCRInfo;
@@ -62,13 +64,13 @@ namespace promoit_frontend_cs.Pages.BCR
             return listOfProductsByBCR = await businessCompanyRepresentativeService.GetProductsAndBCRInfo(bcr_id);
         }
 
-        private async Task SelectProductToDonate(ProductsAndBcrInfo product)
+		private async Task SelectProductToDonate(ProductsAndBcrInfo product)
         {
             showDonationForm = !showDonationForm;
             productToDonate = product;
         }
 
-        private async Task CheckAndDonateProduct()
+		private async Task CheckAndDonateProduct()
         {
             if (campaignToDonateTo == null || productToDonate == null)
             {
