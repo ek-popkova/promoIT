@@ -34,6 +34,13 @@ namespace promoit_backend_cs_api.Controllers
             return Ok(campaign);
         }
 
+        [HttpGet("/api/Campaigns/CampaignsByNPRId/{npr_id}")]
+        public async Task<ActionResult<IEnumerable<CampaignDTO>>> GetCampaignByNPRId(int npr_id)
+        {
+            var campaign = await _campaignService.GetCampaignsByNPCRId(npr_id);
+            return Ok(campaign);
+        }
+
         [HttpGet("/api/Campaigns/CampaignsWithNPR")]
         public async Task<ActionResult<object>> GetCampaignsWithNPR()
         {

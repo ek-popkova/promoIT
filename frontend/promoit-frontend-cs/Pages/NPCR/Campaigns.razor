@@ -1,0 +1,124 @@
+﻿@page "/np-campaigns"
+@attribute [Authorize(Roles = "Non-profit company representative")]
+
+
+<PageTitle>Campaigns</PageTitle>
+
+<h3>Start promoting your campaign with promoIT!</h3>
+
+<div>
+	<button class="btn btn-primary" @onclick="GetCampaigns">See my campaigns</button>
+</div>
+&nbsp;
+
+
+
+@if (showTableCampaigns)
+{
+	@if (listOfCampaigns.Count() > 0)
+	{
+	<div>
+		<table class="table table-hover table-striped">
+			<thead class="table-dark">
+				<tr>
+					<th>Campaign Name</th>
+					<th>Campaign Link</th>
+					<th>Campaign Hashtag</th>
+					@*<th>Action</th>*@
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var campaign in listOfCampaigns)
+				{
+					<tr>
+						<td>@campaign.Name</td>
+						<td>@campaign.Link</td>
+						<td>@campaign.Hashtag</td>
+						@*<div>
+							<button class="btn btn-outline-success" @onclick="() => 
+								SelectCampaignToDonateTo(campaign)">Choose this campaign to donate a product
+							</button>
+						</div>*@
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+	}
+	else {
+		<h3>loading data</h3>
+	}
+}
+
+<div>
+	<button class="btn btn-primary" @onclick="ShowProductForm">Add a campaign</button>
+</div>
+&nbsp;
+
+
+@if (showAddCampaignForm)
+{
+	@if (!campaign_flag)
+	{
+		<div class="row">
+			<div class="col-6 offset-1">
+
+				<EditForm Model="@newCampaign" OnValidSubmit="@sendNewCampaign">
+
+					<DataAnnotationsValidator />
+					<div class="row mb-4">
+						<label for="campaignName" class="col-sm-3 col-form-label">Name</label>
+						<div class="col-sm-9">
+							<InputText type="text"
+							   class="form-control"
+							   id="campaignName"
+							   placeholder="Write the campaigns's name here"
+							   @bind-Value="newCampaign.Name" />
+							<ValidationMessage For="() => newCampaign.Name" />
+						</div>
+					</div>
+					<div class="row mb-4">
+						<label for="campaignLink" class="col-sm-3 col-form-label">Link</label>
+						<div class="col-sm-9">
+							<InputText type="text"
+							   class="form-control"
+							   id="campaignLink"
+							   placeholder="Provide the link to your campaigns page"
+							   @bind-Value="newCampaign.Link" />
+							<ValidationMessage For="() => newCampaign.Link" />
+						</div>
+					</div>
+					<div class="row mb-4">
+						<label for="campaignHash" class="col-sm-3 col-form-label">Hashtag</label>
+						<div class="col-sm-9">
+							<InputText type="text"
+							   class="form-control"
+							   id="campaignHash"
+							   placeholder="Provide the hashtag to promote your campaign"
+							   @bind-Value="newCampaign.Hashtag" />
+							<ValidationMessage For="() => newCampaign.Hashtag" />
+						</div>
+					</div>
+					<div class="row mb-4">
+						<div class="col-sm-6 offset-3">
+							<button type="submit" class="btn btn-primary">Submit</button>
+							<button type="reset" class="btn btn-danger">Clear fields</button>
+						</div>
+					</div>
+
+				</EditForm>
+			</div>
+		</div>
+	}
+	<div class="row">
+		<div class="row col-6 offset-1">
+			<h4>@campaign_respond</h4>
+		</div>
+	</div>
+}
+
+@code {
+
+
+	
+}

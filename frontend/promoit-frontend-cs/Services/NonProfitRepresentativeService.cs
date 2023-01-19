@@ -33,6 +33,22 @@ namespace promoit_frontend_cs.Services
             }
         }
 
+        public async Task<int> GetNPCRidByUserId(string user_id)
+        {
+            try
+            {
+                var response = await _http.GetAsync($"https://localhost:7263/api/NonProfitRepresentatives/NpcrIdByUserId/{user_id}");
+                return Int32.Parse(await response.Content.ReadAsStringAsync());
+
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, $"Error getting the non-profit organization representative id");
+                throw new Exception($"Error getting the non-profit organization representative id", exception);
+            }
+
+        }
+
 
     }
 }

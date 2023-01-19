@@ -54,6 +54,26 @@ namespace promoit_backend_cs.Services
             }
         }
 
+        public async Task<int> GetNpcrIdByUserId(string user_id)
+        {
+            try
+            {
+                var npr = await _context.NonProfitRepresentatives.Where(npr => npr.UserId == user_id)
+                                             .FirstOrDefaultAsync();
+                if (npr == null)
+                {
+                    throw new Exception($"Cannot find non profit representative with {user_id}");
+                }
+                return npr.Id;
+
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, $"Error getting non profit representative with ID {user_id}");
+                throw new Exception($"Error getting non profit representative with ID {user_id}", exception);
+            }
+        }
+
         public async Task<NonProfitRepresentativeDTO> CreateNPR(NonProfitRepresentativeDTO NonProfitRepresentativeDTO)
         {
             var nonProfitRepresentative = new NonProfitRepresentative
