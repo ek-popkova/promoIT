@@ -11,20 +11,20 @@ export class TwitterReportRoutes extends RouteConfig {
   }
   configureRoutes() {
 
-    this.app.route(`/twitter-report`).get(requiresAuth(),[TwitterReportController.getTwitterReports])
+    this.app.route(`/twitter-report`).get([TwitterReportController.getTwitterReports])
 
-    this.app.get(`/twitter-report/:id`, [requiresAuth(),
+    this.app.get(`/twitter-report/:id`, [
       check('id').isInt().withMessage("The 'id' parameter must be an integer"), ],
       [TwitterReportController.getTwitterReportByCampaignId])
     
 
-    this.app.post(`/twitter-report`, [requiresAuth(),
+    this.app.post(`/twitter-report`, [
       body('campaign_id').isInt().withMessage("The 'campaign_id' parameter must be an integer"),
       body('tweets').isInt().withMessage("The 'tweets' parameter must be an integer"),
       body('retweets').isInt().withMessage("The 'retweets' parameter must be an integer"),
     ], [TwitterReportController.addTwitterReport])
 
-    this.app.put(`/twitter-report/:id`, [requiresAuth(),
+    this.app.put(`/twitter-report/:id`, [
       check('id').isInt().withMessage("The 'id' parameter must be an integer"),
       body('tweets').isInt().withMessage("The 'tweets' parameter must be an integer"),
       body('retweets').isInt().withMessage("The 'retweets' parameter must be an integer"),

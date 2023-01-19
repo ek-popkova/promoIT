@@ -1,7 +1,10 @@
 ﻿using Newtonsoft.Json;
+using NuGet.Common;
+using promoit_frontend_cs.Pages.Admin;
 using Shared;
 using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using static System.Net.WebRequestMethods;
 
 namespace promoit_frontend_cs.Services
@@ -31,6 +34,21 @@ namespace promoit_frontend_cs.Services
 				throw new Exception($"Error getting campaigns and money", exception);
 			}
 		}
+
+        //public async Task<IEnumerable<SocialActivistDTO>> GetSocialActivists()
+        //{
+        //    try
+        //    {
+        //        var response = await _http.GetAsync("http://localhost:7000/social-activists");
+        //        var json = await response.Content.ReadAsStringAsync();
+        //        return JsonConvert.DeserializeObject<IEnumerable<SocialActivistDTO>>(json);
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        _logger.LogError(exception, $"Error getting social activists");
+        //        throw new Exception($"Error getting social activists", exception);
+        //    }
+        //}
 
         public async Task<HttpResponseMessage> UpdateMoney(int id, SaToCampaignShared saToCampaignShared)
         {
@@ -67,7 +85,6 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                //_httpClient.DefaultRequestHeaders.Authorization = new AuhenticationHeaderValue("Bearer", "Your Oauth token");
                 var response = await _http.GetAsync("http://localhost:7000/social-activists");
                 var json = await response.Content.ReadAsStringAsync();
                 var data = JsonConvert.DeserializeObject<SocialActivistDTO[]>(json);
@@ -77,6 +94,22 @@ namespace promoit_frontend_cs.Services
             {
                 _logger.LogError(exception, $"Error getting the data of social activist");
                 throw new Exception($"Error getting the data of social activist", exception);
+            }
+        }
+
+        public async Task<IEnumerable<TwitterReportType>> GetTwitterReport()
+        {
+            try
+            {
+                var response = await _http.GetAsync("http://localhost:7000/twitter-report");
+                var json = await response.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<IEnumerable<TwitterReportType>>(json);
+                return data;
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, $"Error getting the twitter report");
+                throw new Exception($"Error getting the twitter report", exception);
             }
         }
     }

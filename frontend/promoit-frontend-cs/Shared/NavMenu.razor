@@ -17,14 +17,14 @@
         <AuthorizeView Roles="Admin">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="allcampaigns">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> campaigns
+                    <span class="oi oi-audio" aria-hidden="true"></span> Campaigns
             </NavLink>
         </div>
         </AuthorizeView>
         <AuthorizeView Roles="Admin">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="allactivists">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> activists
+                    <span class="oi oi-people" aria-hidden="true"></span> Activists
             </NavLink>
         </div>
         </AuthorizeView>
@@ -59,9 +59,16 @@
         <AuthorizeView Roles="Non-profit company representative">
         <div class="nav-item px-3">
                 <NavLink class="nav-link" href="np-campaigns">
-                <span class="oi oi-share" aria-hidden="true"></span> My campaigns
+                    <span class="oi oi-audio" aria-hidden="true"></span> My campaigns
             </NavLink>
         </div>
+        </AuthorizeView>
+        <AuthorizeView Roles="Admin">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="twitterreport">
+                    <span class="oi oi-chat" aria-hidden="true"></span> Twitter report
+                </NavLink>
+            </div>
         </AuthorizeView>
     </nav>
 </div>

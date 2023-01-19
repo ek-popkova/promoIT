@@ -3,64 +3,49 @@
 @using System.Text.Json
 @using System.Text.Json.Serialization
 @using System.Net.Http.Headers
+@using promoit_frontend_cs.Services
 @inject IHttpClientFactory ClientFactory
 @inject Microsoft​.AspNetCore​.Http.IHttpContextAccessor HttpContextAccessor
-@inject promoit_backend_cs_api.Data.promo_itContext DbContext
+@inject CampaignService campaignService
 
 
 <h3>Campaigns</h3>
 
-<button class="btn btn-primary" @onclick="OnInitializedAsync">Click me</button>
-
-<table class="table table-hover table-striped">
-    <thead class="table-dark">
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Hashtag</th>
-            <th>Link</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var campaign in campaigns)
-        {
+@if (сampaigns.Count() > 0)
+{
+    <table class="table table-hover table-striped">
+        <thead class="table-dark">
             <tr>
-                <td>@campaign.Id</td>
-                <td>@campaign.Name</td>
-                <td>@campaign.Hashtag</td>
-                <td>@campaign.Link</td>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Hashtag</th>
+                <th>Link</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var campaign in сampaigns)
+            {
+                    <tr>
+                        <td>@campaign.Id</td>
+                        <td>@campaign.Name</td>
+                        <td>@campaign.Hashtag</td>
+                        <td>@campaign.Link</td>
+                    </tr>
+            }
+        </tbody>
+    </table>
+} else {
+    <h4>Loading data</h4>
+}
+
+
 
 @functions {
 
-    private IEnumerable<CampaignDTO> campaigns = Array.Empty<CampaignDTO>();
+    private IEnumerable<CampaignShared> сampaigns = Array.Empty<CampaignShared>();
 
     protected override async Task OnInitializedAsync()
     {
-        var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7263/api/Campaigns");
-
-        string token = HttpContextAccessor.HttpContext.Request.Cookies["auth_token"];
-
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        var client = ClientFactory.CreateClient();
-        JsonSerializerOptions jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-
-        var response = await client.SendAsync(request);
-
-        if (response.IsSuccessStatusCode)
-        {
-            using var responseStream = await response.Content.ReadAsStreamAsync();
-
-            campaigns = await JsonSerializer.DeserializeAsync
-                <IEnumerable<CampaignDTO>>(responseStream, jsonOptions);
-        }
-
+         сampaigns = await campaignService.GetAllCampaigns();
     }
 }
