@@ -1,5 +1,4 @@
-﻿namespace Shared
-{
+﻿
     public partial class CampaignShared
         {
             public int Id { get; set; }
@@ -15,5 +14,5 @@
 
         }
 
-} 
+
 

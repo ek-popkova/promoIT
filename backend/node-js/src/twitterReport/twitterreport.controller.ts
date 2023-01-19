@@ -15,9 +15,7 @@ class TwitterReporterController {
   async getTwitterReports(req: Request, res: Response, next: NextFunction) {
     TwitterReportService.getTwitterReports()
       .then((result: ITwitterReport[]) => {
-        return res.status(200).json({
-          report: result
-        });
+        return res.status(200).json(result);
       })
       .catch((error: systemError) => {
         return ErrorHelper.handleError(res, error);

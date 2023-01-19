@@ -17,7 +17,9 @@ export class SocialActivistRoutes extends RouteConfig {
   configureRoutes() {
 
     //this.app.route(`/social-activists`).get([SocialActivistController.getSocialActivists]);
-    this.app.route(`/social-activists`).get([AuthMiddleware.authenticateAccessToken, AuthMiddleware.checkRoles(["Admin"]), SocialActivistController.getSocialActivists])
+    //this.app.route(`/social-activists`).get([AuthMiddleware.authenticateAccessToken, AuthMiddleware.checkRoles(["Admin"]), SocialActivistController.getSocialActivists])
+    this.app.route(`/social-activists`).get([SocialActivistController.getSocialActivists])
+
 
 
     //this.app.route(`/social-activists/:id`).get([SocialActivistController.getSocialActivistById])
