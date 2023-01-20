@@ -59,7 +59,7 @@ class MoneyService implements IMoneyService {
         });
     }
 
-    public addMoneyByHashtagTwitter(money: IMoney, userId: number): Promise<IMoney> {
+    public addMoneyByHashtagTwitter(money: IMoney, userId: string): Promise<IMoney> {
         return new Promise<IMoney>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
             MoneyModel.create({
@@ -80,7 +80,7 @@ class MoneyService implements IMoneyService {
         });
     }
 
-    public updateMoneyByHashtagTwitter(money: IMoney, userId: number): Promise<number> {
+    public updateMoneyByHashtagTwitter(money: IMoney, userId: string): Promise<number> {
         return new Promise<number>((resolve, reject) => {
             //console.log(money);
             const createDate: string = DateHelper.dateToString(new Date());

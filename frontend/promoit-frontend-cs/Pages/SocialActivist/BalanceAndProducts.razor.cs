@@ -43,6 +43,7 @@ namespace promoit_frontend_cs.Pages.SocialActivist
 
         private async Task GetCampaignsAndMoney()
         {
+        
 			user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
 			socialActId = await socialActivistService.GetSocialActivistById(user_id);
 			ShowTableCampaignsAndMoney = !ShowTableCampaignsAndMoney;

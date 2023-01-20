@@ -40,10 +40,10 @@ export class SocialActivistTransactionModel extends Model {
     transaction_status_id!: Order;
 
 	@Column
-	create_user_id!: number;
+	create_user_id!: string;
 
 	@Column
-	update_user_id!: number;
+	update_user_id!: string;
 
 	@Column
 	create_date!: string;

@@ -16,8 +16,8 @@ interface IBcrService {
     getSocialActivistTransactionById(id: number): Promise<SocialActivistTransactionModel>
     addSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction): Promise<ISocialActivistTransaction>
     // addSocialActivistTransactionNew(socialActivistTransaction: ISocialActivistTransactionAdd, userId: number): Promise<ISocialActivistTransaction>
-    updateSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction, userId: number): Promise<number>
-    deleteSocialActivistTransaction(id: number, userId: number): Promise<number>
+    updateSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction, userId: string): Promise<number>
+    deleteSocialActivistTransaction(id: number, userId: string): Promise<number>
 }
 
 class BcrService implements IBcrService {
@@ -89,6 +89,7 @@ class BcrService implements IBcrService {
                     reject(ErrorHelper.getError(AppError.QueryError)))
         })
     }
+    
     public addSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction): Promise<ISocialActivistTransaction> {
         return new Promise<ISocialActivistTransaction>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
@@ -138,7 +139,7 @@ class BcrService implements IBcrService {
     //     })
     // }
 
-    public updateSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction, userId: number): Promise<number> {
+    public updateSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction, userId: string): Promise<number> {
         return new Promise<number>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
             SocialActivistTransactionModel.update({
@@ -170,7 +171,7 @@ class BcrService implements IBcrService {
         })
     }
 
-        public ShipSocialActivistTransaction(transactionId: number, userId: number): Promise<number> {
+        public ShipSocialActivistTransaction(transactionId: number, userId: string): Promise<number> {
         return new Promise<number>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
             SocialActivistTransactionModel.update({
@@ -197,7 +198,7 @@ class BcrService implements IBcrService {
         })
     }
 
-    public deleteSocialActivistTransaction(id: number, userId: number): Promise<number> {
+    public deleteSocialActivistTransaction(id: number, userId: string): Promise<number> {
         return new Promise<number>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
             SocialActivistTransactionModel.update({
