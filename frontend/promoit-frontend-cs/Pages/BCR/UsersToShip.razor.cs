@@ -12,18 +12,25 @@ namespace promoit_frontend_cs.Pages.BCR
         BusinessCompanyRepresentativeService businessCompanyRepresentativeService { get; set; }
 		[Inject]
 		AuthService authService { get; set; }
+		[Inject]
+		IHttpContextAccessor HttpContextAccessor { get; set; }
 
 		private IEnumerable<SaTransactionSharedSAInfo> transactionsByBcrId = System.Array.Empty<SaTransactionSharedSAInfo>();
 
         private bool showTransactionForm { get; set; } = false;
-        private int BCR_id { get; set; } = 2;
+		private string user_id { get; set; }
+		private int bcr_id { get; set; }
 
-        protected override async Task OnInitializedAsync() { }
+        protected override async Task OnInitializedAsync() 
+        {
+			user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
+			bcr_id = await businessCompanyRepresentativeService.GetBCRidByUserId(user_id);
+		}
 
         private async Task<IEnumerable<SaTransactionSharedSAInfo>> GetTransactionWithSAInfo(int id)
         {
             showTransactionForm = !showTransactionForm;
-            return transactionsByBcrId = await _businessCompanyRepresentativeService.GetTransactionWithSAInfo(BCR_id);
+            return transactionsByBcrId = await _businessCompanyRepresentativeService.GetTransactionWithSAInfo(bcr_id);
         }
 
         private async Task SendProduct(SaTransactionSharedSAInfo saTransactionSharedSAInfo)

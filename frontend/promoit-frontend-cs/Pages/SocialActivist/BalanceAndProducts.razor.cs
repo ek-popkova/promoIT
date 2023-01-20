@@ -39,13 +39,14 @@ namespace promoit_frontend_cs.Pages.SocialActivist
         private int socialActId { get; set; }
         private string user_id { get; set; }
 
-        protected override async Task OnInitializedAsync() { }
+        protected override async Task OnInitializedAsync() 
+        {
+			user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
+			socialActId = await socialActivistService.GetSocialActivistById(user_id);
+        }
 
         private async Task GetCampaignsAndMoney()
         {
-        
-			user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
-			socialActId = await socialActivistService.GetSocialActivistById(user_id);
 			ShowTableCampaignsAndMoney = !ShowTableCampaignsAndMoney;
             campaignsAndMoney = await socialActivistService.GetCampaignsAndMoney(socialActId);
         }
@@ -168,7 +169,7 @@ namespace promoit_frontend_cs.Pages.SocialActivist
                         campaignFromForeach.money = (int)saToCampaignShared.money;
                         var updateMoney = await socialActivistService.UpdateMoney(campaignFromForeach.id, saToCampaignShared);
                         var putProductToCampaign = await campaignService.PutProductToCampaign(pac.Id, ptc);
-                        //await popupService.ShowPopupThanks(pac.campaignName);
+                        await popupService.ShowPopupThanks(pac.campaignName);
                     }
                 }
             }
