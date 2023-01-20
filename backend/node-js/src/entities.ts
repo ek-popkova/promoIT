@@ -51,6 +51,8 @@ export interface ISocialActivistTransaction {
     products_number: number;
     price: number;
     transaction_status_id: Order;
+    create_user_id: number;
+    update_user_id: number;
 }
 
 export interface ISocialActivistTransactionAdd {
