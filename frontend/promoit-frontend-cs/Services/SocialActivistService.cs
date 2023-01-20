@@ -25,7 +25,8 @@ namespace promoit_frontend_cs.Services
 		public async Task<IEnumerable<SpResults>> GetCampaignsAndMoney(int id)
         {
             try
-            {
+			{
+				string user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
                 return await _http.GetFromJsonAsync<IEnumerable<SpResults>>($"https://localhost:7263/api/SaToCampaignWithCampaignInfo/{id}");
 			}
 			catch (Exception exception)

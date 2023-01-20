@@ -57,7 +57,7 @@ class TwitterReportService implements ITwitterReportService {
     }
 
 
-    public addTwitterReport(twitterReport: ITwitterReport, userId: number): Promise<ITwitterReport> {
+    public addTwitterReport(twitterReport: ITwitterReport, userId: string): Promise<ITwitterReport> {
         return new Promise<ITwitterReport>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
             TwitterReportModel.create({
@@ -78,7 +78,7 @@ class TwitterReportService implements ITwitterReportService {
         });
     }
 
-    public updateTwitterReport(twitterReport: ITwitterReport, userId: number): Promise<number> {
+    public updateTwitterReport(twitterReport: ITwitterReport, userId: string): Promise<number> {
         return new Promise<number>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
             TwitterReportModel.update({
