@@ -111,7 +111,8 @@ namespace promoit_backend_cs_api.Controllers
 		[Authorize(Roles = "Business company representative, Social activist, Admin")]
 		public async Task<IActionResult> PutProductToCampaign(int id, ProductToCampaignDTOShared productToCampaign)
         {
-            var editedProductToCampaign = await _productService.EditProductToCampaign(id, productToCampaign);
+			Console.WriteLine("PutProductToCampaign backend started");
+			var editedProductToCampaign = await _productService.EditProductToCampaign(id, productToCampaign);
             return NoContent();
         }
 

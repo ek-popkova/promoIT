@@ -143,10 +143,12 @@ namespace promoit_frontend_cs.Pages.SocialActivist
                 var pac = productsAndCampaigns.Where(x => x.campaignId == ChosenCampaign.Id && x.productId == productFromForeach.productId).FirstOrDefault();
                 var ptc = new ProductToCampaignDTOShared()
                 {
+                    Id = pac.Id,
                     CampaignId = pac.campaignId,
                     ProductId = pac.productId,
                     InititalNumber = pac.InititalNumber,
-                    BoughtNumber = pac.BoughtNumber + boughtNumber
+                    BoughtNumber = pac.BoughtNumber + boughtNumber,
+                    UpdateUserId = user_id
 				};
                 if (boughtNumber < 0)
                 {
@@ -166,7 +168,7 @@ namespace promoit_frontend_cs.Pages.SocialActivist
                         campaignFromForeach.money = (int)saToCampaignShared.money;
                         var updateMoney = await socialActivistService.UpdateMoney(campaignFromForeach.id, saToCampaignShared);
                         var putProductToCampaign = await campaignService.PutProductToCampaign(pac.Id, ptc);
-                        await popupService.ShowPopupThanks(pac.campaignName);
+                        //await popupService.ShowPopupThanks(pac.campaignName);
                     }
                 }
             }
