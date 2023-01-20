@@ -78,9 +78,10 @@ class SocialActivistService implements ISocialActivistService {
         });
     }
 
-    public addSocialActivist(socialActivist: ISocialActivist, userId: string): Promise<ISocialActivist> {
+    public addSocialActivist(socialActivist: ISocialActivist): Promise<ISocialActivist> {
         return new Promise<ISocialActivist>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
+            console.log(socialActivist);
             SocialActivistModel.create({
                 user_id: socialActivist.user_id,
                 email: socialActivist.email,
@@ -89,8 +90,8 @@ class SocialActivistService implements ISocialActivistService {
                 twitter: socialActivist.twitter,
                 create_date: createDate,
                 update_date: createDate,
-                create_user_id: userId,
-                update_user_id: userId,
+                create_user_id: socialActivist.create_user_id,
+                update_user_id: socialActivist.update_user_id,
                 status_id: Status.Active
             })
             .then((result: SocialActivistModel) => {
@@ -101,7 +102,7 @@ class SocialActivistService implements ISocialActivistService {
         });
     }
 
-    public updateSocialActivist(socialActivist: ISocialActivist, userId: string): Promise<number> {
+    public updateSocialActivist(socialActivist: ISocialActivist): Promise<number> {
         return new Promise<number>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
             SocialActivistModel.update({
@@ -111,7 +112,7 @@ class SocialActivistService implements ISocialActivistService {
                 phone: socialActivist.phone,
                 twitter: socialActivist.twitter,
                 update_date: createDate,
-                update_user_id: userId
+                update_user_id: socialActivist.update_user_id
             }, {
                 where: {
                     id: socialActivist.id,
@@ -132,13 +133,13 @@ class SocialActivistService implements ISocialActivistService {
         });
     }
 
-    public deleteSocialActivist(id: number, userId: string): Promise<number> {
+    public deleteSocialActivist(id: number, delete_user_id: string): Promise<number> {
         return new Promise<number>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
             SocialActivistModel.update({
                 status_id: Status.NotActive,
                 update_date: createDate,
-                update_user_id: userId
+                update_user_id: delete_user_id
             }, {
                 where: {
                     id: id,
@@ -161,7 +162,9 @@ class SocialActivistService implements ISocialActivistService {
             email: socialActivist.email,
             address: socialActivist.address,
             phone: socialActivist.phone,
-            twitter: socialActivist.twitter
+            twitter: socialActivist.twitter,
+            create_user_id: socialActivist.create_user_id,
+            update_user_id: socialActivist.update_user_id
         }
     }
 }

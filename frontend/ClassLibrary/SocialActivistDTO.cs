@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 public class SocialActivistDTO
 {
     public int Id { get; set; }
-        public string User_id { get; set; } = null!;
+        public string user_id { get; set; } = null!;
 
         [Required]
         [EmailAddress(ErrorMessage = "Enter the valid e-mail address.")]
@@ -26,11 +26,10 @@ public class SocialActivistDTO
         [MaxLength(15, ErrorMessage = "Twitter account is too long, 15 charachters maximum.")]
         public string Twitter { get; set; }
 
-        public string UserId { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
-        public string CreateUserId { get; set; }
-        public string UpdateUserId { get; set; }
+        public string create_user_id { get; set; }
+        public string update_user_id { get; set; }
         public int StatusId { get; set; }
 
 }
