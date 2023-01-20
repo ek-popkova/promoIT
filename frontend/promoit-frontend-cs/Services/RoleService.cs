@@ -14,9 +14,9 @@ namespace promoit_frontend_cs.Services
             _http = Http;
             _logger = logger;
             roles = new Dictionary<string, string>(){
-    {"Activist", "rol_Kfj83rfyJDGlIhEq"},
-    {"BCR", "rol_rvrE4kaUwM1ZmDyc"},
-    {"NPCR", "rol_E36SwZN0k609LcpS"}
+            {"Activist", "rol_Kfj83rfyJDGlIhEq"},
+            {"BCR", "rol_rvrE4kaUwM1ZmDyc"},
+            {"NPCR", "rol_E36SwZN0k609LcpS"}
     };
 
         }
