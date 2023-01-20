@@ -51,7 +51,7 @@ export class SocialActivistRoutes extends RouteConfig {
       body('twitter').isLength({ min: 4, max: 15 }).isAlphanumeric('en-US', {ignore: '_'}).withMessage("The 'twitter' parametr must be a valid twitter account"),
     ], [SocialActivistController.updateSocialActivist])
 
-    this.app.delete(`/social-activists/:id`, [
+    this.app.delete(`/social-activists/:id/:user_id`, [
       check('id').isInt().withMessage("The 'id' parameter must be an integer"),],
       [SocialActivistController.deleteSocialActivist])
     

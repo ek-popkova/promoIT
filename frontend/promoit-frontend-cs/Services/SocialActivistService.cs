@@ -14,8 +14,9 @@ namespace promoit_frontend_cs.Services
 		private readonly ILogger<SocialActivistService> _logger;
 		private readonly AuthService _authservice;
 		private readonly HttpClient _http;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-		public SocialActivistService(HttpClient Http, ILogger<SocialActivistService> logger, AuthService authservice)
+        public SocialActivistService(HttpClient Http, ILogger<SocialActivistService> logger, AuthService authservice)
 		{
 			_http = Http;
 			_logger = logger;
@@ -47,21 +48,6 @@ namespace promoit_frontend_cs.Services
 			}
 		}
 
-        //public async Task<IEnumerable<SocialActivistDTO>> GetSocialActivists()
-        //{
-        //    try
-        //    {
-        //        var response = await _http.GetAsync("http://localhost:7000/social-activists");
-        //        var json = await response.Content.ReadAsStringAsync();
-        //        return JsonConvert.DeserializeObject<IEnumerable<SocialActivistDTO>>(json);
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        _logger.LogError(exception, $"Error getting social activists");
-        //        throw new Exception($"Error getting social activists", exception);
-        //    }
-        //}
-
         public async Task<HttpResponseMessage> UpdateMoney(int id, SaToCampaignShared saToCampaignShared)
         {
             try
@@ -77,13 +63,14 @@ namespace promoit_frontend_cs.Services
 
         public async Task<HttpResponseMessage> AddNewSocialActivist(SocialActivistDTO newSocialActivist, string user_id)
         {
-            newSocialActivist.UserId = user_id;
-            newSocialActivist.CreateUserId = user_id;
-            newSocialActivist.UpdateUserId = user_id;
+            newSocialActivist.user_id = user_id;
+            newSocialActivist.create_user_id = user_id;
+            newSocialActivist.update_user_id = user_id;
 
             try
             {
-                return await _http.PostAsJsonAsync("http://localhost:7000/social-activists", newSocialActivist);
+                var response = await _http.PostAsJsonAsync("http://localhost:7000/social-activists", newSocialActivist);
+                return response;
 
             }
             catch (Exception exception)

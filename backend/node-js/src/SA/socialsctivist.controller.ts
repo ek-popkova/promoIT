@@ -100,7 +100,7 @@ class SocialActivistController {
     else {
       const body: ISocialActivist = req.body;
       body.id = NON_EXISTENT_ID;
-      SocialActivistService.addSocialActivist(body, DEMO_USER)
+      SocialActivistService.addSocialActivist(body)
         .then((result: ISocialActivist) => {
           return res.status(200).json(result);
         })
@@ -120,7 +120,7 @@ class SocialActivistController {
       if (id > 0) {
         const body: ISocialActivist = req.body;
         body.id = id;
-        SocialActivistService.updateSocialActivist(body, DEMO_USER)
+        SocialActivistService.updateSocialActivist(body)
           .then((result: number) => {
             return res.status(200).json({
               rows: result
@@ -143,8 +143,9 @@ class SocialActivistController {
     }
     else {
       let id: number = parseInt(req.params.id);
+      let user_id: string = req.params.user_id;
       if (id > 0) {
-        SocialActivistService.deleteSocialActivist(id, DEMO_USER)
+        SocialActivistService.deleteSocialActivist(id, user_id)
           .then((result: number) => {
             return res.status(200).json({
               rows: result

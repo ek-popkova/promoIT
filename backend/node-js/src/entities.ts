@@ -6,7 +6,9 @@ export interface ISocialActivist {
   email: string,
   address: string,
   phone: string,
-  twitter: string
+  twitter: string,
+  create_user_id: string,
+  update_user_id: string
 }
 
 export interface ICampaign {

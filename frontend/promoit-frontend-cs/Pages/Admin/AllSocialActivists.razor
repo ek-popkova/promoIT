@@ -14,7 +14,7 @@
 <h3>Social activists</h3>
 
 
-@if (socialActivists.Count() > 0)
+@if (socialActivists.Count() != 0)
 {
     <table class="table table-hover table-striped">
         <thead class="table-dark">
@@ -30,7 +30,7 @@
             @foreach (var socialActivist in socialActivists)
             {
                 <tr>
-                    <td>@socialActivist.User_id</td>
+                    <td>@socialActivist.user_id</td>
                     <td>@socialActivist.Email</td>
                     <td>@socialActivist.Address</td>
                     <td>@socialActivist.Phone</td>

@@ -37,10 +37,10 @@ export class SocialActivistModel extends Model {
     twitter!: string;
 
     @Column
-    create_user_id!: number;
+    create_user_id!: string;
 
     @Column
-    update_user_id!: number;
+    update_user_id!: string;
 
     @Column
     create_date!: string;
