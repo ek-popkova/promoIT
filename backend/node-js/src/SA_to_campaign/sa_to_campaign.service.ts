@@ -5,14 +5,14 @@ import { DateHelper } from './../helper/date.helper';
 import { reject, where } from 'underscore';
 import { ISAtoCampaign } from './../entities';
 interface ISA_to_campaign {
-    updateSAtoCampaign(sa_to_campaign: ISAtoCampaign, userId: number): Promise<number>
+    updateSAtoCampaign(sa_to_campaign: ISAtoCampaign, userId: string): Promise<number>
 }
 
 class SA_to_campaign implements ISA_to_campaign {
 
     constructor() { }
     
-    public updateSAtoCampaign(sa_to_campaign: ISAtoCampaign, userId: number): Promise<number> {
+    public updateSAtoCampaign(sa_to_campaign: ISAtoCampaign, userId: string): Promise<number> {
         return new Promise<number>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
             SA_to_campaignModel.update({

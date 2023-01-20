@@ -2,6 +2,8 @@ import { NextFunction, Response } from 'express';
 import { Request, expressjwt } from "express-jwt";
 import jwtAuthz from "express-jwt-authz";
 import dotenv from "dotenv"
+import jwt_decode from "jwt-decode";
+
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 
@@ -70,6 +72,33 @@ class AuthMiddleware {
         credentialsRequired: true
     });
 
+    // public checkUser = (req: Request, res: Response, next: NextFunction) => {
+    //     let authToken: string | undefined = req.headers["authorization"]?.toString();
+    //     let token: string | undefined = authToken?.slice(7)
+    //     this.authenticateAccessToken(req, res, async (decodedToken: any) => {
+    //         const user_id = decodedToken.id
+    //         next()
+    //     })
+    // }
+
+        // public checkUser = (req: Request, res: Response, next: NextFunction) => {
+    //     if ((req as any).auth.payload["id"]) {
+    //         const user_id = (req as any).auth.payload["id"]
+    //         return next()
+    //     }
+    // }
+
+    // public checkUser = (req: Request, res: Response, next: NextFunction) => {
+    //     if ((req as any).headers['Authorization']?.toString()) {
+    //         const decodedToken = jwt_decode((req as any).headers['Authorization']?.toString())
+    //         console.log(decodedToken);
+    //         return next()
+    //     }
+    //     else {
+    //         return res.status(401)
+    //     }
+
+    // }
 }
 
 export default new AuthMiddleware();

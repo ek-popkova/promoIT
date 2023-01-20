@@ -45,7 +45,8 @@ class BusinessCompanyRepresentativeController {
         else {
             const body: ISocialActivistTransaction = req.body;
             body.id = NON_EXISTENT_ID;
-            BcrService.addSocialActivistTransaction(body, DEMO_USER)
+            const user_id = req.body.user_id
+            BcrService.addSocialActivistTransaction(body, user_id)
                 .then((result: ISocialActivistTransaction) => {
                     return res.status(200).json(result);
                 })
@@ -64,8 +65,9 @@ class BusinessCompanyRepresentativeController {
             let id: number = parseInt(req.params.id);
             if (id > 0) {
                 const body: ISocialActivistTransaction = req.body;
+                const user_id = req.params.user_id
                 body.id = id;
-                BcrService.updateSocialActivistTransaction(body, DEMO_USER)
+                BcrService.updateSocialActivistTransaction(body, user_id)
                 .then((result: number) => {
                     return res.status(200).json({
                         rows:result

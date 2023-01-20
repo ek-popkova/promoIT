@@ -39,6 +39,7 @@ namespace promoit_frontend_cs.Pages.SocialActivist
 
         private async Task GetCampaignsAndMoney()
         {
+
             ShowTableCampaignsAndMoney = !ShowTableCampaignsAndMoney;
             campaignsAndMoney = await socialActivistService.GetCampaignsAndMoney(socialActId);
         }

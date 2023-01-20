@@ -8,9 +8,9 @@ import { ErrorHelper } from '../helper/error.helper';
 interface ISocialActivistService {
     getSocialActivists(): Promise<ISocialActivist[]>;
     getSocialActivistById(id: number): Promise<ISocialActivist>;
-    addSocialActivist(socialActivist: ISocialActivist, userId: number): Promise<ISocialActivist>;
-    updateSocialActivist(socialActivist: ISocialActivist, userId: number): Promise<number>;
-    deleteSocialActivist(id: number, userId: number): Promise<number>;
+    addSocialActivist(socialActivist: ISocialActivist, userId: string): Promise<ISocialActivist>;
+    updateSocialActivist(socialActivist: ISocialActivist, userId: string): Promise<number>;
+    deleteSocialActivist(id: number, userId: string): Promise<number>;
 }
 
 class SocialActivistService implements ISocialActivistService {
@@ -78,7 +78,7 @@ class SocialActivistService implements ISocialActivistService {
         });
     }
 
-    public addSocialActivist(socialActivist: ISocialActivist, userId: number): Promise<ISocialActivist> {
+    public addSocialActivist(socialActivist: ISocialActivist, userId: string): Promise<ISocialActivist> {
         return new Promise<ISocialActivist>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
             SocialActivistModel.create({
@@ -101,7 +101,7 @@ class SocialActivistService implements ISocialActivistService {
         });
     }
 
-    public updateSocialActivist(socialActivist: ISocialActivist, userId: number): Promise<number> {
+    public updateSocialActivist(socialActivist: ISocialActivist, userId: string): Promise<number> {
         return new Promise<number>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
             SocialActivistModel.update({
@@ -132,7 +132,7 @@ class SocialActivistService implements ISocialActivistService {
         });
     }
 
-    public deleteSocialActivist(id: number, userId: number): Promise<number> {
+    public deleteSocialActivist(id: number, userId: string): Promise<number> {
         return new Promise<number>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
             SocialActivistModel.update({
