@@ -23,7 +23,6 @@ namespace promoit_frontend_cs.Pages.BCR
         private IEnumerable<ProductsAndBcrInfo> listOfProductsByBCR = System.Array.Empty<ProductsAndBcrInfo>();
         private IEnumerable<CampaignsAndNpr> listOfCampaignsAndNPR = System.Array.Empty<CampaignsAndNpr>();
 
-        private ProductToCampaignDTOShared productToCampaign;
         private CampaignsAndNpr campaignToDonateTo;
         private ProductsAndBcrInfo productToDonate;
 
@@ -33,14 +32,17 @@ namespace promoit_frontend_cs.Pages.BCR
         private bool showTableCampaignsAndNRP { get; set; } = false;
         private bool showDonationForm { get; set; } = false;
         private bool showAddProductForm { get; set; } = false;
-
         private int initialNumber { get; set; }
-
         private string product_respond { get; set; }
-
         private bool product_flag { get; set; } = false;
+        private string user_id { get; set; }
+        private int bcr_id { get; set; }
 
-        protected override async Task OnInitializedAsync() { }
+		protected override async Task OnInitializedAsync() {
+
+			user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
+			bcr_id = await businessCompanyRepresentativeService.GetBCRidByUserId(user_id);
+		}
 
 		private async Task<IEnumerable<CampaignsAndNpr>> GetCampaignsAndNPR()
         {
@@ -57,10 +59,7 @@ namespace promoit_frontend_cs.Pages.BCR
 
     private async Task<IEnumerable<ProductsAndBcrInfo>> GetProductsAndBCRInfo()
         {
-            
             showTableProductsAndBCRInfo = !showTableProductsAndBCRInfo;
-            string user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
-            var bcr_id = await businessCompanyRepresentativeService.GetBCRidByUserId(user_id);
             return listOfProductsByBCR = await businessCompanyRepresentativeService.GetProductsAndBCRInfo(bcr_id);
         }
 
@@ -83,7 +82,9 @@ namespace promoit_frontend_cs.Pages.BCR
                     CampaignId = campaignToDonateTo.Id,
                     ProductId = productToDonate.Id,
                     InititalNumber = initialNumber,
-                    BoughtNumber = 0
+                    BoughtNumber = 0,
+                    CreateUserId = user_id,
+                    UpdateUserId = user_id
                 };
                 if (product.InititalNumber <= 0)
                 {
@@ -96,6 +97,7 @@ namespace promoit_frontend_cs.Pages.BCR
                         var pac = allProductsAndCampaigns.Where(x => x.ProductId == product.ProductId && x.CampaignId == product.CampaignId)
                                                             .FirstOrDefault();
 
+                        pac.UpdateUserId = user_id;
                         pac.InititalNumber += initialNumber;
                         var putProductToCampaign = await campaignService.PutProductToCampaign(pac.Id, pac);
                         await popupService.ShowPopupThanks(campaignToDonateTo.OrganizationName);
@@ -119,8 +121,6 @@ namespace promoit_frontend_cs.Pages.BCR
 
         private async Task sendNewProduct()
         {
-            string user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
-            var bcr_id = await businessCompanyRepresentativeService.GetBCRidByUserId(user_id);
             newProduct.BcrId = bcr_id;
             newProduct.CreateUserId = user_id;
             newProduct.UpdateUserId = user_id;
