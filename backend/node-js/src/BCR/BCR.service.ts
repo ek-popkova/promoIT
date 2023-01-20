@@ -14,7 +14,7 @@ import socialactivistService from '../SA/socialactivist.service';
 interface IBcrService {
     getSocialActivistTransactionByBCRId(id: number): Promise<SocialActivistTransactionModel[]>
     getSocialActivistTransactionById(id: number): Promise<SocialActivistTransactionModel>
-    addSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction, userId: number): Promise<ISocialActivistTransaction>
+    addSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction): Promise<ISocialActivistTransaction>
     // addSocialActivistTransactionNew(socialActivistTransaction: ISocialActivistTransactionAdd, userId: number): Promise<ISocialActivistTransaction>
     updateSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction, userId: number): Promise<number>
     deleteSocialActivistTransaction(id: number, userId: number): Promise<number>
@@ -89,7 +89,7 @@ class BcrService implements IBcrService {
                     reject(ErrorHelper.getError(AppError.QueryError)))
         })
     }
-    public addSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction, userId: number): Promise<ISocialActivistTransaction> {
+    public addSocialActivistTransaction(socialActivistTransaction: ISocialActivistTransaction): Promise<ISocialActivistTransaction> {
         return new Promise<ISocialActivistTransaction>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
             SocialActivistTransactionModel.create({
@@ -98,14 +98,15 @@ class BcrService implements IBcrService {
                 product_id: socialActivistTransaction.product_id,
                 products_number: socialActivistTransaction.products_number,
                 price: socialActivistTransaction.price,
+                create_user_id: socialActivistTransaction.create_user_id,
+                update_user_id: socialActivistTransaction.update_user_id,
                 transaction_status_id: Order.Ordered,
-                create_user_id: userId,
-                update_user_id: userId,
                 create_date: createDate,
                 update_date: createDate,
                 status_id: Status.Active
             })
                 .then((result: SocialActivistTransactionModel) => {
+                    console.log(result);
                 resolve(this.parseLocalSocialActivistModel(result));
             })
                 .catch(error =>
@@ -226,7 +227,9 @@ class BcrService implements IBcrService {
             product_id: socialActivistTransactionModel.product_id,
             products_number: socialActivistTransactionModel.products_number,
             price: socialActivistTransactionModel.price,
-            transaction_status_id: socialActivistTransactionModel.transaction_status_id
+            transaction_status_id: socialActivistTransactionModel.transaction_status_id,
+            create_user_id: socialActivistTransactionModel.create_user_id,
+            update_user_id: socialActivistTransactionModel.update_user_id
         }
     }
 }

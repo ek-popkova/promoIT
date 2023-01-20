@@ -51,7 +51,7 @@ class AuthMiddleware {
     public checkRoles = (roles: string[]) => jwtAuthz(
         roles,
         {
-            customScopeKey: "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+            customScopeKey: process.env.CUSTOM_SCOPE_KEY,
             customUserKey: 'auth',
             failWithError: true
         }
@@ -62,10 +62,10 @@ class AuthMiddleware {
             cache: true,
             rateLimit: true,
             jwksRequestsPerMinute: 5,
-            jwksUri: 'https://dev-jr7t62fw3n4cftwt.us.auth0.com/.well-known/jwks.json'
+            jwksUri: process.env.JWKS_URI
         }),
-        audience: "1RAPuIXc8O65zsmujQQUnHixw0cdCsLY",
-        issuer: "https://dev-jr7t62fw3n4cftwt.us.auth0.com/",
+        audience: process.env.AUDIENCE,
+        issuer: process.env.ISSUER,
         algorithms: ['RS256'],
         credentialsRequired: true
     });

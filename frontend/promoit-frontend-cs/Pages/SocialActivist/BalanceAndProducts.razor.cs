@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using promoit_backend_cs.Services;
 using promoit_frontend_cs.Services;
 using Shared;
 
@@ -9,13 +10,15 @@ namespace promoit_frontend_cs.Pages.SocialActivist
         [Inject]
         BusinessCompanyRepresentativeService businessCompanyRepresentativeService { get; set; }
         [Inject]
-        CampaignService campaignService { get; set; }
+		Services.CampaignService campaignService { get; set; }
         [Inject]
         PopupService popupService { get; set; }
         [Inject]
         SocialActivistService socialActivistService { get; set; }
 		[Inject]
 		AuthService authService { get; set; }
+		[Inject]
+		IHttpContextAccessor HttpContextAccessor { get; set; }
 
 		private IEnumerable<ProductsAndCampaignsShared> productsAndCampaigns = Array.Empty<ProductsAndCampaignsShared>();
         private IEnumerable<CampaignShared> allCampaigns = Array.Empty<CampaignShared>();
@@ -33,13 +36,16 @@ namespace promoit_frontend_cs.Pages.SocialActivist
         private string selectedCampaignName { get; set; }
         private bool ShowFormBuy { get; set; } = false;
         private int boughtNumber { get; set; } = 0;
-        private int socialActId { get; set; } = 1;
+        private int socialActId { get; set; }
+        private string user_id { get; set; }
 
         protected override async Task OnInitializedAsync() { }
 
         private async Task GetCampaignsAndMoney()
         {
-            ShowTableCampaignsAndMoney = !ShowTableCampaignsAndMoney;
+			user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
+			socialActId = await socialActivistService.GetSocialActivistById(user_id);
+			ShowTableCampaignsAndMoney = !ShowTableCampaignsAndMoney;
             campaignsAndMoney = await socialActivistService.GetCampaignsAndMoney(socialActId);
         }
 
@@ -84,8 +90,10 @@ namespace promoit_frontend_cs.Pages.SocialActivist
             saTransactionShared.price = productFromForeach.productValue;
             saToCampaignShared.money = campaignFromForeach.money - productFromForeach.productValue * saTransactionShared.products_number;
             saTransactionShared.SA_id = campaignFromForeach.social_activist_id;
+            saTransactionShared.create_user_id = user_id;
+            saTransactionShared.update_user_id = user_id;
 
-            if (saToCampaignShared.money < 0)
+			if (saToCampaignShared.money < 0)
             {
                 await popupService.ShowPopupNoMoney();
             }
@@ -138,8 +146,7 @@ namespace promoit_frontend_cs.Pages.SocialActivist
                     ProductId = pac.productId,
                     InititalNumber = pac.InititalNumber,
                     BoughtNumber = pac.BoughtNumber + boughtNumber
-
-                };
+				};
                 if (boughtNumber < 0)
                 {
                     await popupService.ShowPopupWrongNumber();
@@ -170,8 +177,9 @@ namespace promoit_frontend_cs.Pages.SocialActivist
                     ProductId = productFromForeach.productId,
                     InititalNumber = boughtNumber,
                     BoughtNumber = boughtNumber,
-
-                };
+					CreateUserId = user_id,
+					UpdateUserId = user_id
+				};
                 if (boughtNumber <= 0)
                 {
                     await popupService.ShowPopupWrongNumber();

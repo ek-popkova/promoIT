@@ -20,7 +20,7 @@ export class SocialActivistRoutes extends RouteConfig {
     //this.app.route(`/social-activists`).get([AuthMiddleware.authenticateAccessToken, AuthMiddleware.checkRoles(["Admin"]), SocialActivistController.getSocialActivists])
     this.app.route(`/social-activists`).get([SocialActivistController.getSocialActivists])
 
-
+    this.app.route(`/social-activist-id/:id`).get([SocialActivistController.getSocialActivistIdByUserId])
 
     //this.app.route(`/social-activists/:id`).get([SocialActivistController.getSocialActivistById])
     this.app.get(`/social-activists/:id`, [

@@ -25,7 +25,7 @@ namespace promoit_backend_cs_api.Services
 
 			try
 			{
-				var listCampaignsAndMoney = await _context.SpResults.FromSqlInterpolated($"[promo_it_Kate].[dbo].[GetSocialActToCampaign] @__id_0={id}").ToListAsync();
+				var listCampaignsAndMoney = await _context.SpResults.FromSqlInterpolated($"[promo_it].[dbo].[GetSocialActToCampaign] @__id_0={id}").ToListAsync();
 
 				if (listCampaignsAndMoney == null)
 				{

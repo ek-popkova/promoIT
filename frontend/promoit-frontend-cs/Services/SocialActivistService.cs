@@ -22,10 +22,22 @@ namespace promoit_frontend_cs.Services
 			_authservice = authservice;
 		}
 
-		public async Task<IEnumerable<SpResults>> GetCampaignsAndMoney(int id)
+        public async Task<int> GetSocialActivistById(string id)
         {
             try
             {
+                return await _http.GetFromJsonAsync<int>($"http://localhost:7000/social-activist-id/{id}");
+            } catch(Exception exception)
+			{
+				_logger.LogError(exception, $"Error getting social activist by ID {id}");
+				throw new Exception($"Error getting social activist by ID {id}", exception);
+			}
+        }
+
+		public async Task<IEnumerable<SpResults>> GetCampaignsAndMoney(int id)
+        {
+            try
+			{
                 return await _http.GetFromJsonAsync<IEnumerable<SpResults>>($"https://localhost:7263/api/SaToCampaignWithCampaignInfo/{id}");
 			}
 			catch (Exception exception)

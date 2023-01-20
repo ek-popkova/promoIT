@@ -49,7 +49,29 @@ class SocialActivistController {
         return ErrorHelper.handleError(res, ErrorHelper.getError(AppError.NonPositiveInput))
       }
     }
-  }
+    }
+    
+    async getSocialActivistIdByUserId(req: Request, res: Response, next: NextFunction) {
+    const errors: Result<ValidationError> = validationResult(req);
+    if (!errors.isEmpty()) {
+      return ErrorHelper.handleValidationError(res, errors);
+    }
+    else {
+      let userId: string = req.params.id;
+      if (userId != undefined) {
+        SocialActivistService.getSocialActivistIdByUserId(userId)
+          .then((result: ISocialActivist) => {
+            return res.status(200).json(result.id);
+          })
+          .catch((error: systemError) => {
+              return ErrorHelper.handleError(res, error);
+          })
+      }
+      else {
+        return ErrorHelper.handleError(res, ErrorHelper.getError(AppError.NonPositiveInput))
+      }
+    }
+    }
 
   async getSocialActivistByTwitter(req: Request, res: Response, next: NextFunction) {
     const errors = validationResult(req);

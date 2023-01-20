@@ -16,5 +16,8 @@ namespace Shared
         [Required]
         public int price { get; set; }
         public int transaction_status_id { get ; set; }
-    }
+        public string create_user_id { get; set; }
+        public string update_user_id { get; set; }
+
+	}
 }
