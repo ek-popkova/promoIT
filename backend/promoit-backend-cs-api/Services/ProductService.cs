@@ -243,6 +243,7 @@ namespace promoit_backend_cs.Services
             existingPTC.ProductId= productToCampaignDTO.ProductId;
             existingPTC.InititalNumber = productToCampaignDTO.InititalNumber;
             existingPTC.BoughtNumber = productToCampaignDTO.BoughtNumber;
+            existingPTC.UpdateUserId= productToCampaignDTO.UpdateUserId;
             existingPTC.UpdateDate = DateTime.Now;
 
             try
