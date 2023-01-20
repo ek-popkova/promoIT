@@ -58,6 +58,26 @@ class SocialActivistService implements ISocialActivistService {
         });
     }
 
+        public getSocialActivistIdByUserId(userId: string): Promise<ISocialActivist> {
+        return new Promise<ISocialActivist>((resolve, reject) => {
+            SocialActivistModel.findOne({
+                attributes:['id'],
+                    where: {
+                    user_id: userId
+                    }})
+                .then((queryResult: SocialActivistModel | null) => {
+                    if (queryResult != null) {
+                        resolve(queryResult);
+                    }
+                    else {
+                        reject(ErrorHelper.getError(AppError.NoData))
+                    }
+                })
+                .catch(error =>
+                    reject(ErrorHelper.getError(AppError.QueryError)))
+        });
+    }
+
 
     public getSocialActivistByTwitter(twitter: string): Promise<ISocialActivist> {
         return new Promise<ISocialActivist>((resolve, reject) => {
