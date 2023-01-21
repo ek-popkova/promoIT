@@ -31,13 +31,5 @@ namespace promoit_backend_cs_api.Controllers
 			var socialActoWithCampaign = await _saToCampaignService.GetSocialActToCampaignWithCampaignInfoBySocialActId(id);
 			return Ok(socialActoWithCampaign);
 		}
-
-/*		[HttpPut("{id}")]
-		public async Task<IActionResult> UpdateSaToCampaign(int id, SaToCampaignDTO saToCampaignDTO)
-		{
-			var editSaToCampaign = await _saToCampaignService.UpdateSaToCampaign(id, saToCampaignDTO);
-			return NoContent();
-		}*/
-
 	}
 }

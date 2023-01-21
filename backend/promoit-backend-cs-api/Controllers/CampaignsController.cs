@@ -28,14 +28,16 @@ namespace promoit_backend_cs_api.Controllers
 
         // GET: api/Campaigns/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Campaign>> GetCampaign(int id)
+		[Authorize(Roles = "Admin")]
+		public async Task<ActionResult<Campaign>> GetCampaign(int id)
         {
             var campaign = await _campaignService.GetCampaignById(id);
             return Ok(campaign);
         }
 
         [HttpGet("/api/Campaigns/CampaignsByNPRId/{npr_id}")]
-        public async Task<ActionResult<IEnumerable<CampaignDTO>>> GetCampaignByNPRId(int npr_id)
+		[Authorize(Roles = "Admin")]
+		public async Task<ActionResult<IEnumerable<CampaignDTO>>> GetCampaignByNPRId(int npr_id)
         {
             var campaign = await _campaignService.GetCampaignsByNPCRId(npr_id);
             return Ok(campaign);
@@ -51,7 +53,8 @@ namespace promoit_backend_cs_api.Controllers
 
         // PUT: api/Campaigns/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCampaign(int id, CampaignDTO campaign)
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> PutCampaign(int id, CampaignDTO campaign)
         {
             await _campaignService.EditCampain(id, campaign);
             return Ok();
@@ -74,7 +77,8 @@ namespace promoit_backend_cs_api.Controllers
 
         // DELETE: api/Campaigns/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCampaign(int id)
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> DeleteCampaign(int id)
         {
             await _campaignService.DeleteCampaign(id);
             return Ok();

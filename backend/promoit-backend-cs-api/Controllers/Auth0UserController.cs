@@ -21,7 +21,8 @@ namespace promoit_backend_cs_api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<UserDTO>> GetUsers()
+		[Authorize(Roles = "Admin")]
+		public async Task<IEnumerable<UserDTO>> GetUsers()
         {
             var users = await _managementApiClient.Users.GetAllAsync(new GetUsersRequest(), new PaginationInfo());
             return users.Select(x => new UserDTO
@@ -34,7 +35,9 @@ namespace promoit_backend_cs_api.Controllers
         }
 
         [HttpPut("/add-role/{user_id}/{role_id}")]
-        public async Task<IActionResult> AssignRole(string user_id, string role_id)
+		[Authorize(Roles = "Admin")]
+
+		public async Task<IActionResult> AssignRole(string user_id, string role_id)
         {
             string[] roles = new string[] { role_id };
 
@@ -47,7 +50,9 @@ namespace promoit_backend_cs_api.Controllers
         }
 
         [HttpPut("/delete-role/{user_id}/{role_id}")]
-        public async Task<IActionResult> DeleteRole(string user_id, string role_id)
+		[Authorize(Roles = "Admin")]
+
+		public async Task<IActionResult> DeleteRole(string user_id, string role_id)
         {
             string[] roles = new string[] { role_id };
 
