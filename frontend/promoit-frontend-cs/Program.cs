@@ -80,6 +80,7 @@ builder.Services.AddAuthorization(options => {
     options.AddPolicy("NoRolePolicy", policy => policy.RequireAssertion(context => !context.User.HasClaim(c => c.Type == ClaimTypes.Role)));
 });
 
+
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 //builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
