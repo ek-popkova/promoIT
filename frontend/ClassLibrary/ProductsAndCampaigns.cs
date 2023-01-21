@@ -1,6 +1,5 @@
 ﻿
-namespace Shared
-{
+
     public partial class ProductsAndCampaignsShared
     {
         public int Id { get; set; }
@@ -14,4 +13,4 @@ namespace Shared
         public int BoughtNumber { get; set; }
 
     }
-}
+

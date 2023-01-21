@@ -68,7 +68,7 @@ namespace promoit_frontend_cs.Pages.SocialActivist
 
         private async Task ChooseCampaign(SpResults campaign) => campaignFromForeach = campaign;
 
-        private async void EditProduct(ProductsAndCampaignsShared productsAndCampaigns)
+        private async void EditProduct()
         {
             if (campaignFromForeach == null)
             {
@@ -78,9 +78,8 @@ namespace promoit_frontend_cs.Pages.SocialActivist
             {
                 ShowFormBuy = !ShowFormBuy;
                 ShowFormDonate = false;
-                productFromForeach = productsAndCampaigns;
-                saTransactionShared.BCR_id = productsAndCampaigns.BCRid;
-                saTransactionShared.product_id = productsAndCampaigns.productId;
+                saTransactionShared.BCR_id = productFromForeach.BCRid;
+                saTransactionShared.product_id = productFromForeach.productId;
                 saTransactionShared.SA_id = campaignFromForeach.social_activist_id;
             }
         }
@@ -110,7 +109,7 @@ namespace promoit_frontend_cs.Pages.SocialActivist
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private async Task SelectProductToDonate(ProductsAndCampaignsShared productsAndCampaigns)
+        private async Task SelectProductToDonate()
         {
             if (campaignFromForeach == null)
             {
@@ -119,7 +118,6 @@ namespace promoit_frontend_cs.Pages.SocialActivist
             else
             {
                 ShowFormBuy = false;
-                productFromForeach = productsAndCampaigns;
             }
         }
 

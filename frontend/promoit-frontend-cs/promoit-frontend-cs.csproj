@@ -13,6 +13,7 @@
     <PackageReference Include="Auth0Net.DependencyInjection" Version="2.0.0" />
     <PackageReference Include="Blazorise.Bootstrap" Version="1.1.6" />
     <PackageReference Include="Blazorise.DataGrid" Version="1.1.6" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Core" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.12" />

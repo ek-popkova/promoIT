@@ -13,37 +13,15 @@
 {
     if (campaignsAndMoney.Count() != 0)
     {
-        <div>
-            <div class="table-responsive">
-            <table class="table table-hover table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Social Activist Id</th>
-                        <th>Campaign</th>
-                        <th>Hashatg</th>
-                        <th>Campaign Id</th>
-                        <th>Balance</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var campaign in campaignsAndMoney)
-                    {
-                        <tr>
-                            <td>@campaign.social_activist_id</td>
-                            <td>@campaign.campaignName</td>
-                            <td>@campaign.Hashtag</td>
-                            <td>@campaign.campaign_id</td>
-                            <td>@campaign.money</td>
-                            <div>
-                                <button class="btn btn-primary" @onclick="() => ChooseCampaign(campaign)">Choose this campaign</button>
-                            </div>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            </div>
-        </div>
+        <DataGrid TItem="SpResults"
+          Data="@campaignsAndMoney"
+          @bind-SelectedRow="@campaignFromForeach"
+          Filterable
+          Responsive>
+            <DataGridColumn Field="@nameof( SpResults.campaignName )" Caption="Campaign" Editable="false"></DataGridColumn>
+            <DataGridColumn Field="@nameof( SpResults.Hashtag )" Caption="Hashtag" Editable="false"></DataGridColumn>
+            <DataGridColumn Field="@nameof( SpResults.money )"  Caption="Balance" Editable="false" Sortable="true"></DataGridColumn>
+        </DataGrid>
     } else
     {
         <div>Loading ...</div>
@@ -60,44 +38,26 @@
 @if (ShowTableProductsAndCampaigns == true)
 {
     if (productsAndCampaigns.Count() != 0)
-    { 
-        <div>
-            <table class="table table-hover table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Campaign Name</th>
-                        <th>Product Name</th>
-                        <th>Product Value</th>
-                        <th>Initial Number</th>
-                        <th>Bought Number</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var product in productsAndCampaigns)
-                    {
-                        <tr>
-                            <td>@product.campaignName</td>
-                            <td>@product.productName</td>
-                            <td>@product.productValue</td>
-                            <td>@product.InititalNumber</td>
-                            <td>@product.BoughtNumber</td>
-                            <div>
-                                <button class="btn btn-info" @onclick="() => EditProduct(product)">I want to buy it!</button>
-                            </div>
-                            <div>
-                                <button class="btn btn-success" @onclick="async() => {
-                                                                                        await SelectProductToDonate(product);
-                                                                                        await GetAllCampaigns();
-                                                                                     }">
-                                    I want to donate it!
-                                </button>
-                            </div>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+    {
+        <DataGrid TItem="ProductsAndCampaignsShared"
+          Data="@productsAndCampaigns"
+          @bind-SelectedRow="@productFromForeach"
+          Filterable
+          Responsive>
+            <DataGridColumn Field="@nameof( ProductsAndCampaignsShared.campaignName )" Caption="Campaign" Editable="false"></DataGridColumn>
+            <DataGridColumn Field="@nameof( ProductsAndCampaignsShared.productName )" Caption="Product" Editable="false"></DataGridColumn>
+            <DataGridColumn Field="@nameof( ProductsAndCampaignsShared.productValue )" Caption="Price" Editable="false" Sortable="true"></DataGridColumn>
+        </DataGrid>
+   
+
+   
+    <button class="btn btn-warning" @onclick="() => EditProduct()">I want to buy it!</button>
+    <button class="btn btn-success" @onclick="async() => {
+                                                     await SelectProductToDonate();
+                                                     await GetAllCampaigns();
+                                                    }">
+                                                    I want to donate it!
+    </button>
     } else
     {
         <div>Loading ...</div>
@@ -123,7 +83,7 @@
                 <button type="submit" class="btn btn-primary">Buy this product</button>
             </div>
             &nbsp;
-            <ValidationSummary />
+            @*<ValidationSummary />*@
         </EditForm>
     </div>
 }
@@ -163,12 +123,25 @@
                 </button>
             </div>
             &nbsp;
-            <ValidationSummary />
+            @*<ValidationSummary />*@
         </EditForm>
     </div>
 }
 
-@functions {
+@code {
+
+    string selectedMoneyFilter;
+
+    private bool OnMoneyCustomFilter(object itemValue, object searchValue)
+    {
+        if (searchValue is string genderFilter)
+        {
+            return genderFilter == "*" || genderFilter == itemValue?.ToString();
+        }
+
+        return true;
+    }
+
 
 }
 

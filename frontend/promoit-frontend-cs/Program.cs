@@ -10,6 +10,10 @@ using Microsoft.JSInterop;
 using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
 using promoit_frontend_cs.Pages.SocialActivist;
 using Microsoft.Extensions.Logging;
+using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -80,6 +84,13 @@ builder.Services.AddAuthorization(options => {
     options.AddPolicy("NoRolePolicy", policy => policy.RequireAssertion(context => !context.User.HasClaim(c => c.Type == ClaimTypes.Role)));
 });
 
+builder.Services
+    .AddBlazorise(options =>
+    {
+        options.Immediate = true;
+    })
+    .AddBootstrapProviders()
+    .AddFontAwesomeIcons();
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
