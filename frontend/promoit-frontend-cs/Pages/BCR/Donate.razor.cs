@@ -37,7 +37,6 @@ namespace promoit_frontend_cs.Pages.BCR
         private bool product_flag { get; set; } = false;
         private string user_id { get; set; }
         private int bcr_id { get; set; }
-
 		protected override async Task OnInitializedAsync() {
 
 			user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
@@ -47,21 +46,29 @@ namespace promoit_frontend_cs.Pages.BCR
 		private async Task<IEnumerable<CampaignsAndNpr>> GetCampaignsAndNPR()
         {
 			showTableCampaignsAndNRP = !showTableCampaignsAndNRP;
-            return listOfCampaignsAndNPR = await campaignService.GetCampaignsAndNpr();
-        }
+
+            var response = await campaignService.GetCampaignsAndNpr();
+            return listOfCampaignsAndNPR = response;
+
+		}
 
 		private async Task<IEnumerable<ProductToCampaignDTOShared>> GetAllProductsToCampaigns()
         {
-            return allProductsAndCampaigns = await campaignService.GetAllProductsToCampaigns();
-        }
+            var response = await campaignService.GetAllProductsToCampaigns();
+            return allProductsAndCampaigns = response;
+
+		}
 
 		private async Task SelectCampaignToDonateTo(CampaignsAndNpr campaign) => campaignToDonateTo = campaign;
 
     private async Task<IEnumerable<ProductsAndBcrInfo>> GetProductsAndBCRInfo()
         {
             showTableProductsAndBCRInfo = !showTableProductsAndBCRInfo;
-            return listOfProductsByBCR = await businessCompanyRepresentativeService.GetProductsAndBCRInfo(bcr_id);
-        }
+
+			var response = await businessCompanyRepresentativeService.GetProductsAndBCRInfo(bcr_id);
+            return listOfProductsByBCR = response;
+
+		}
 
 		private async Task SelectProductToDonate(ProductsAndBcrInfo product)
         {
