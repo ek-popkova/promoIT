@@ -27,7 +27,8 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                return await _http.GetFromJsonAsync<int>($"http://localhost:7000/social-activist-id/{id}");
+                var response = await _http.GetFromJsonAsync<int>($"http://localhost:7000/social-activist-id/{id}");
+                return response;
             } catch(Exception exception)
 			{
 				_logger.LogError(exception, $"Error getting social activist by ID {id}");

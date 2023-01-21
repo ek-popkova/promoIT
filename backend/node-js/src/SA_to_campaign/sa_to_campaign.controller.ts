@@ -20,7 +20,7 @@ class SA_to_campaignController {
             if (id > 0) {
                 const body: ISAtoCampaign = req.body;
                 body.id = id;
-                Sa_to_campaignService.updateSAtoCampaign(body, DEMO_USER)
+                Sa_to_campaignService.updateSAtoCampaign(body)
                     .then((result: number) => {
                         return res.status(200).json({
                         rows: result

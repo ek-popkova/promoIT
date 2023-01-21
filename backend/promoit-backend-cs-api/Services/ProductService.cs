@@ -60,13 +60,13 @@ namespace promoit_backend_cs.Services
                                                         .Where(x => x.StatusId == 1)
                                                         .Select(x => new
                                                         {
-                                                        
                                                             campaignId = x.Campaign.Id,
                                                             campaignName = x.Campaign.Name,
                                                             productName = x.Product.Name,
                                                             productValue = x.Product.Value,
                                                             productId = x.Product.Id,
                                                             BCRid = x.Product.BcrId,
+                                                            Hashtag = x.Campaign.Hashtag,
                                                             x.Id,
                                                             x.InititalNumber,
                                                             x.BoughtNumber
@@ -204,12 +204,9 @@ namespace promoit_backend_cs.Services
                 BoughtNumber = productToCampaignDTO.BoughtNumber,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
-				/*                CreateUserId = productToCampaignDTO.CreateUserId,
-								UpdateUserId = productToCampaignDTO.UpdateUserId,*/
-				CreateUserId = "2",
-				UpdateUserId = "5",
-				StatusId = 1,
-                
+                CreateUserId = productToCampaignDTO.CreateUserId,
+                UpdateUserId = productToCampaignDTO.UpdateUserId,
+				StatusId = 1
             };
 
             try

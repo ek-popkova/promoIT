@@ -39,7 +39,7 @@ namespace promoit_frontend_cs.Pages.BCR
             if (result)
             {
                 saTransactionSharedSAInfo.transaction_status_id = 2;
-                await businessCompanyRepresentativeService.SendProductToSocialActivist(saTransactionSharedSAInfo.Id);
+                await businessCompanyRepresentativeService.SendProductToSocialActivist(saTransactionSharedSAInfo.Id, user_id);
             }
         }
     }

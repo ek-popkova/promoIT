@@ -12,7 +12,7 @@ class SA_to_campaign implements ISA_to_campaign {
 
     constructor() { }
     
-    public updateSAtoCampaign(sa_to_campaign: ISAtoCampaign, userId: string): Promise<number> {
+    public updateSAtoCampaign(sa_to_campaign: ISAtoCampaign): Promise<number> {
         return new Promise<number>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
             SA_to_campaignModel.update({
