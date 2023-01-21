@@ -35,7 +35,7 @@ namespace promoit_backend_cs_api.Controllers
         }
 
         [HttpPut("/add-role/{user_id}/{role_id}")]
-		[Authorize(Roles = "Admin")]
+		[Authorize]
 
 		public async Task<IActionResult> AssignRole(string user_id, string role_id)
         {

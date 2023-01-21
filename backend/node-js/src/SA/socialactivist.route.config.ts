@@ -39,7 +39,7 @@ export class SocialActivistRoutes extends RouteConfig {
       body('address').isLength({max: 50}).withMessage("The 'address' parameter must be not more than 50 characters long"),
       body('phone').isNumeric().withMessage("The 'phone' parameter must be numeric"),
       body('twitter').isLength({ min: 4, max: 15 }).isAlphanumeric('en-US', {ignore: '_'}).withMessage("The 'twitter' parametr must be a valid twitter account"),
-    ], [AuthMiddleware.authenticateAccessToken, AuthMiddleware.checkRoles(["Admin"]), SocialActivistController.addSocialActivist])
+    ], [AuthMiddleware.authenticateAccessToken, SocialActivistController.addSocialActivist])
 
     //this.app.route(`/social-activists/:id`).put([SocialActivistController.updateSocialActivist])
     this.app.put(`/social-activists/:id`, [
