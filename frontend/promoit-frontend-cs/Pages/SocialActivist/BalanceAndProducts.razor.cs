@@ -146,80 +146,73 @@ namespace promoit_frontend_cs.Pages.SocialActivist
         {
             saToCampaignShared.social_activist_id = socialActId;
 
-            if (productFromForeach.campaignId == chosenCampaign.Id)
+            if (productsAndCampaigns.Any(x => x.campaignId == ChosenCampaign.Id && x.productId == productFromForeach.productId))
             {
-                if (productsAndCampaigns.Any(x => x.campaignId == ChosenCampaign.Id && x.productId == productFromForeach.productId))
+                var pac = productsAndCampaigns.Where(x => x.campaignId == ChosenCampaign.Id && x.productId == productFromForeach.productId).FirstOrDefault();
+                var ptc = new ProductToCampaignDTOShared()
                 {
-                    var pac = productsAndCampaigns.Where(x => x.campaignId == ChosenCampaign.Id && x.productId == productFromForeach.productId).FirstOrDefault();
-                    var ptc = new ProductToCampaignDTOShared()
-                    {
-                        Id = pac.Id,
-                        CampaignId = pac.campaignId,
-                        ProductId = pac.productId,
-                        InititalNumber = pac.InititalNumber,
-                        BoughtNumber = pac.BoughtNumber + boughtNumber,
-                        UpdateUserId = user_id
-				    };
-                    if (boughtNumber < 0)
-                    {
-                        await popupService.ShowPopupWrongNumber();
-                    }
-                    else
-                    {
-                        saToCampaignShared.campaign_id = pac.campaignId;
-                        saToCampaignShared.money = campaignFromForeach.money - boughtNumber * pac.productValue;
-
-                        if (saToCampaignShared.money < 0)
-                        {
-                            await popupService.ShowPopupNoMoney();
-                        }
-                        else
-                        {
-                            campaignFromForeach.money = (int)saToCampaignShared.money;
-                            var updateMoney = await socialActivistService.UpdateMoney(campaignFromForeach.id, saToCampaignShared);
-                            var putProductToCampaign = await campaignService.PutProductToCampaign(pac.Id, ptc);
-                            await popupService.ShowPopupThanks(pac.campaignName);
-                        }
-                    }
+                    Id = pac.Id,
+                    CampaignId = pac.campaignId,
+                    ProductId = pac.productId,
+                    InititalNumber = pac.InititalNumber,
+                    BoughtNumber = pac.BoughtNumber + boughtNumber,
+                    UpdateUserId = user_id
+				};
+                if (boughtNumber < 0)
+                {
+                    await popupService.ShowPopupWrongNumber();
                 }
                 else
                 {
-                    var ptc = new ProductToCampaignDTOShared()
+                    saToCampaignShared.campaign_id = pac.campaignId;
+                    saToCampaignShared.money = campaignFromForeach.money - boughtNumber * pac.productValue;
+
+                    if (saToCampaignShared.money < 0)
                     {
-                        CampaignId = ChosenCampaign.Id,
-                        ProductId = productFromForeach.productId,
-                        InititalNumber = boughtNumber,
-                        BoughtNumber = boughtNumber,
-					    CreateUserId = user_id,
-					    UpdateUserId = user_id
-				    };
-                    if (boughtNumber <= 0)
+                        await popupService.ShowPopupNoMoney();
+                    }
+                    else
                     {
-                        await popupService.ShowPopupWrongNumber();
+                        campaignFromForeach.money = (int)saToCampaignShared.money;
+                        var updateMoney = await socialActivistService.UpdateMoney(campaignFromForeach.id, saToCampaignShared);
+                        var putProductToCampaign = await campaignService.PutProductToCampaign(pac.Id, ptc);
+                        await popupService.ShowPopupThanks(pac.campaignName);
+                    }
+                }
+            }
+            else
+            {
+                var ptc = new ProductToCampaignDTOShared()
+                {
+                    CampaignId = ChosenCampaign.Id,
+                    ProductId = productFromForeach.productId,
+                    InititalNumber = boughtNumber,
+                    BoughtNumber = boughtNumber,
+					CreateUserId = user_id,
+					UpdateUserId = user_id
+				};
+                if (boughtNumber <= 0)
+                {
+                    await popupService.ShowPopupWrongNumber();
+
+                }
+                else
+                {
+                    saToCampaignShared.campaign_id = ChosenCampaign.Id;
+                    saToCampaignShared.money = campaignFromForeach.money - boughtNumber * productFromForeach.productValue;
+
+                    if (saToCampaignShared.money < 0)
+                    {
+                        await popupService.ShowPopupNoMoney();
 
                     }
                     else
                     {
-                        saToCampaignShared.campaign_id = ChosenCampaign.Id;
-                        saToCampaignShared.money = campaignFromForeach.money - boughtNumber * productFromForeach.productValue;
-
-                        if (saToCampaignShared.money < 0)
-                        {
-                            await popupService.ShowPopupNoMoney();
-
-                        }
-                        else
-                        {
-                            var updateMoney = await socialActivistService.UpdateMoney(campaignFromForeach.id, saToCampaignShared);
-                            var postPtoductToCampaign = await campaignService.PostProductToCampaign(ptc);
-                            await popupService.ShowPopupThanks(ChosenCampaign.Name);
-                        }
+                        var updateMoney = await socialActivistService.UpdateMoney(campaignFromForeach.id, saToCampaignShared);
+                        var postPtoductToCampaign = await campaignService.PostProductToCampaign(ptc);
+                        await popupService.ShowPopupThanks(ChosenCampaign.Name);
                     }
                 }
-
-            } else
-            {
-                await popupService.ShowPopupChooseAnotherCampaign(campaignFromForeach.campaignName);
             }
         }
     }

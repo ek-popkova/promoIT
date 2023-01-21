@@ -11,37 +11,37 @@
 
 @if (ShowTableCampaignsAndMoney)
 {
-        @if (campaignsAndMoney.Count() != 0)
-        {
-            <div>
-                <table class="table table-hover table-striped">
-                    <thead class="table-dark">
+    @if (campaignsAndMoney.Count() != 0)
+    {
+        <div>
+            <table class="table table-hover table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Campaign</th>
+                        <th>Hashatg</th>
+                        <th>Balance</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var campaign in campaignsAndMoney)
+                    {
                         <tr>
-                            <th>Campaign</th>
-                            <th>Hashatg</th>
-                            <th>Balance</th>
-                            <th>Action</th>
+                            <td>@campaign.campaignName</td>
+                            <td>@campaign.Hashtag</td>
+                            <td>@campaign.money</td>
+                            <div>
+                                <button class="btn btn-primary" @onclick="() => ChooseCampaign(campaign)">Choose this campaign</button>
+                            </div>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var campaign in campaignsAndMoney)
-                        {
-                            <tr>
-                                <td>@campaign.campaignName</td>
-                                <td>@campaign.Hashtag</td>
-                                <td>@campaign.money</td>
-                                <div>
-                                    <button class="btn btn-primary" @onclick="() => ChooseCampaign(campaign)">Choose this campaign</button>
-                                </div>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        } else
-        {
-            <div>Loading ...</div>
-        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    } else
+    {
+        <div>Loading ...</div>
+    }
 }
 
 &nbsp;
@@ -53,46 +53,43 @@
 
 @if (ShowTableProductsAndCampaigns)
 {
-        if (productsAndCampaigns.Count() != 0)
-        { 
-            <div>
-                <table class="table table-hover table-striped">
-                    <thead class="table-dark">
+    if (productsAndCampaigns.Count() != 0)
+    { 
+        <div>
+            <table class="table table-hover table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Campaign Name</th>
+                        <th>Campaign Hashtag</th>
+                        <th>Product Name</th>
+                        <th>Product Value</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in productsAndCampaigns)
+                    {
                         <tr>
-                            <th>Campaign Name</th>
-                            <th>Campaign Hashtag</th>
-                            <th>Product Name</th>
-                            <th>Product Value</th>
-                            <th>Action</th>
+                            <td>@product.campaignName</td>
+                            <td>@product.Hashtag</td>
+                            <td>@product.productName</td>
+                            <td>@product.productValue</td>
+                            <div>
+                                <button class="btn btn-info" @onclick="() => EditProduct(product)">I want to buy it!</button>
+                            </div>
+                            <div>
+                                <button class="btn btn-success" @onclick="async() => {
+                                                                                        await SelectProductToDonate(product);
+                                                                                        await GetAllCampaigns();
+                                                                                        }">
+                                    I want to donate it!
+                                </button>
+                            </div>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var product in productsAndCampaigns)
-                        {
-                            <tr>
-                                <td>@product.campaignName</td>
-                                <td>@product.Hashtag</td>
-                                <td>@product.productName</td>
-                                <td>@product.productValue</td>
-                                <div>
-                                    <button class="btn btn-info" @onclick="() => EditProduct(product)">I want to buy it!</button>
-                                </div>
-                                <div>
-                                    <button class="btn btn-success" @onclick="async() => {
-                                                                                            await SelectProductToDonate(product);
-                                                                                            await GetAllCampaigns();
-                                                                                         }">
-                                        I want to donate it!
-                                    </button>
-                                </div>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        } else
-        {
-        <div>Loading ...</div>
+                    }
+                </tbody>
+            </table>
+        </div>
     }
 }
 
