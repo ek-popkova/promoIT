@@ -38,7 +38,6 @@ namespace promoit_frontend_cs.Pages.SocialActivist
         private int boughtNumber { get; set; } = 0;
         private int socialActId { get; set; }
         private string user_id { get; set; }
-
         protected override async Task OnInitializedAsync() 
         {
 			user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
@@ -49,6 +48,7 @@ namespace promoit_frontend_cs.Pages.SocialActivist
         private async Task GetCampaignsAndMoney()
         {
 			ShowTableCampaignsAndMoney = !ShowTableCampaignsAndMoney;
+
             campaignsAndMoney = await socialActivistService.GetCampaignsAndMoney(socialActId);
         }
 

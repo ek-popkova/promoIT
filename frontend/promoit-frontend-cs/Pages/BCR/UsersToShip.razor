@@ -12,50 +12,50 @@
 </div>
 &nbsp;
 
-@if (showTransactionForm == true)
+@if (showTransactionForm)
 {
-	if (transactionsByBcrId.Count() != 0)
-	{
-		<div>
-			<table class="table table-hover table-striped">
-				<thead class="table-dark">
-					<tr>
-						<th>Product Name</th>
-						<th>Number of products</th>
-						<th>Price</th>
-						<th>customer's phone</th>
-						<th>customer's email</th>
-						<th>Ship Status</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (var transaction in transactionsByBcrId)
-					{
+		@if (transactionsByBcrId.Count() != 0)
+		{
+			<div>
+				<table class="table table-hover table-striped">
+					<thead class="table-dark">
 						<tr>
-							<td>@transaction.productName</td>
-							<td>@transaction.products_number</td>
-							<td>@transaction.price</td>
-							<td>@transaction.socialAscivist.phone</td>
-							<td>@transaction.socialAscivist.email</td>
-							@if(transaction.transaction_status_id == 1)
-							{
-								<div>
-									<button class="btn btn-outline-success" @onclick="async () => {
-										await SendProduct(transaction);}">
-										Send this product
-									</button>
-								</div>
-							} else
-							{
-								<div>This product has been sent!</div>
-							}
+							<th>Product Name</th>
+							<th>Number of products</th>
+							<th>Price</th>
+							<th>customer's phone</th>
+							<th>customer's email</th>
+							<th>Ship Status</th>
 						</tr>
-					}
-				</tbody>
-			</table>
-		</div>
-	} else
-	{
+					</thead>
+					<tbody>
+						@foreach (var transaction in transactionsByBcrId)
+						{
+							<tr>
+								<td>@transaction.productName</td>
+								<td>@transaction.products_number</td>
+								<td>@transaction.price</td>
+								<td>@transaction.socialAscivist.phone</td>
+								<td>@transaction.socialAscivist.email</td>
+								@if(transaction.transaction_status_id == 1)
+								{
+									<div>
+										<button class="btn btn-outline-success" @onclick="async () => {
+											await SendProduct(transaction);}">
+											Send this product
+										</button>
+									</div>
+								} else
+								{
+									<div>This product has been sent!</div>
+								}
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		} else
+		{
 		<div>Loading ...</div>
 	}
 }
