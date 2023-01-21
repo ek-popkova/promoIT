@@ -1,5 +1,5 @@
 import { systemError, tweetRetweet, ITwitterReport } from './../entities';
-import { DEMO_USER } from './../constants';
+import { DEMO_USER, SERVER_USER } from './../constants';
 import { MINUTE } from "../constants";
 import CampaignService from '../campaign/campaign.service';
 import TwitterService from '../twitter/twitter.service';
@@ -62,11 +62,11 @@ export class MoneyTwitterHelper {
         MoneyService.getMoneyByHashtagTwitter(social_activist_id, campaign_id)
             .then((result: IMoney) => {
                     putMoney.money = result.money + dollar_number;
-                    MoneyService.updateMoneyByHashtagTwitter(putMoney, DEMO_USER);
+                    MoneyService.updateMoneyByHashtagTwitter(putMoney, SERVER_USER);
             })
             .catch((error: systemError) => {
                 if (error.key === AppError.NoData) {
-                    MoneyService.addMoneyByHashtagTwitter(putMoney, DEMO_USER);
+                    MoneyService.addMoneyByHashtagTwitter(putMoney, SERVER_USER);
                 }
                 else console.log(error.message);
             })
@@ -80,11 +80,11 @@ export class MoneyTwitterHelper {
                     tweets: result.tweets + newTwitterReport.tweets,
                     retweets: result.retweets + newTwitterReport.retweets
                     }
-                    TwitterReportService.updateTwitterReport(putTwitterReport, DEMO_USER);
+                    TwitterReportService.updateTwitterReport(putTwitterReport, SERVER_USER);
             })
             .catch((error: systemError) => {
                 if (error.key === AppError.NoData) {
-                    TwitterReportService.addTwitterReport(newTwitterReport, DEMO_USER);
+                    TwitterReportService.addTwitterReport(newTwitterReport, SERVER_USER);
                 }
                 else console.log(error.message);
             })

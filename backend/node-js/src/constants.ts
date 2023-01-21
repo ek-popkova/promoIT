@@ -4,5 +4,6 @@
 export const NON_EXISTENT_ID: number = -1;
 export const DEMO_USER: string = "2";
 export const MINUTE: number = 60000;
+export const SERVER_USER: string = "server_user";
 
 
