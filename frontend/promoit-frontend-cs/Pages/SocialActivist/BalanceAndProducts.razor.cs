@@ -39,13 +39,14 @@ namespace promoit_frontend_cs.Pages.SocialActivist
         private int socialActId { get; set; }
         private string user_id { get; set; }
 
-        protected override async Task OnInitializedAsync() { }
+        protected override async Task OnInitializedAsync() 
+        {
+			user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
+			socialActId = await socialActivistService.GetSocialActivistById(user_id);
+        }
 
         private async Task GetCampaignsAndMoney()
         {
-        
-			user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
-			socialActId = await socialActivistService.GetSocialActivistById(user_id);
 			ShowTableCampaignsAndMoney = !ShowTableCampaignsAndMoney;
             campaignsAndMoney = await socialActivistService.GetCampaignsAndMoney(socialActId);
         }
@@ -143,10 +144,12 @@ namespace promoit_frontend_cs.Pages.SocialActivist
                 var pac = productsAndCampaigns.Where(x => x.campaignId == ChosenCampaign.Id && x.productId == productFromForeach.productId).FirstOrDefault();
                 var ptc = new ProductToCampaignDTOShared()
                 {
+                    Id = pac.Id,
                     CampaignId = pac.campaignId,
                     ProductId = pac.productId,
                     InititalNumber = pac.InititalNumber,
-                    BoughtNumber = pac.BoughtNumber + boughtNumber
+                    BoughtNumber = pac.BoughtNumber + boughtNumber,
+                    UpdateUserId = user_id
 				};
                 if (boughtNumber < 0)
                 {
