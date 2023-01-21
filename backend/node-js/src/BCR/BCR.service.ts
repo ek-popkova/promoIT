@@ -171,13 +171,13 @@ class BcrService implements IBcrService {
         })
     }
 
-        public ShipSocialActivistTransaction(transactionId: number, userId: string): Promise<number> {
+        public ShipSocialActivistTransaction(transactionId: number, user_id: string): Promise<number> {
         return new Promise<number>((resolve, reject) => {
             const createDate: string = DateHelper.dateToString(new Date());
             SocialActivistTransactionModel.update({
                 transaction_status_id: Order.Shipped,
                 update_date: createDate,
-                update_user_id: userId
+                update_user_id: user_id
             }, {
                 where: {
                     id: transactionId,

@@ -13,6 +13,7 @@ import { TwitterReportRoutes } from "./twitterReport/tweeterreport.route.config"
 import AuthMiddleware from './authentication/authentication.middleware'
 import { requiresAuth } from 'express-openid-connect';
 import { SA_to_campaignRoutes } from './SA_to_campaign/sa_to_campaign.routes';
+import { MoneyTwitterHelper } from './helper/money-tweeter.helper';
 
 const { auth } = require('express-openid-connect')
 
@@ -82,5 +83,5 @@ server.listen(PORT, async () => {
   routes.forEach((route: RouteConfig) => {
     console.log(`Routes configured for ${route.getName()}`)
   })
-  //MoneyTwitterHelper.checkTweetsGiveMoney();
+  MoneyTwitterHelper.checkTweetsGiveMoney();
 })

@@ -11,7 +11,7 @@
 
 @if (ShowTableCampaignsAndMoney)
 {
-    if (campaignsAndMoney.Count() != 0)
+    @if (campaignsAndMoney.Count() != 0)
     {
         <DataGrid TItem="SpResults"
           Data="@campaignsAndMoney"
@@ -35,7 +35,7 @@
 </div>
 &nbsp;
 
-@if (ShowTableProductsAndCampaigns == true)
+@if (ShowTableProductsAndCampaigns)
 {
     if (productsAndCampaigns.Count() != 0)
     {

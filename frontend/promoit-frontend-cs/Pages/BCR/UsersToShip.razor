@@ -12,9 +12,9 @@
 </div>
 &nbsp;
 
-@if (showTransactionForm == true)
+@if (showTransactionForm)
 {
-	if (transactionsByBcrId.Count() != 0)
+	@if (transactionsByBcrId.Count() != 0)
 	{
 		<div>
 			<div class="table-responsive">
@@ -56,9 +56,6 @@
 			</table>
 			</div>
 		</div>
-	} else
-	{
-		<div>Loading ...</div>
 	}
 }
 

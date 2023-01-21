@@ -38,16 +38,17 @@ namespace promoit_frontend_cs.Pages.SocialActivist
         private int boughtNumber { get; set; } = 0;
         private int socialActId { get; set; }
         private string user_id { get; set; }
-
         protected override async Task OnInitializedAsync() 
         {
 			user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
 			socialActId = await socialActivistService.GetSocialActivistById(user_id);
+            Console.WriteLine($"{socialActId}");
         }
 
         private async Task GetCampaignsAndMoney()
         {
 			ShowTableCampaignsAndMoney = !ShowTableCampaignsAndMoney;
+
             campaignsAndMoney = await socialActivistService.GetCampaignsAndMoney(socialActId);
         }
 
@@ -86,24 +87,30 @@ namespace promoit_frontend_cs.Pages.SocialActivist
 
         private async Task BuyProduct(SaTransactionShared saTransactionShared, ProductsAndCampaignsShared productsAndCampaigns)
         {
-            saToCampaignShared.social_activist_id = saTransactionShared.SA_id;
-            saToCampaignShared.campaign_id = productsAndCampaigns.campaignId;
-            saTransactionShared.price = productFromForeach.productValue;
-            saToCampaignShared.money = campaignFromForeach.money - productFromForeach.productValue * saTransactionShared.products_number;
-            saTransactionShared.SA_id = campaignFromForeach.social_activist_id;
-            saTransactionShared.create_user_id = user_id;
-            saTransactionShared.update_user_id = user_id;
+            if (campaignFromForeach.campaign_id == productsAndCampaigns.campaignId)
+            {
+                saToCampaignShared.social_activist_id = saTransactionShared.SA_id;
+                saToCampaignShared.campaign_id = productsAndCampaigns.campaignId;
+                saTransactionShared.price = productFromForeach.productValue;
+                saToCampaignShared.money = campaignFromForeach.money - productFromForeach.productValue * saTransactionShared.products_number;
+                saTransactionShared.SA_id = campaignFromForeach.social_activist_id;
+                saTransactionShared.create_user_id = user_id;
+                saTransactionShared.update_user_id = user_id;
 
-			if (saToCampaignShared.money < 0)
+			    if (saToCampaignShared.money < 0)
+                {
+                    await popupService.ShowPopupNoMoney();
+                }
+                else
+                {
+                    campaignFromForeach.money = (int)saToCampaignShared.money;
+                    var updateMoney = await socialActivistService.UpdateMoney(campaignFromForeach.id, saToCampaignShared);
+                    var addTransaction = await businessCompanyRepresentativeService.AddSocialActivistTransaction(saTransactionShared);
+                    await popupService.ShowPopupBought();
+                }
+            } else
             {
-                await popupService.ShowPopupNoMoney();
-            }
-            else
-            {
-                campaignFromForeach.money = (int)saToCampaignShared.money;
-                var updateMoney = await socialActivistService.UpdateMoney(campaignFromForeach.id, saToCampaignShared);
-                var addTransaction = await businessCompanyRepresentativeService.AddSocialActivistTransaction(saTransactionShared);
-                await popupService.ShowPopupBought();
+                await popupService.ShowPopupChooseAnotherCampaign(campaignFromForeach.campaignName);
             }
         }
 

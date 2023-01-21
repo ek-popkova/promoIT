@@ -11,6 +11,7 @@
         public int BCRid { get; set; }
         public int InititalNumber { get; set; }
         public int BoughtNumber { get; set; }
+        public string Hashtag { get; set; }
 
     }
 
