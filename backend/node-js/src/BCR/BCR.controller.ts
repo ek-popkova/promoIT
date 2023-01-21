@@ -99,8 +99,9 @@ class BusinessCompanyRepresentativeController {
         }
         else {
             let id: number = parseInt(req.params.id);
+            let user_id: string = req.params.user_id;
             if (id > 0) {
-                BcrService.ShipSocialActivistTransaction(id, DEMO_USER)
+                BcrService.ShipSocialActivistTransaction(id, user_id)
                 .then((result: number) => {
                     return res.status(200).json({
                         rows:result

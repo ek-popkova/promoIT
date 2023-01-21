@@ -27,7 +27,7 @@ namespace promoit_frontend_cs.Services
 
         public async Task ShowPopupThanks(string campaignName)
 		{
-			await _jSRuntime.InvokeAsync<object>("alert", $"Thank you very much for this donation! {campaignName} appreciate it!");
+			await _jSRuntime.InvokeAsync<object>("alert", $"Thank you very much for this donation! '{campaignName}' appreciate it!");
 		}
 
         public async Task ShowPopupBought()
@@ -45,5 +45,11 @@ namespace promoit_frontend_cs.Services
             return await _jSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to ship this product?");
             //var result = confirmed ? "Shipped" : "Okay, maybe later!";
         }
-	}
+
+        public async Task ShowPopupChooseAnotherCampaign(string campaignName)
+        {
+            await _jSRuntime.InvokeAsync<object>("alert", $"money earned on campaign '{campaignName}' can only be spent on this campaign");
+        }
+
+    }
 }

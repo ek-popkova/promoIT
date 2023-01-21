@@ -64,11 +64,11 @@ namespace promoit_frontend_cs.Services
 			}
 		}
 
-        public async Task<HttpResponseMessage> SendProductToSocialActivist(int saTransactionId)
+        public async Task<HttpResponseMessage> SendProductToSocialActivist(int saTransactionId, string user_id)
         {
             try
             {
-                return await _http.DeleteAsync($"http://localhost:7000/business-company-representative/ship/{saTransactionId}");
+                return await _http.DeleteAsync($"http://localhost:7000/business-company-representative/ship/{saTransactionId}/{user_id}");
 			}
 			catch (Exception exception)
 			{

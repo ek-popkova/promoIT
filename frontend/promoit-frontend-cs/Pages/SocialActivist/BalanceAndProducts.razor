@@ -17,10 +17,8 @@
             <table class="table table-hover table-striped">
                 <thead class="table-dark">
                     <tr>
-                        <th>Social Activist Id</th>
                         <th>Campaign</th>
                         <th>Hashatg</th>
-                        <th>Campaign Id</th>
                         <th>Balance</th>
                         <th>Action</th>
                     </tr>
@@ -29,10 +27,8 @@
                     @foreach (var campaign in campaignsAndMoney)
                     {
                         <tr>
-                            <td>@campaign.social_activist_id</td>
                             <td>@campaign.campaignName</td>
                             <td>@campaign.Hashtag</td>
-                            <td>@campaign.campaign_id</td>
                             <td>@campaign.money</td>
                             <div>
                                 <button class="btn btn-primary" @onclick="() => ChooseCampaign(campaign)">Choose this campaign</button>
@@ -64,10 +60,9 @@
                 <thead class="table-dark">
                     <tr>
                         <th>Campaign Name</th>
+                        <th>Campaign Hashtag</th>
                         <th>Product Name</th>
                         <th>Product Value</th>
-                        <th>Initial Number</th>
-                        <th>Bought Number</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -76,10 +71,9 @@
                     {
                         <tr>
                             <td>@product.campaignName</td>
+                            <td>@product.Hashtag</td>
                             <td>@product.productName</td>
                             <td>@product.productValue</td>
-                            <td>@product.InititalNumber</td>
-                            <td>@product.BoughtNumber</td>
                             <div>
                                 <button class="btn btn-info" @onclick="() => EditProduct(product)">I want to buy it!</button>
                             </div>

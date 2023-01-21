@@ -76,6 +76,7 @@ namespace promoit_backend_cs.Services
             try
             {
                 var listOfCampaigns = await _context.Campaigns.Include(c => c.Npr)
+                                                              .Where(c => c.StatusId == 1)
                                                               .Select(c => new
                                                               {
                                                                   c.Id,
