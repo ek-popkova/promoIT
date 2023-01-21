@@ -20,21 +20,17 @@ namespace promoit_backend_cs_api.Controllers
 
         // GET: api/Products
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+		[Authorize(Roles = "Admin")]
+		public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             var allProducts = await _productService.GetAllProducts();
             return Ok(allProducts);
         }
-/*        [HttpGet("/api/ProductsWithBr")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductsWithBCR()
-        {
-            var allProductsWithBCR = await _productService.GetAllProductsWithBcr();
-            return Ok(allProductsWithBCR);
-        }*/
 
         // GET: api/Products/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+		[Authorize(Roles = "Admin")]
+		public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var productById = await _productService.GetProductById(id);
             return Ok(productById);
@@ -50,14 +46,16 @@ namespace promoit_backend_cs_api.Controllers
 		}
 
         [HttpGet("/api/ProductToCampaignByProductId/{id}")]
-        public async Task<ActionResult<ProductToCampaign>> GetProductToCampaignByProductId(int id)
+		[Authorize(Roles = "Admin")]
+		public async Task<ActionResult<ProductToCampaign>> GetProductToCampaignByProductId(int id)
         {
             var productToCampaignByProductId = await _productService.GetProductsToCampaignByProductId(id);
             return Ok(productToCampaignByProductId);
         }
 
         [HttpGet("/api/ProductToCampaignByCampaignId/{id}")]
-        public async Task<ActionResult<ProductToCampaign>> GetProductToCampaignByCampaignId(int id)
+		[Authorize(Roles = "Admin")]
+		public async Task<ActionResult<ProductToCampaign>> GetProductToCampaignByCampaignId(int id)
         {
             var productToCampaignByCampaignId = await _productService.GetProductsToCampaignByCampaignIdWithCampaignInfo(id);
             return Ok(productToCampaignByCampaignId);
@@ -65,7 +63,6 @@ namespace promoit_backend_cs_api.Controllers
 
         [HttpGet("/api/ProductToCampaignInfo")]
 		[Authorize(Roles = "Social activist, Admin")]
-
 		public async Task<ActionResult<object>> GetProductToCampaignInfo()
         {
             var productsAndCampaigns = await _productService.GetAllProductsAndCampaigns();
@@ -74,7 +71,8 @@ namespace promoit_backend_cs_api.Controllers
 
         // PUT: api/Products/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, ProductDTO product)
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> PutProduct(int id, ProductDTO product)
         {
             var editedProduct = await _productService.EditProduct(id, product);
             return NoContent();
@@ -82,7 +80,9 @@ namespace promoit_backend_cs_api.Controllers
 
         // POST: api/Products
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(ProductDTO product)
+		[Authorize(Roles = "Business company representative, Admin")]
+
+		public async Task<ActionResult<Product>> PostProduct(ProductDTO product)
         {
             var newProduct = new ProductDTO();
 
@@ -118,7 +118,8 @@ namespace promoit_backend_cs_api.Controllers
 
 
         [HttpPost("/api/PostProductAndCampaign")]
-        public async Task<ActionResult<ProductToCampaign>> PostProductAndCampaign(string product_name, int product_value, int Bcr_id, int initial_number, int campaign_id, string user_id)
+		[Authorize(Roles = "Admin")]
+		public async Task<ActionResult<ProductToCampaign>> PostProductAndCampaign(string product_name, int product_value, int Bcr_id, int initial_number, int campaign_id, string user_id)
         {
             var newProduct = new ProductDTO();
             var resultProduct = new ProductDTO();
@@ -148,7 +149,8 @@ namespace promoit_backend_cs_api.Controllers
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> DeleteProduct(int id)
         {
             await _productService.DeleteProduct(id);
             return NoContent();

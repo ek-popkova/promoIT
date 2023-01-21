@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using promoit_backend_cs.Services;
 using promoit_backend_cs_api.Models;
@@ -19,7 +20,8 @@ namespace promoit_backend_cs_api.Controllers
 
         // GET: api/NonProfitRepresentatives
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<NonProfitRepresentative>>> GetNonProfitRepresentatives()
+		[Authorize(Roles = "Admin")]
+		public async Task<ActionResult<IEnumerable<NonProfitRepresentative>>> GetNonProfitRepresentatives()
         {
             var allNPRS = await _nonProfitRepresentativeService.GetAllNPRs();
             return Ok(allNPRS);
@@ -27,14 +29,16 @@ namespace promoit_backend_cs_api.Controllers
 
         // GET: api/NonProfitRepresentatives/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<NonProfitRepresentative>> GetNonProfitRepresentative(int id)
+		[Authorize(Roles = "Admin")]
+		public async Task<ActionResult<NonProfitRepresentative>> GetNonProfitRepresentative(int id)
         {
             var nprById = await _nonProfitRepresentativeService.GetNPRById(id);
             return Ok(nprById);
         }
 
         [HttpGet("/api/NonProfitRepresentatives/NpcrIdByUserId/{user_id}")]
-        public async Task<ActionResult<int>> GetNpcrIdByUserId(string user_id)
+		[Authorize(Roles = "Admin")]
+		public async Task<ActionResult<int>> GetNpcrIdByUserId(string user_id)
         {
             var id = await _nonProfitRepresentativeService.GetNpcrIdByUserId(user_id);
             return Ok(id);
@@ -42,7 +46,8 @@ namespace promoit_backend_cs_api.Controllers
 
         // PUT: api/NonProfitRepresentatives/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNonProfitRepresentative(int id, NonProfitRepresentativeDTO nonProfitRepresentative)
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> PutNonProfitRepresentative(int id, NonProfitRepresentativeDTO nonProfitRepresentative)
         {
             await _nonProfitRepresentativeService.EditNPR(id, nonProfitRepresentative);
             return Ok();
@@ -65,7 +70,8 @@ namespace promoit_backend_cs_api.Controllers
 
         // DELETE: api/NonProfitRepresentatives/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNonProfitRepresentative(int id)
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> DeleteNonProfitRepresentative(int id)
         {
             await _nonProfitRepresentativeService.DeleteNPR(id);
             return Ok();

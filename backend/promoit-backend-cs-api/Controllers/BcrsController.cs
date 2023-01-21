@@ -19,7 +19,8 @@ namespace promoit_backend_cs_api.Controllers
 
         // GET: api/Bcrs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Bcr>>> GetBcrs()
+		[Authorize(Roles = "Admin")]
+		public async Task<ActionResult<IEnumerable<Bcr>>> GetBcrs()
         {
             var allBcrs =  await _bcrService.GetAllBcrs();
             return Ok(allBcrs);
@@ -35,15 +36,16 @@ namespace promoit_backend_cs_api.Controllers
 
         // GET: api/Bcrs/5
         [HttpGet("{id}")]
-        
-        public async Task<ActionResult<Bcr>> GetBcrById(int id)
+		[Authorize(Roles = "Admin")]
+		public async Task<ActionResult<Bcr>> GetBcrById(int id)
         {
             var bcrById = await _bcrService.GetBcrById(id);
             return Ok(bcrById);
         }
 
         [HttpGet("/api/Bcrs/BcrIdByUserId/{user_id}")]
-        public async Task<ActionResult<int>> GetBcrIdByUserId(string user_id)
+		[Authorize(Roles = "Admin")]
+		public async Task<ActionResult<int>> GetBcrIdByUserId(string user_id)
         {
             var id = await _bcrService.GetBcrIdByUserId(user_id);
             return Ok(id);
@@ -51,7 +53,8 @@ namespace promoit_backend_cs_api.Controllers
 
         // PUT: api/Bcrs/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBcr(int id, BcrDTO bcr)
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> PutBcr(int id, BcrDTO bcr)
         {
             var editedBcr = await _bcrService.EditBcr(id, bcr);
             return NoContent();
@@ -74,7 +77,8 @@ namespace promoit_backend_cs_api.Controllers
 
         // DELETE: api/Bcrs/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBcr(int id)
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> DeleteBcr(int id)
         {
             await _bcrService.DeleteBcr(id);
             return NoContent();
