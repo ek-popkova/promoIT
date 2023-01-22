@@ -46,7 +46,7 @@ namespace promoit_backend_cs_api.Controllers
 
         // PUT: api/NonProfitRepresentatives/5
         [HttpPut("{id}")]
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = " Admin")]
 		public async Task<IActionResult> PutNonProfitRepresentative(int id, NonProfitRepresentativeDTO nonProfitRepresentative)
         {
             await _nonProfitRepresentativeService.EditNPR(id, nonProfitRepresentative);
