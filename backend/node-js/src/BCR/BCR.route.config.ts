@@ -34,7 +34,7 @@ export class BcrRoutes extends RouteConfig {
             body('price').isInt().withMessage("The 'price' parameter must be an integer"),
             body('transaction_status_id').isInt().withMessage("The 'transaction_status_id' parameter must be an integer")
         ], [AuthMiddleware.authenticateAccessToken, AuthMiddleware.checkRoles(["Business company representative", "Admin"]), BCRController.updateSocialActivistTransaction])
-
+                                                                                
         this.app.delete(`/business-company-representative/ship/:id/:user_id`, [
             check('id').isInt().withMessage("The id must be an integer"),],
             [AuthMiddleware.authenticateAccessToken, AuthMiddleware.checkRoles(["Business company representative", "Admin"]), BusinessCompanyRepresentativeController.ShipSocialActivistTransaction])

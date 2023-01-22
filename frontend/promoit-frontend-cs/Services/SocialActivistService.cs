@@ -43,7 +43,7 @@ namespace promoit_frontend_cs.Services
                 return await _http.GetFromJsonAsync<IEnumerable<SpResults>>($"https://localhost:7263/api/SaToCampaignWithCampaignInfo/{id}");
 			}
 			catch (Exception exception)
-			{
+			{                
 				_logger.LogError(exception, $"Error getting campaigns and money");
 				throw new Exception($"Error getting campaigns and money", exception);
 			}
