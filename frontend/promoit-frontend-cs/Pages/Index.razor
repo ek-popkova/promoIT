@@ -11,9 +11,11 @@
 
 <PageTitle>Main Page</PageTitle>
 
+<h3>Hello, @name!</h3>
+
 <AuthorizeView Policy="NoRolePolicy">
      <Authorized >
-        <h1>Choose your role</h1>
+        <h4>Choose your role</h4>
 
         <a role="button" class="btn btn-primary" href="/add-social-activist/">Social Activist</a>
         <a role="button" class="btn btn-success" href="/add-business-company/">Business company representative</a>
@@ -23,26 +25,64 @@
 
 <AuthorizeView Roles="Social activist">
     <Authorized>
-        This content can be seen only if you are a social activist
+        <p>Great! Now you have a full access to the system as an social activist.</p>
+        <p>To get started you need:
+            <ol>
+                <li>choose the campaign you want to promote</li>
+                <li>tweet about it using a special hashtag</li>
+                <li>get retweets from other supporters</li>
+                <li>for each of your tweets and retweets, you will receive 1 promoCoin, which you can then spend on gifts from sponsors</li>
+                <li>you can also spend promoCoin to donate a gift from one campaign to another.</li>
+            </ol>
+        </p>
+        <h5>Enjoy Promo IT!</h5>
     </Authorized>
 </AuthorizeView>
 
 <AuthorizeView Roles="Business company representative">
     <Authorized>
-        This content can be seen only if you are a business company representative
+        <p>Great! Now you have a full access to the system as a business company representative.</p>
+        <p>
+            To get started you need:
+            <ol>
+                <li>fill in the form with products, you can donate, provide their value in promoCoins, for social activists to be able to buy them after ptomoting a campaign</li>
+                <li>choose, which campaign you would like to donate which product and enter their value</li>
+                <li>on shipping page you will see new orders from social activists, please mark them as sent, when you have already shipped it</li>
+            </ol>
+        </p>
+        <h5>Enjoy Promo IT!</h5>
     </Authorized>
 </AuthorizeView>
 
 <AuthorizeView Roles="Non-profit company representative">
     <Authorized>
-        This content can be seen only if you are a non-profit company representative
+        <p>Great! Now you have a full access to the system as a non-profit organization representative.</p>
+        <p>
+            To get started you need:
+            <ol>
+                <li>create your campaign</li>
+                <li>provide it with a special hashtag, you want social activists to post tweets with</li>
+                <li>now business companies can donate products to motivate social activists to post tweets, and social activists are ready to promote your campaign as much as they can!</li>
+            </ol>
+        </p>
+        <h5>Enjoy Promo IT!</h5>
     </Authorized>
 </AuthorizeView>
 
 
-<p style="word-break:break-word">Your token is @token</p>
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <p>Great! Now you have a full access to the system as an admin.</p>
+        <p>When you use the system for the first time, don't forget to register as social activist, business-company representative and a non-profit organisation representative to have a correct access to their functions.</p>
 
-@foreach (var claim in user.Claims)
+        <p style="word-break:break-word">Your token is @token</p>
+    </Authorized>
+</AuthorizeView>
+
+
+
+
+@*@foreach (var claim in user.Claims)
 {
     <span>
         @claim.Type
@@ -52,17 +92,19 @@
         @claim.Value
     </span>
     <br />
-}
+}*@
 
 
 @code {
     public string token;
-    public ClaimsPrincipal user;
+    //public ClaimsPrincipal user;
+    public string name;
 
     protected override async Task OnInitializedAsync()
     {
         token = HttpContextAccessor.HttpContext.Request.Cookies["auth_token"];
-        user = HttpContextAccessor.HttpContext.User;
+        //user = HttpContextAccessor.HttpContext.User;
+        name = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "name").Value;
     }
 
 }
