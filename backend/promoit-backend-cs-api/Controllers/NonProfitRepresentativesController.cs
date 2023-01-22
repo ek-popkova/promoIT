@@ -37,7 +37,7 @@ namespace promoit_backend_cs_api.Controllers
         }
 
         [HttpGet("/api/NonProfitRepresentatives/NpcrIdByUserId/{user_id}")]
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Non-profit company representative, Admin")]
 		public async Task<ActionResult<int>> GetNpcrIdByUserId(string user_id)
         {
             var id = await _nonProfitRepresentativeService.GetNpcrIdByUserId(user_id);

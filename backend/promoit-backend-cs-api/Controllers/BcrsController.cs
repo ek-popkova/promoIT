@@ -44,8 +44,9 @@ namespace promoit_backend_cs_api.Controllers
         }
 
         [HttpGet("/api/Bcrs/BcrIdByUserId/{user_id}")]
-		[Authorize(Roles = "Admin")]
-		public async Task<ActionResult<int>> GetBcrIdByUserId(string user_id)
+		[Authorize(Roles = "Admin, Business company representative")]
+
+        public async Task<ActionResult<int>> GetBcrIdByUserId(string user_id)
         {
             var id = await _bcrService.GetBcrIdByUserId(user_id);
             return Ok(id);
