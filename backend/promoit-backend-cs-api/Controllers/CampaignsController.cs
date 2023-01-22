@@ -19,7 +19,7 @@ namespace promoit_backend_cs_api.Controllers
 
         // GET: api/Campaigns
         [HttpGet]
-		[Authorize(Roles = "Social activist, Admin")]
+		[Authorize(Roles = "Business company representative, Social activist, Admin")]
 		public async Task<ActionResult<IEnumerable<CampaignDTO>>> GetCampaigns()
         {
             var allCampaigns = await _campaignService.GetAllCampaigns();
@@ -28,7 +28,7 @@ namespace promoit_backend_cs_api.Controllers
 
         // GET: api/Campaigns/5
         [HttpGet("{id}")]
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Business company representative, Admin")]
 		public async Task<ActionResult<Campaign>> GetCampaign(int id)
         {
             var campaign = await _campaignService.GetCampaignById(id);
@@ -36,7 +36,7 @@ namespace promoit_backend_cs_api.Controllers
         }
 
         [HttpGet("/api/Campaigns/CampaignsByNPRId/{npr_id}")]
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Business company representative,Non-profit company representative, Admin")]
 		public async Task<ActionResult<IEnumerable<CampaignDTO>>> GetCampaignByNPRId(int npr_id)
         {
             var campaign = await _campaignService.GetCampaignsByNPCRId(npr_id);
@@ -53,7 +53,7 @@ namespace promoit_backend_cs_api.Controllers
 
         // PUT: api/Campaigns/5
         [HttpPut("{id}")]
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Business company representative, Admin")]
 		public async Task<IActionResult> PutCampaign(int id, CampaignDTO campaign)
         {
             await _campaignService.EditCampain(id, campaign);
@@ -77,7 +77,7 @@ namespace promoit_backend_cs_api.Controllers
 
         // DELETE: api/Campaigns/5
         [HttpDelete("{id}")]
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Business company representative, Admin")]
 		public async Task<IActionResult> DeleteCampaign(int id)
         {
             await _campaignService.DeleteCampaign(id);
