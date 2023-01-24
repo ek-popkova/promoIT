@@ -12,20 +12,24 @@ namespace promoit_frontend_cs.Services
 		private readonly IHttpContextAccessor _httpContextAccessor;
 		private readonly AuthService _authservice;
 		private readonly HttpClient _http;
+        private readonly HttpClient clientJS;
+        private readonly HttpClient clientNET;
 
-		public BusinessCompanyRepresentativeService(HttpClient http, ILogger<BusinessCompanyRepresentativeService> logger, IHttpContextAccessor HttpContextAccessor, AuthService authservice)
+		public BusinessCompanyRepresentativeService(HttpClient http, ILogger<BusinessCompanyRepresentativeService> logger, IHttpContextAccessor HttpContextAccessor, AuthService authservice, IHttpClientFactory factory)
 		{
 			_http = http;
 			_logger = logger;
 			_httpContextAccessor = HttpContextAccessor;
 			_authservice = authservice;
+            clientJS = factory.CreateClient("NodeJS_Server");
+            clientNET = factory.CreateClient("NET_Server");
 		}
 
 		public async Task<IEnumerable<SaTransactionSharedSAInfo>> GetTransactionWithSAInfo(int id)
         {
 			try
             {
-                var response = await _http.GetAsync($"http://localhost:7000/business-company-representative/{id}");
+                var response = await _http.GetAsync($"{clientJS.BaseAddress}business-company-representative/{id}");
                 var json = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<IEnumerable<SaTransactionSharedSAInfo>>(json);
 			}
@@ -40,7 +44,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-			    var response = await _http.GetAsync($"https://localhost:7263/api/Bcrs/productByBcrId/{id}");
+			    var response = await _http.GetAsync($"{clientNET.BaseAddress}api/Bcrs/productByBcrId/{id}");
 			    var json = await response.Content.ReadAsStringAsync();
 			    return JsonConvert.DeserializeObject<IEnumerable<ProductsAndBcrInfo>>(json);
 			}
@@ -55,7 +59,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-				return await _http.PostAsJsonAsync("http://localhost:7000/business-company-representative", saTransactionShared);
+				return await _http.PostAsJsonAsync($"{clientJS.BaseAddress}business-company-representative", saTransactionShared);
 			}
 			catch (Exception exception)
 			{
@@ -68,7 +72,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                return await _http.DeleteAsync($"http://localhost:7000/business-company-representative/ship/{saTransactionId}/{user_id}");
+                return await _http.DeleteAsync($"{clientJS.BaseAddress}business-company-representative/ship/{saTransactionId}/{user_id}");
 			}
 			catch (Exception exception)
 			{
@@ -85,7 +89,7 @@ namespace promoit_frontend_cs.Services
 
             try
             {
-                return await _http.PostAsJsonAsync("https://localhost:7263/api/Bcrs", newBCR);
+                return await _http.PostAsJsonAsync($"{clientNET.BaseAddress}api/Bcrs", newBCR);
 
             }
             catch (Exception exception)
@@ -100,7 +104,7 @@ namespace promoit_frontend_cs.Services
 
             try
             {
-                return await _http.PostAsJsonAsync("https://localhost:7263/api/Products", newProduct);
+                return await _http.PostAsJsonAsync($"{clientNET.BaseAddress}api/Products", newProduct);
 
             }
             catch (Exception exception)
@@ -114,7 +118,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                var response = await _http.GetAsync($"https://localhost:7263/api/Bcrs/BcrIdByUserId/{user_id}");
+                var response = await _http.GetAsync($"{clientNET.BaseAddress}api/Bcrs/BcrIdByUserId/{user_id}");
                 return Int32.Parse(await response.Content.ReadAsStringAsync());
 
             }

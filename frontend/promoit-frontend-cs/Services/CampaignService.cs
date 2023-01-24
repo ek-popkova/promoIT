@@ -9,18 +9,20 @@ namespace promoit_frontend_cs.Services
 		private readonly ILogger<CampaignService> _logger;
 		private readonly AuthService _authservice;
 		private readonly HttpClient _http;
-        public CampaignService(HttpClient Http, ILogger<CampaignService> logger, AuthService authservice)
+        private readonly HttpClient clientNET;
+        public CampaignService(HttpClient Http, ILogger<CampaignService> logger, AuthService authservice, IHttpClientFactory factory)
         {
             _http = Http;
 			_logger = logger;
 			_authservice = authservice;
+            clientNET = factory.CreateClient("NET_Server");
         }
 
         public async Task<IEnumerable<CampaignShared>> GetAllCampaigns()
         {
             try
             {
-                var response = await _http.GetAsync("https://localhost:7263/api/Campaigns");
+                var response = await _http.GetAsync($"{clientNET.BaseAddress}api/Campaigns");
                 var json = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<IEnumerable<CampaignShared>>(json);
 			}
@@ -35,7 +37,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                var response = await _http.GetAsync($"https://localhost:7263/api/Campaigns/CampaignsByNPRId/{npr_id}");
+                var response = await _http.GetAsync($"{clientNET.BaseAddress}api/Campaigns/CampaignsByNPRId/{npr_id}");
                 var json = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<IEnumerable<CampaignDTO>>(json);
             }
@@ -50,7 +52,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-			    var response = await _http.GetAsync("https://localhost:7263/api/allProductsToCampaigns");
+			    var response = await _http.GetAsync($"{clientNET.BaseAddress}api/allProductsToCampaigns");
 			    var json = await response.Content.ReadAsStringAsync();
 			    return JsonConvert.DeserializeObject<IEnumerable<ProductToCampaignDTOShared>>(json);
 			}
@@ -66,7 +68,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                var response = await _http.GetAsync("https://localhost:7263/api/ProductToCampaignInfo");
+                var response = await _http.GetAsync($"{clientNET.BaseAddress}api/ProductToCampaignInfo");
                 var json = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<IEnumerable<ProductsAndCampaignsShared>>(json);
 			}
@@ -80,7 +82,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                var response = await _http.GetAsync("https://localhost:7263/api/Campaigns/CampaignsWithNPR");
+                var response = await _http.GetAsync($"{clientNET.BaseAddress}api/Campaigns/CampaignsWithNPR");
                 var json = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<IEnumerable<CampaignsAndNpr>>(json);
 			}
@@ -95,7 +97,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                return await _http.PutAsJsonAsync($"https://localhost:7263/api/PutProductToCampaign/{id}", ptc);
+                return await _http.PutAsJsonAsync($"{clientNET.BaseAddress}api/PutProductToCampaign/{id}", ptc);
 			}
 			catch (Exception exception)
 			{
@@ -108,7 +110,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                return await _http.PostAsJsonAsync("https://localhost:7263/api/PostProductToCampaign", ptc);
+                return await _http.PostAsJsonAsync($"{clientNET.BaseAddress}api/PostProductToCampaign", ptc);
 			}
 			catch (Exception exception)
 			{
@@ -121,7 +123,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                return await _http.PostAsJsonAsync("https://localhost:7263/api/Campaigns", newCampaign);
+                return await _http.PostAsJsonAsync($"{clientNET.BaseAddress}api/Campaigns", newCampaign);
 
             }
             catch (Exception exception)
