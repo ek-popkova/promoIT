@@ -8,11 +8,13 @@ namespace promoit_frontend_cs.Services
     {
         private readonly HttpClient _http;
         private readonly ILogger<NonProfitRepresentativeService> _logger;
+        private readonly HttpClient clientNET;
 
-        public NonProfitRepresentativeService(HttpClient http, ILogger<NonProfitRepresentativeService> logger)
+        public NonProfitRepresentativeService(HttpClient http, ILogger<NonProfitRepresentativeService> logger, IHttpClientFactory factory)
         {
             _http = http;
             _logger = logger;
+            clientNET = factory.CreateClient("NET_Server");
         }
 
         public async Task<HttpResponseMessage> AddNewNPCR(NonProfitRepresentativeDTO newNPCR, string user_id)
@@ -23,7 +25,7 @@ namespace promoit_frontend_cs.Services
 
             try
             {
-                return await _http.PostAsJsonAsync("https://localhost:7263/api/NonProfitRepresentatives", newNPCR);
+                return await _http.PostAsJsonAsync($"{clientNET.BaseAddress}api/NonProfitRepresentatives", newNPCR);
 
             }
             catch (Exception exception)
@@ -37,7 +39,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                var response = await _http.GetAsync($"https://localhost:7263/api/NonProfitRepresentatives/NpcrIdByUserId/{user_id}");
+                var response = await _http.GetAsync($"{clientNET.BaseAddress}api/NonProfitRepresentatives/NpcrIdByUserId/{user_id}");
                 return Int32.Parse(await response.Content.ReadAsStringAsync());
 
             }

@@ -15,19 +15,23 @@ namespace promoit_frontend_cs.Services
 		private readonly AuthService _authservice;
 		private readonly HttpClient _http;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly HttpClient clientJS;
+		private readonly HttpClient clientNET;
 
-        public SocialActivistService(HttpClient Http, ILogger<SocialActivistService> logger, AuthService authservice)
+		public SocialActivistService(HttpClient Http, ILogger<SocialActivistService> logger, AuthService authservice, IHttpClientFactory factory)
 		{
 			_http = Http;
 			_logger = logger;
 			_authservice = authservice;
+            clientJS = factory.CreateClient("NodeJS_Server");
+			clientNET = factory.CreateClient("NET_Server");
 		}
 
         public async Task<int> GetSocialActivistById(string id)
         {
             try
             {
-                var response = await _http.GetFromJsonAsync<int>($"http://localhost:7000/social-activist-id/{id}");
+                var response = await _http.GetFromJsonAsync<int>($"{clientJS.BaseAddress}social-activist-id/{id}");
                 return response;
             } catch(Exception exception)
 			{
@@ -40,7 +44,7 @@ namespace promoit_frontend_cs.Services
         {
             try
 			{
-                return await _http.GetFromJsonAsync<IEnumerable<SpResults>>($"https://localhost:7263/api/SaToCampaignWithCampaignInfo/{id}");
+                return await _http.GetFromJsonAsync<IEnumerable<SpResults>>($"{clientNET.BaseAddress}api/SaToCampaignWithCampaignInfo/{id}");
 			}
 			catch (Exception exception)
 			{                
@@ -53,7 +57,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                return await _http.PutAsJsonAsync($"http://localhost:7000/sa-to-campaign/{id}", saToCampaignShared);
+                return await _http.PutAsJsonAsync($"{clientJS.BaseAddress}sa-to-campaign/{id}", saToCampaignShared);
 			}
 			catch (Exception exception)
 			{
@@ -70,7 +74,7 @@ namespace promoit_frontend_cs.Services
 
             try
             {
-                var response = await _http.PostAsJsonAsync("http://localhost:7000/social-activists", newSocialActivist);
+                var response = await _http.PostAsJsonAsync($"{clientJS.BaseAddress}social-activists", newSocialActivist);
                 return response;
 
             }
@@ -85,7 +89,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                var response = await _http.GetAsync("http://localhost:7000/social-activists");
+                var response = await _http.GetAsync($"{clientJS.BaseAddress}social-activists");
                 var json = await response.Content.ReadAsStringAsync();
                 var data = JsonConvert.DeserializeObject<SocialActivistDTO[]>(json);
                 return data;
@@ -101,7 +105,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                var response = await _http.GetAsync("http://localhost:7000/twitter-report");
+                var response = await _http.GetAsync($"{clientJS.BaseAddress}twitter-report");
                 var json = await response.Content.ReadAsStringAsync();
                 var data = JsonConvert.DeserializeObject<IEnumerable<TwitterReportType>>(json);
                 return data;

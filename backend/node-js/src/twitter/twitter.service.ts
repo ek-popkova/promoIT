@@ -53,7 +53,7 @@ class TwitterService implements ITwitterService {
 
             try {
                 const postTweet = await this.rwClient.v2.tweet({
-                    text: `A social activist with Twitter account ${socialActivistTransactionModel.socialAscivist.twitter} just bought some products from ${socialActivistTransactionModel.businessCompanyRepresentative.company_name} LLLLLLETTSSSSS GOOOOOOOOOOOOOOOOOO`
+                    text: `A social activist with Twitter account ${socialActivistTransactionModel.socialAscivist.twitter} just bought some products from ${socialActivistTransactionModel.businessCompanyRepresentative.company_name} PERFECT!`
                 })
             }
             catch (error) {

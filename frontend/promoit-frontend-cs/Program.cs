@@ -25,8 +25,11 @@ builder.Services.AddDbContext<promoit_backend_cs_api.Data.promo_itContext>(optio
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddHttpClient();
-/*builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:7000/") });
-*/
+//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:7000/") });
+
+builder.Services.AddHttpClient("NodeJS_Server", config => { config.BaseAddress = new Uri("http://localhost:7000/"); });
+builder.Services.AddHttpClient("NET_Server", config => { config.BaseAddress = new Uri("https://localhost:7263/"); });
+
 builder.Services.AddScoped<PopupService>();
 builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<NonProfitRepresentativeService>();
