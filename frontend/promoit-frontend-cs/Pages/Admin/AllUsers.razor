@@ -1,5 +1,6 @@
 ﻿@page "/allusers"
 @inject HttpClient Http
+@inject IHttpClientFactory factory;
 @attribute [Authorize(Roles = "Admin")]
 
 
@@ -37,9 +38,11 @@ else
 
 @functions {
     private IEnumerable<UserDTO>? users;
+    private HttpClient clientNET;
 
     protected override async Task OnInitializedAsync()
     {
-        users = await Http.GetFromJsonAsync<UserDTO[]>("https://localhost:7263/User");
+        clientNET = factory.CreateClient("NET_Server");
+        users = await Http.GetFromJsonAsync<UserDTO[]>($"{clientNET.BaseAddress}User");
     }
 }
