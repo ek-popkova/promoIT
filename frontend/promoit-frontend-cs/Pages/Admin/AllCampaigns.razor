@@ -37,17 +37,24 @@
     </table>
     </div>
 } else {
-    <h4>Loading data</h4>
+    <h5>@message</h5>
 }
 
 
 
 @functions {
-
+    private string message = "Loading data...";
     private IEnumerable<CampaignShared> сampaigns = Array.Empty<CampaignShared>();
 
     protected override async Task OnInitializedAsync()
     {
-         сampaigns = await campaignService.GetAllCampaigns();
+        try
+        {
+            сampaigns = await campaignService.GetAllCampaigns();
+        }
+        catch (Exception exception)
+        {
+            message = exception.Message;
+        }
     }
 }

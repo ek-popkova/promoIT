@@ -116,17 +116,23 @@ else
 	{
 		string user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
 		var message = await socialActivistService.AddNewSocialActivist(newSocialActivist, user_id);
-		respond = message.ReasonPhrase;
 		if (message.ReasonPhrase == "OK")
 		{
-			respond = "Great! Now you need to log out and login back to enjoy the whole functionality of being a social activist in PromoIT.";
+			try
+			{
+				await roleService.RoleAdder(user_id, "Activist");
+				respond = "Great! Now you need to log out and login back to enjoy the whole functionality of being a social activist in PromoIT.";
+			}
+			catch (Exception exception)
+			{
+				respond = exception.Message;
+			}
 		}
 		else
 		{
 			respond = message.ReasonPhrase;
 		}
 		flag = true;
-		await roleService.RoleAdder(user_id, "Activist");
 	}
 
 	protected override async Task OnInitializedAsync()

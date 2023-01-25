@@ -45,7 +45,14 @@ namespace promoit_backend_cs_api.Controllers
             {
                 Roles = roles
             };
+            var getRequest = new GetUserLogsRequest
+            {
+                Sort = "role:1",
+                UserId = user_id
+            };
             await _managementApiClient.Users.AssignRolesAsync(user_id, assignRequest);
+            var role = await _managementApiClient.Users.GetLogsAsync(getRequest);
+            Console.WriteLine(role.ToString());
             return NoContent();
         }
 

@@ -100,19 +100,26 @@ else
 
 	public async Task sendNewNPCR()
 	{
+
 		string user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
 		var message = await nonProfitRepresentativeService.AddNewNPCR(newNPCR, user_id);
-		respond = message.ReasonPhrase;
 		if (message.ReasonPhrase == "Created")
 		{
-			respond = "Great! Now you need to log out and login back to enjoy the whole functionality of being a non-profit organization representative in PromoIT.";
+			try
+			{
+				await roleService.RoleAdder(user_id, "NPCR");
+				respond = "Great! Now you need to log out and login back to enjoy the whole functionality of being a non-profit organization representative in PromoIT.";
+			}
+			catch (Exception exception)
+			{
+				respond = exception.Message;
+			}
 		}
 		else
 		{
 			respond = message.ReasonPhrase;
 		}
 		flag = true;
-		await roleService.RoleAdder(user_id, "NPCR");
 	}
 
 	

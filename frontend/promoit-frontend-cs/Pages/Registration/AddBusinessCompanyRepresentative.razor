@@ -82,13 +82,20 @@ else
 		var message = await businessCompanyRepresentativeService.AddNewBCR(newBCR, user_id);
 		if (message.ReasonPhrase == "Created")
 		{
-			respond = "Great! Now you need to log out and login back to enjoy the whole functionality of being a business company representative in PromoIT.";
+			try
+			{
+				await roleService.RoleAdder(user_id, "BCR");
+				respond = "Great! Now you need to log out and login back to enjoy the whole functionality of being a business company representative in PromoIT.";
+			}
+			catch (Exception exception)
+			{
+				respond = exception.Message;
+			}
 		}
 		else {
 			respond = message.ReasonPhrase;
 		}
 		flag = true;
-		await roleService.RoleAdder(user_id, "BCR");
 	}
 
 }
