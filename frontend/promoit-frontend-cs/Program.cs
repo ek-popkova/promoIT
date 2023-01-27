@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
-
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,10 +25,15 @@ builder.Services.AddDbContext<promoit_backend_cs_api.Data.promo_itContext>(optio
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddHttpClient();
-//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:7000/") });
 
-builder.Services.AddHttpClient("NodeJS_Server", config => { config.BaseAddress = new Uri("http://localhost:7000/"); });
-builder.Services.AddHttpClient("NET_Server", config => { config.BaseAddress = new Uri("https://localhost:7263/"); });
+builder.Services.AddHttpClient("NodeJS_Server", config => 
+{ 
+    config.BaseAddress = new Uri(builder.Configuration["NodeJSServer"]); 
+});
+builder.Services.AddHttpClient("NET_Server", config => 
+{
+    config.BaseAddress = new Uri(builder.Configuration["NETServer"]);
+});
 
 builder.Services.AddScoped<PopupService>();
 builder.Services.AddScoped<RoleService>();
