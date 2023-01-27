@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Shared;
+using System.Configuration;
 using static System.Net.WebRequestMethods;
 
 namespace promoit_frontend_cs.Services
@@ -10,20 +11,22 @@ namespace promoit_frontend_cs.Services
 		private readonly AuthService _authservice;
 		private readonly HttpClient _http;
         private readonly HttpClient clientNET;
-        public CampaignService(HttpClient Http, ILogger<CampaignService> logger, AuthService authservice, IHttpClientFactory factory)
+        private readonly IConfiguration _configuration;
+
+		public CampaignService(HttpClient Http, ILogger<CampaignService> logger, AuthService authservice, IHttpClientFactory factory, IConfiguration configuration)
         {
             _http = Http;
 			_logger = logger;
 			_authservice = authservice;
             clientNET = factory.CreateClient("NET_Server");
+            _configuration = configuration;
         }
-
-        public async Task<IEnumerable<CampaignShared>> GetAllCampaigns()
+		public async Task<IEnumerable<CampaignShared>> GetAllCampaigns()
         {
             try
             {
-                var response = await _http.GetAsync($"{clientNET.BaseAddress}api/Campaigns");
-                var json = await response.Content.ReadAsStringAsync();
+				var response = await _http.GetAsync($"{clientNET.BaseAddress}api/Campaigns");
+				var json = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<IEnumerable<CampaignShared>>(json);
 			}
 			catch (NullReferenceException exception)
@@ -82,7 +85,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                var response = await _http.GetAsync($"{clientNET.BaseAddress}api/Campaigns/CampaignsWithNPR");
+				var response = await _http.GetAsync($"{clientNET.BaseAddress}api/Campaigns/CampaignsWithNPR");
                 var json = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<IEnumerable<CampaignsAndNpr>>(json);
 			}
