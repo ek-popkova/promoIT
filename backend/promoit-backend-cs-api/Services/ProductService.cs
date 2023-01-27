@@ -80,6 +80,27 @@ namespace promoit_backend_cs.Services
             }
         }
 
+
+        public async Task<ProductToCampaignDTO> AnalizeAndAddAllProductsAndCampaigns(ProductToCampaignDTOShared product)
+        {
+            var allProductsAndCampaigns = await GetAllProductsToCampaigns();
+            ProductToCampaignDTO newProductToCampaign;
+            if (allProductsAndCampaigns.Any(x => x.ProductId == product.ProductId && x.CampaignId == product.CampaignId))
+            {
+                var pac = allProductsAndCampaigns.Where(x => x.ProductId == product.ProductId && x.CampaignId == product.CampaignId)
+                                                    .FirstOrDefault();
+
+                pac.UpdateUserId = product.UpdateUserId;
+                pac.InititalNumber += product.InititalNumber;
+                newProductToCampaign = await EditProductToCampaign(pac.Id, pac);
+            }
+            else
+            {
+                newProductToCampaign = await AddProductToCampaign(product);
+            }
+            return newProductToCampaign;
+        }
+
         public async Task<ProductDTO> GetProductById(int id)
         {
             try
@@ -223,7 +244,7 @@ namespace promoit_backend_cs.Services
             }
         }
 
-        public async Task<ProductToCampaignDTO> EditProductToCampaign(int id, ProductToCampaignDTOShared productToCampaignDTO)
+        public async Task<ProductToCampaignDTO> EditProductToCampaign(int id, ProductToCampaignDTO productToCampaignDTO)
         {
             var existingPTC = await _context.ProductToCampaigns.FindAsync(id);
 

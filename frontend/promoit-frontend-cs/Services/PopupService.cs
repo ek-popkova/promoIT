@@ -10,6 +10,11 @@ namespace promoit_frontend_cs.Services
             _jSRuntime= JSRuntime;
         }
 
+        public async Task ShowPopupException(string exception)
+        {
+            await _jSRuntime.InvokeAsync<object>("alert", exception);
+        }
+
         public async Task ShowPopupNoData()
         {
             await _jSRuntime.InvokeAsync<object>("alert", "Please, select a campaign you want to donate to and a product you want to donate");
