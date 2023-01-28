@@ -108,23 +108,6 @@ namespace promoit_frontend_cs.Pages.BCR
                     catch (Exception exception) {
                         await popupService.ShowPopupException(exception.Message);
                     }
-                    //if (allProductsAndCampaigns.Any(x => x.ProductId == product.ProductId && x.CampaignId == product.CampaignId))
-                    //{
-                    //    var pac = allProductsAndCampaigns.Where(x => x.ProductId == product.ProductId && x.CampaignId == product.CampaignId)
-                    //                                        .FirstOrDefault();
-
-                    //    pac.UpdateUserId = user_id;
-                    //    pac.InititalNumber += initialNumber;
-                    //    var putProductToCampaign = await campaignService.PutProductToCampaign(pac.Id, pac);
-                    //    await popupService.ShowPopupThanks(campaignToDonateTo.OrganizationName);
-                    //}
-                    //else
-                    //{
-                    //    var postProductToCampaign = await campaignService.PostProductToCampaign(product);
-                    //    await popupService.ShowPopupThanks(campaignToDonateTo.OrganizationName);
-                    //    showDonationForm = !showDonationForm;
-                    //}
-
                 }
 
             }
