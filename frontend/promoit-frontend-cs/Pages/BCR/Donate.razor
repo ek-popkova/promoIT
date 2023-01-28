@@ -1,4 +1,5 @@
 ﻿@page "/donate"
+@using global::Shared
 @attribute [Authorize(Roles = "Business company representative, Admin")]
 
 
@@ -13,50 +14,27 @@
 
 @if (showTableCampaignsAndNRP)
 {
-	if (listOfCampaignsAndNPR.Count() != 0)
+	@if (listOfCampaignsAndNPR.Count() != 0)
 	{
-		<div>
-			<table class="table table-hover table-striped">
-				<thead class="table-dark">
-					<tr>
-						<th>Campaign Name</th>
-						<th>Campaign Link</th>
-						@*<th>Campaign Hashtag</th>*@
-						<th>Organization Name</th>
-						<th>Campaign Link</th>
-						<th>Representative Email</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (var campaign in listOfCampaignsAndNPR)
-					{
-						<tr>
-							<td>@campaign.Name</td>
-							<td>@campaign.Link</td>
-							@*<td>@campaign.Hashtag</td>*@
-							<td>@campaign.OrganizationName</td>
-							<td>@campaign.OrganizationLink</td>
-							<td>@campaign.NPR_email</td>
-							<div>
-								<button class="btn btn-outline-success" @onclick="() => 
-									SelectCampaignToDonateTo(campaign)">Choose this campaign to donate a product
-								</button>
-							</div>
-						</tr>
-					}
-				</tbody>
-			</table>
-		</div>
-	}
-	else
+		<DataGrid TItem="CampaignsAndNpr"
+		  Data="@listOfCampaignsAndNPR"	
+		  @bind-SelectedRow="@campaignToDonateTo"
+		  Filterable
+		  Responsive>
+			<DataGridColumn Field="@nameof( CampaignsAndNpr.Name)" Caption="Campaign Name" Editable="false" Sortable="true"></DataGridColumn>
+			<DataGridColumn Field="@nameof( CampaignsAndNpr.Link )" Caption="Campaign Link" Editable="false"></DataGridColumn>
+			<DataGridColumn Field="@nameof( CampaignsAndNpr.OrganizationName )" Caption="Organization Name" Editable="false" Sortable="true"></DataGridColumn>
+			<DataGridColumn Field="@nameof( CampaignsAndNpr.OrganizationLink )" Caption="Campaign Link" Editable="false"></DataGridColumn>
+			<DataGridColumn Field="@nameof( CampaignsAndNpr.NPR_email )" Caption="Representative Email" Editable="false"></DataGridColumn>
+
+		</DataGrid>
+	} else
 	{
 		<div>Loading ...</div>
 	}
 }
 
 &nbsp;
-
 <div>
 	<button class="btn btn-primary" @onclick="() => GetProductsAndBCRInfo()">See my products</button>
 </div>
@@ -66,40 +44,27 @@
 {
 	@if (listOfProductsByBCR.Count() != 0)
 	{
-		<div>
-			<div class="table-responsive">
-			<table class="table table-hover table-striped">
-				<thead class="table-dark">
-					<tr>
-						<th>Product Name</th>
-						<th>Product Value</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (var product in listOfProductsByBCR)
-					{
-						<tr>
-							<td>@product.Name</td>
-							<td>@product.Value</td>
-							<div>
-								<button class="btn btn-outline-success" @onclick="async () => {
-									await SelectProductToDonate(product);
-									await GetAllProductsToCampaigns(); }">
-									Choose this product
-								</button>
-							</div>
-						</tr>
-					}
-				</tbody>
-			</table>
-			</div>
-		</div>
+		<DataGrid TItem="ProductsAndBcrInfo"
+		  Data="@listOfProductsByBCR"
+		  @bind-SelectedRow="@productToDonate"
+		  Filterable
+		  Responsive>
+			<DataGridColumn Field="@nameof( ProductsAndBcrInfo.Name)" Caption="Product Name" Editable="false" Sortable="true"></DataGridColumn>
+			<DataGridColumn Field="@nameof( ProductsAndBcrInfo.Value )" Caption="Product Value" Editable="false" Sortable="true"></DataGridColumn>
+
+		</DataGrid>
 	} else
 	{
 		<div>Loading ...</div>
 	}
 }
+
+&nbsp;
+
+<div>
+	<button type="submit" class="btn btn-success" onclick="@(async() => await ShowDonationForm())">Show donation form</button>
+</div>
+
 &nbsp;
 
 @if (showDonationForm)
@@ -113,7 +78,7 @@
 			</div>
 			&nbsp;
 			<div>
-				<button type="submit" class="btn btn-primary">Donate!</button>
+				<button type="submit" class="btn btn-success">Donate!</button>
 			</div>
 			&nbsp;
 		</EditForm>

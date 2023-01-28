@@ -48,16 +48,14 @@
             <DataGridColumn Field="@nameof( ProductsAndCampaignsShared.productName )" Caption="Product" Editable="false"></DataGridColumn>
             <DataGridColumn Field="@nameof( ProductsAndCampaignsShared.productValue )" Caption="Price" Editable="false" Sortable="true"></DataGridColumn>
         </DataGrid>
-   
 
-   
-    <button class="btn btn-warning" @onclick="() => EditProduct()">I want to buy it!</button>
-    <button class="btn btn-success" @onclick="async() => {
-                                                     await SelectProductToDonate();
-                                                     await GetAllCampaigns();
-                                                    }">
-                                                    I want to donate it!
-    </button>
+        <button class="btn btn-warning" @onclick="() => EditProduct()">I want to buy it!</button>
+        <button class="btn btn-success" @onclick="async() => {
+                                                         await SelectProductToDonate();
+                                                         await GetAllCampaigns();
+                                                        }">
+                                                        I want to donate it!
+        </button>
     } else
     {
         <div>Loading ...</div>

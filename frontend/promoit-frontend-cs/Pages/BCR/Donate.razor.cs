@@ -41,6 +41,7 @@ namespace promoit_frontend_cs.Pages.BCR
 
 			user_id = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(e => e.Type == "id").Value;
 			bcr_id = await businessCompanyRepresentativeService.GetBCRidByUserId(user_id);
+            GetAllProductsToCampaigns();
 		}
 
 		private async Task<IEnumerable<CampaignsAndNpr>> GetCampaignsAndNPR()
@@ -59,9 +60,7 @@ namespace promoit_frontend_cs.Pages.BCR
 
 		}
 
-		private async Task SelectCampaignToDonateTo(CampaignsAndNpr campaign) => campaignToDonateTo = campaign;
-
-    private async Task<IEnumerable<ProductsAndBcrInfo>> GetProductsAndBCRInfo()
+        private async Task<IEnumerable<ProductsAndBcrInfo>> GetProductsAndBCRInfo()
         {
             showTableProductsAndBCRInfo = !showTableProductsAndBCRInfo;
 
@@ -70,11 +69,10 @@ namespace promoit_frontend_cs.Pages.BCR
 
 		}
 
-		private async Task SelectProductToDonate(ProductsAndBcrInfo product)
+        private async Task ShowDonationForm()
         {
-            showDonationForm = !showDonationForm;
-            productToDonate = product;
-        }
+			showDonationForm = !showDonationForm;
+		}
 
 		private async Task CheckAndDonateProduct()
         {
@@ -109,7 +107,6 @@ namespace promoit_frontend_cs.Pages.BCR
                         await popupService.ShowPopupException(exception.Message);
                     }
                 }
-
             }
         }
 

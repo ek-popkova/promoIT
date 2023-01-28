@@ -1,5 +1,6 @@
 ﻿@page "/allusers"
 @inject HttpClient Http
+@inject IHttpClientFactory factory;
 @attribute [Authorize(Roles = "Admin")]
 
 
@@ -38,11 +39,13 @@ else
 @functions {
     private string message = "Loading data...";
     private IEnumerable<UserDTO>? users;
+    private HttpClient clientNET;
 
     protected override async Task OnInitializedAsync()
     {
         try {
-            users = await Http.GetFromJsonAsync<UserDTO[]>("https://localhost:7263/User");
+            clientNET = factory.CreateClient("NET_Server");
+            users = await Http.GetFromJsonAsync<UserDTO[]>($"{clientNET.BaseAddress}User");
         }
         catch (Exception exception) {
             if (exception.Message == "Response status code does not indicate success: 401 (Unauthorized).")
@@ -52,9 +55,6 @@ else
             else {
                 message = exception.Message;
             }
-            //message = "Auth0 temporary unavailale, please try again later";
- 
         }
-        
     }
 }
