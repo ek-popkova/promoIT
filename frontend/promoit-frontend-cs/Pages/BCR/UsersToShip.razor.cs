@@ -38,7 +38,7 @@ namespace promoit_frontend_cs.Pages.BCR
             var result = await popupService.ShowConfirm();
             if (result)
             {
-                saTransactionSharedSAInfo.transaction_status_id = 2;
+                //saTransactionSharedSAInfo.transaction_status_id = 2;
                 await businessCompanyRepresentativeService.SendProductToSocialActivist(saTransactionSharedSAInfo.Id, user_id);
             }
         }

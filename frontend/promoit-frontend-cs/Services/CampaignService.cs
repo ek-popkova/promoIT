@@ -122,6 +122,19 @@ namespace promoit_frontend_cs.Services
 			}
 		}
 
+        public async Task<HttpResponseMessage> AnalizeAndPutProductToCampaign(ProductToCampaignDTOShared ptc)
+        {
+            try
+            {
+                return await _http.PutAsJsonAsync($"https://localhost:7263/api/ProductToCampaign/", ptc);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, $"Error putting products and campaigns");
+                throw new Exception($"Error putting products and campaigns", exception);
+            }
+        }
+
         public async Task<HttpResponseMessage> AddNewCampaign(CampaignDTO newCampaign)
         {
             try

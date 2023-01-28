@@ -109,12 +109,23 @@ namespace promoit_backend_cs_api.Controllers
 
         [HttpPut("/api/PutProductToCampaign/{id}")]
 		[Authorize(Roles = "Business company representative, Social activist, Admin")]
-		public async Task<IActionResult> PutProductToCampaign(int id, ProductToCampaignDTOShared productToCampaign)
+		public async Task<IActionResult> PutProductToCampaign(int id, ProductToCampaignDTO productToCampaign)
         {
 			Console.WriteLine("PutProductToCampaign backend started");
 			var editedProductToCampaign = await _productService.EditProductToCampaign(id, productToCampaign);
             return NoContent();
         }
+
+        [HttpPut("/api/ProductToCampaign/")]
+        //[Authorize(Roles = "Business company representative, Social activist, Admin")]
+        public async Task<ActionResult<ProductToCampaign>> ProductToCampaign(ProductToCampaignDTOShared productToCampaign)
+        {
+            Console.WriteLine("AnalizeProductToCampaign backend started");
+            var editedProductToCampaign = await _productService.AnalizeAndAddAllProductsAndCampaigns(productToCampaign);
+            return Ok(editedProductToCampaign);
+        }
+
+
 
 
         [HttpPost("/api/PostProductAndCampaign")]

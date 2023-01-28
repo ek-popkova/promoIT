@@ -6,7 +6,7 @@
 
 @if (users is null)
 {
-    <p>Loading data...</p>
+    <h5>@message</h5>
 
 }
 else
@@ -37,12 +37,24 @@ else
 }
 
 @functions {
+    private string message = "Loading data...";
     private IEnumerable<UserDTO>? users;
     private HttpClient clientNET;
 
     protected override async Task OnInitializedAsync()
     {
-        clientNET = factory.CreateClient("NET_Server");
-        users = await Http.GetFromJsonAsync<UserDTO[]>($"{clientNET.BaseAddress}User");
+        try {
+            clientNET = factory.CreateClient("NET_Server");
+            users = await Http.GetFromJsonAsync<UserDTO[]>($"{clientNET.BaseAddress}User");
+        }
+        catch (Exception exception) {
+            if (exception.Message == "Response status code does not indicate success: 401 (Unauthorized).")
+            {
+                message = "Auth0 temparary unavailable, please try again later";
+            }
+            else {
+                message = exception.Message;
+            }
+        }
     }
 }

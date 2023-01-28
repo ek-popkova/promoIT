@@ -83,5 +83,5 @@ server.listen(PORT, async () => {
   routes.forEach((route: RouteConfig) => {
     console.log(`Routes configured for ${route.getName()}`)
   })
-  MoneyTwitterHelper.checkTweetsGiveMoney();
+  //MoneyTwitterHelper.checkTweetsGiveMoney();
 })

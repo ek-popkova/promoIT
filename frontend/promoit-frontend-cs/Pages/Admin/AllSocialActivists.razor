@@ -42,15 +42,22 @@
     </table>
     </div>
 } else {
-    <h5>Loading data</h5>
+    <h5>@message</h5>
 }
 
 @functions {
-
+    private string message = "Loading data...";
     private IEnumerable<SocialActivistDTO> socialActivists = Array.Empty<SocialActivistDTO>();
 
     protected override async Task OnInitializedAsync()
     {
-        socialActivists = await socialActivistService.GetSocialActivists();
+        try
+        {
+            socialActivists = await socialActivistService.GetSocialActivists();
+        }
+        catch (Exception exception)
+        {
+            message = exception.Message;
+        }
     }
 }
