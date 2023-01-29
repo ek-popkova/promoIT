@@ -126,7 +126,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                return await _http.PutAsJsonAsync($"https://localhost:7263/api/ProductToCampaign/", ptc);
+                return await _http.PutAsJsonAsync($"{clientNET.BaseAddress}api/ProductToCampaign/", ptc);
             }
             catch (Exception exception)
             {
