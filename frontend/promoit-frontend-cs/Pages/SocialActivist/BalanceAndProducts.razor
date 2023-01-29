@@ -90,8 +90,7 @@
 {
     <div>
         <EditForm Model="@boughtNumber" OnValidSubmit="@(async() => {
-                                                                        await AnalizeProductAndCampaignAndDonate(productsAndCampaigns,
-                                                                                                                 chosenCampaign,
+                                                                        await AnalizeProductAndCampaignAndDonate(selectedCampaignName,
                                                                                                                  boughtNumber);
                                                                     })">
             <DataAnnotationsValidator />
@@ -127,18 +126,6 @@
 }
 
 @code {
-
-    string selectedMoneyFilter;
-
-    private bool OnMoneyCustomFilter(object itemValue, object searchValue)
-    {
-        if (searchValue is string genderFilter)
-        {
-            return genderFilter == "*" || genderFilter == itemValue?.ToString();
-        }
-
-        return true;
-    }
 
 
 }

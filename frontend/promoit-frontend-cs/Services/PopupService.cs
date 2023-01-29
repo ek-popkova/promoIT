@@ -10,6 +10,10 @@ namespace promoit_frontend_cs.Services
             _jSRuntime= JSRuntime;
         }
 
+        public async Task ShowPopupNoProduct(int leftover, string product)
+        {
+            await _jSRuntime.InvokeAsync<object>("alert", $"Sorry, we have only {leftover} {product}'s left");
+        }
         public async Task ShowPopupException(string exception)
         {
             await _jSRuntime.InvokeAsync<object>("alert", exception);

@@ -69,6 +69,14 @@ namespace promoit_backend_cs_api.Controllers
             return Ok(productsAndCampaigns);
         }
 
+        [HttpPut("/api/DonateProduct/{user_id}/{campaignName}/{boughtNumber}")]
+        [Authorize(Roles = "Social activist, Admin")]
+        public async Task<ActionResult<object>> DonateProduct(string user_id, string campaignName, int boughtNumber, ProductsAndCampaignsShared productAndCampaign)
+        {
+            var productsAndCampaigns = await _productService.AnalyzeProductToCampaignAndDonate(user_id, campaignName, boughtNumber, productAndCampaign);
+            return Ok(productsAndCampaigns);
+        }
+
         // PUT: api/Products/5
         [HttpPut("{id}")]
 		[Authorize(Roles = "Admin")]

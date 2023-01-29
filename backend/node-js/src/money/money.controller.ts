@@ -49,6 +49,31 @@ class MoneyController {
     }
   }
 
+  async getMoneyBySocialActivistIdAndCampaignId(req: Request, res: Response, next: NextFunction) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return ErrorHelper.handleValidationError(res, errors);
+    }
+    else {
+      let sa_id: number = parseInt(req.params.sa_id);
+      console.log(sa_id);
+      let campaign_id: number = parseInt(req.params.campaign_id);
+      console.log(campaign_id);
+      if ((sa_id > 0) && (campaign_id > 0)) {
+        MoneyService.getMoneyBySocialActivistIdAndCampaignId(sa_id, campaign_id)
+          .then((result: number) => {
+            return res.status(200).json(result);
+          })
+          .catch((error: systemError) => {
+              return ErrorHelper.handleError(res, error);
+          })
+      }
+      else {
+        return ErrorHelper.handleError(res, ErrorHelper.getError(AppError.NonPositiveInput))
+      }
+    }
+  }
+
 
   async addMoneyByHashtagTwitter(req: Request, res: Response, next: NextFunction) {
     const errors = validationResult(req);

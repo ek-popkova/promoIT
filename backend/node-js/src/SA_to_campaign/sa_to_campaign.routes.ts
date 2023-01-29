@@ -20,7 +20,7 @@ export class SA_to_campaignRoutes extends RouteConfig {
             check('id').isInt().withMessage("The 'id' parameter must be an integer"),
             body('social_activist_id').isInt().withMessage("The 'social_activist_id' must be an integer"),
             body('campaign_id').isInt().withMessage("The 'campaign_id' must be an integer"),
-            body('money').isInt()?.withMessage("The 'money' must be an integer")], [AuthMiddleware.authenticateAccessToken, AuthMiddleware.checkRoles(["Social activist", "Admin"]),sa_to_campaignController.updateSAtoCampaign])
+            body('money').isInt()?.withMessage("The 'money' must be an integer")], [/*AuthMiddleware.authenticateAccessToken, AuthMiddleware.checkRoles(["Social activist", "Admin"]),*/sa_to_campaignController.updateSAtoCampaign])
             
         return this.app
     }
