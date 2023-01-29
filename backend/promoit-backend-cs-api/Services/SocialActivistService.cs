@@ -1,28 +1,27 @@
 ﻿using Newtonsoft.Json;
 using NuGet.Common;
-using promoit_frontend_cs.Pages.Admin;
 using Shared;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using static System.Net.WebRequestMethods;
 
-namespace promoit_frontend_cs.Services
+namespace promoit_backend_cs.Services
 {
     public class SocialActivistService
     {
 		private readonly ILogger<SocialActivistService> _logger;
-		private readonly AuthService _authservice;
+		//private readonly AuthService _authservice;
 		private readonly HttpClient _http;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly HttpClient clientJS;
 		private readonly HttpClient clientNET;
 
-		public SocialActivistService(HttpClient Http, ILogger<SocialActivistService> logger, AuthService authservice, IHttpClientFactory factory)
+		public SocialActivistService(HttpClient Http, ILogger<SocialActivistService> logger, /*AuthService authservice, */IHttpClientFactory factory)
 		{
 			_http = Http;
 			_logger = logger;
-			_authservice = authservice;
+			//_authservice = authservice;
             clientJS = factory.CreateClient("NodeJS_Server");
 			clientNET = factory.CreateClient("NET_Server");
 		}
@@ -31,7 +30,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                var response = await _http.GetFromJsonAsync<int>($"{clientJS.BaseAddress}social-activist-id/{id}");
+                var response = await _http.GetFromJsonAsync<int>($"http://localhost:7000/social-activist-id/{id}");
                 return response;
             } catch(Exception exception)
 			{
@@ -40,7 +39,21 @@ namespace promoit_frontend_cs.Services
 			}
         }
 
-		public async Task<IEnumerable<SpResults>> GetCampaignsAndMoney(int id)
+        public async Task<int> GetMoneyByIds(int sa_id, int campaign_id)
+        {
+            try
+            {
+                var response = await _http.GetFromJsonAsync<int>($"http://localhost:7000/moneybyids/{sa_id}/{campaign_id}");
+                return response;
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, $"Error getting money by ID {sa_id}");
+                throw new Exception($"Error getting money by ID {sa_id}", exception);
+            }
+        }
+
+        public async Task<IEnumerable<SpResults>> GetCampaignsAndMoney(int id)
         {
             try
 			{
@@ -57,7 +70,7 @@ namespace promoit_frontend_cs.Services
         {
             try
             {
-                return await _http.PutAsJsonAsync($"{clientJS.BaseAddress}sa-to-campaign/{id}", saToCampaignShared);
+                return await _http.PutAsJsonAsync($"http://localhost:7000/sa-to-campaign/{id}", saToCampaignShared);
 			}
 			catch (Exception exception)
 			{
@@ -66,16 +79,16 @@ namespace promoit_frontend_cs.Services
 			}
 		}
 
-        public async Task<HttpResponseMessage> AnalyseAndDonate(string user_id, string campaignName, int boughtNumber, ProductsAndCampaignsShared productAndCampaign)
+        public async Task<HttpResponseMessage> UpdateMoneyBackend(SaToCampaignShared saToCampaignShared)
         {
             try
             {
-                return await _http.PutAsJsonAsync($"{clientNET.BaseAddress}api/DonateProduct/{user_id}/{campaignName}/{boughtNumber}", productAndCampaign);
+                return await _http.PutAsJsonAsync($"{clientJS.BaseAddress}money", saToCampaignShared);
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception, $"Error donating product");
-                throw new Exception($"Error donating product", exception);
+                _logger.LogError(exception, $"Error updating money");
+                throw new Exception($"Error updating money", exception);
             }
         }
 

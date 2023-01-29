@@ -23,6 +23,7 @@ builder.Configuration.GetConnectionString("DefaultConnection")
 builder.Services.AddTransient<NonProfitRepresentativesService>();
 builder.Services.AddTransient<ProductService>();
 builder.Services.AddTransient<CampaignService>();
+builder.Services.AddTransient<SocialActivistService>();
 builder.Services.AddTransient<BcrService>();
 builder.Services.AddTransient<DTOService>();
 builder.Services.AddTransient<ExistsService>();

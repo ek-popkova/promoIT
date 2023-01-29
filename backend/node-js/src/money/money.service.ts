@@ -109,6 +109,28 @@ class MoneyService implements IMoneyService {
         });
     }
 
+     public getMoneyBySocialActivistIdAndCampaignId(social_activist_id: number, campaign_id: number): Promise<number> {
+        return new Promise<number>((resolve, reject) => {
+            MoneyModel.findAll({
+                    where: {
+                    social_activist_id: social_activist_id,
+                    campaign_id: campaign_id,
+                    status_id: Status.Active
+                },
+                include: [CampaignModel]})
+                .then((queryResult: MoneyModel[]) => {
+                    if (queryResult.length > 0) {
+                        resolve(queryResult[0].money);
+                    }
+                    else {
+                        reject(ErrorHelper.getError(AppError.NoData))
+                    }
+                })
+                .catch(error =>
+                    reject(ErrorHelper.getError(AppError.QueryError)))
+        });
+    }
+
 
     private parseMoneyModel(money: MoneyModel): IMoney {
         return {

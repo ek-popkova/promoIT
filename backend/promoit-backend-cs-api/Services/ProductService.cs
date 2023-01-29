@@ -2,8 +2,11 @@
 using promoit_backend_cs_api.Data;
 using promoit_backend_cs_api.Models;
 using promoit_backend_cs_api.ModelsDTO;
+using promoit_backend_cs_api.Services;
 using Shared;
+using Newtonsoft.Json;
 using System.Linq;
+using System.Data.SqlTypes;
 
 namespace promoit_backend_cs.Services
 {
@@ -13,12 +16,17 @@ namespace promoit_backend_cs.Services
         private readonly promo_itContext _context;
         private readonly ILogger<ProductService> _logger;
         private readonly ExistsService _existsService;
+        private readonly SocialActivistService _socialActivistService;
+        private readonly SaToCampaignService _saToCampaignService;
 
-        public ProductService(promo_itContext db, ILogger<ProductService> logger, ExistsService existsService)
+
+
+        public ProductService(promo_itContext db, ILogger<ProductService> logger, ExistsService existsService, SocialActivistService socialActivistService)
         {
             _context = db;
             _logger = logger;
             _existsService = existsService;
+            _socialActivistService = socialActivistService;
         }
 
         public async Task<IEnumerable<ProductDTO>> GetAllProducts()
@@ -282,6 +290,53 @@ namespace promoit_backend_cs.Services
                 }
             }
             return DTOService.ProductToCampaignToDTO(existingPTC);
+        }
+
+        public async Task<ProductToCampaignDTO> AnalyzeProductToCampaignAndDonate(string user_id, string campaignName, int boughtNumber, ProductsAndCampaignsShared productAndCampaign)
+        {
+            int sa_id = await _socialActivistService.GetSocialActivistById(user_id);
+
+            //уменьшить деньги активиста !! обработать отрицательные деньги
+            int money = await _socialActivistService.GetMoneyByIds(sa_id, productAndCampaign.campaignId);
+            SaToCampaignShared saToCampaign = new SaToCampaignShared()
+            {
+                social_activist_id = sa_id,
+                campaign_id = productAndCampaign.campaignId,
+                money = money - productAndCampaign.productValue * boughtNumber
+            };
+            await _socialActivistService.UpdateMoneyBackend(saToCampaign);
+
+            //увеличить boughtnumber старой кампании !! обработать отрицательные товары
+            ProductToCampaignDTO oldProductToCampaign = DTOService.ProductToCampaignToDTO(_context.ProductToCampaigns.Where(x => x.CampaignId == productAndCampaign.campaignId && x.ProductId == productAndCampaign.productId).FirstOrDefault());
+            {
+                oldProductToCampaign.BoughtNumber = oldProductToCampaign.BoughtNumber + boughtNumber;
+                oldProductToCampaign.UpdateUserId = user_id;
+                return await EditProductToCampaign(oldProductToCampaign.Id, oldProductToCampaign);
+            }
+
+            //добавить запись в новую кампанию (куда донатим или обновить старую, если уже была)
+            CampaignDTO chosenCampaign = DTOService.CampaignToDTO(_context.Campaigns.Where(x => x.StatusId == 1 && x.Name == campaignName).FirstOrDefault());
+            ProductToCampaignDTO? productToCampaign = DTOService.ProductToCampaignToDTO(_context.ProductToCampaigns.Where(x => x.CampaignId == chosenCampaign.Id && x.ProductId == productAndCampaign.productId).FirstOrDefault());
+            if (productToCampaign is not null)
+            {
+                productToCampaign.InititalNumber = productToCampaign.InititalNumber + boughtNumber;
+                productToCampaign.UpdateUserId = user_id;
+                return await EditProductToCampaign(productToCampaign.Id, productToCampaign);
+            }
+            else
+            {
+                ProductToCampaignDTOShared newProductToCampaign = new ProductToCampaignDTOShared
+                {
+                    CampaignId = chosenCampaign.Id,
+                    ProductId = productAndCampaign.productId,
+                    InititalNumber = boughtNumber,
+                    BoughtNumber = 0,
+                    CreateUserId = user_id,
+                    UpdateUserId = user_id,
+                };
+                return await AddProductToCampaign(newProductToCampaign);
+            }
+
         }
 
 
