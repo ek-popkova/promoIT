@@ -28,7 +28,7 @@ PromoIt is a system to promote social campaigns and drive positive change. By on
 ### Frontend:
 - Blazor
 
-## The system architecture
+## System architecture
 The system architecture is based on a combination of technologies that communicate with each other using the HTTP protocol. The application follows a multilayer architecture. Client-side requests (Blazor) are routed to the server-side (Node.js and .NET) based on their type. The business logic layer (controllers) on the server-side handles data management and modification. Services and helpers are employed to make targeted adjustments to the controllers in order to achieve the desired data model. Furthermore, database connection classes constitute an additional layer responsible for performing all data operations, encompassing creation, retrieval, updating, and deletion.
 
 ## System Users
