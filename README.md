@@ -13,7 +13,7 @@ PromoIt is a system to promote social campaigns and drive positive change. By on
   - TypeScript
   - sequelize-typescript
   - twitter-api-v2 for twitter API
-- .NET
+- .NET 6
   - C#
   - Entity Framework
 - Authentication: Auth0
@@ -36,9 +36,13 @@ The following user roles are involved in the system:
 
 1. As a non-profit organization representative, I want to register in the system to create a campaign.
    - Provide organization details such as name, email, and website link.
+  
+![2023-06-22_17-20-57](https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/febf4134-d0a4-4823-96da-876f1ec4f6c7)
 
 2. As a non-profit organization representative, I want to create a campaign.
    - Specify the campaign landing page URL and a unique campaign hashtag.
+
+![2023-06-22_17-23-36](https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/e8ddda7c-6dee-4e2c-b151-8479660aa571)
 
 3. As a business company representative, I want to register in the system to donate products.
    - Provide necessary information for registration.
@@ -46,14 +50,21 @@ The following user roles are involved in the system:
 4. As a business company representative, I want to donate goods to selected campaigns.
    - Specify the quantity and value (in dollars) of products donated to each campaign.
 
+![2023-06-22_16-27-39](https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/eeb100a8-a4c4-4213-b795-48b2fe0cc164)
+
 5. As a business company representative, I want to obtain a list of users and products that need to be shipped.
    - Access the relevant data, including product ID and user details.
 
 6. As a business company representative, I want to notify the system when I have sent a product to a user.
    - Mark the transaction as completed in the system.
 
+
+
 7. As a social activist, I want to register in the system to earn money and utilize it to purchase products.
    - Provide personal details such as email, address, and phone number.
+
+![image](https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/dbb3f188-06cd-4b71-a540-3b67f10e0abb)
+
 
 8. As a social activist, I want to promote campaigns by tweeting about them to earn money.
    
@@ -67,25 +78,33 @@ The following user roles are involved in the system:
 
 12. As a social activist, I want to view my earning status to keep track of my balance.
 
-13. As a social activist, I want to donate a product to my chosen campaign to further promote it.
+
+
+14. As a social activist, I want to donate a product to my chosen campaign to further promote it.
    - By earning money, purchasing a product, and donating it, I can increase the campaign's product inventory.
+
+
 
 14. As the ProLobby owner, I want the system to generate reports on the following:
    a. Campaigns
    b. Users
    c. Tweets
 
+![2023-06-22_16-52-39](https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/42d688d3-63bd-4538-8599-9cd9f450306a)
+
+![2023-06-22_16-52-03](https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/55dc8a11-1f13-404d-b2e7-5cbcdf4e04fc)
+
 ## Project Team
 
 This project is performed by the following team members:
 
 - Popkova Ekaterina
-  - GitHub: [ekaterinapopkova](https://github.com/ekaterinapopkova)
-  - LinkedIn: [ekaterinapopkova](https://www.linkedin.com/in/ekaterinapopkova/)
+  - GitHub: [ek-popkova](https://github.com/ek-popkova)
+  - LinkedIn: [ekaterina-popkova](https://www.linkedin.com/in/ekaterina-popkova/)
 
 - Daniel Sizov (Lippo)
-  - GitHub: [danielsizov](https://github.com/DanSizov)
-  - LinkedIn: [danielsizov](https://www.linkedin.com/in/daniil-sizov/)
+  - GitHub: [DanSizov](https://github.com/DanSizov)
+  - LinkedIn: [daniil-sizov](https://www.linkedin.com/in/daniil-sizov/)
 
 Feel free to reach out to us for any inquiries or collaboration opportunities related to this project.
 
