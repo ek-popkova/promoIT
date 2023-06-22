@@ -17,9 +17,11 @@ PromoIt is a system to promote social campaigns and drive positive change. By on
   - C#
   - Entity Framework
 - Authentication: Auth0
-
 ### Frontend:
 - Blazor
+
+## Short Review
+The system architecture is based on a combination of technologies that communicate with each other using the HTTP protocol. The application follows a multilayer architecture. Client-side requests (Blazor) are routed to the server-side (Node.js and .NET) based on their type. The business logic layer (controllers) on the server-side handles data management and modification. Services and helpers are employed to make targeted adjustments to the controllers in order to achieve the desired data model. Furthermore, database connection classes constitute an additional layer responsible for performing all data operations, encompassing creation, retrieval, updating, and deletion.
 
 ## System Users
 
@@ -82,8 +84,8 @@ This project is performed by the following team members:
   - LinkedIn: [ekaterinapopkova](https://www.linkedin.com/in/ekaterinapopkova/)
 
 - Daniel Sizov (Lippo)
-  - GitHub: [danielsizov](https://github.com/danielsizov)
-  - LinkedIn: [danielsizov](https://www.linkedin.com/in/danielsizov/)
+  - GitHub: [danielsizov](https://github.com/DanSizov)
+  - LinkedIn: [danielsizov](https://www.linkedin.com/in/daniil-sizov/)
 
 Feel free to reach out to us for any inquiries or collaboration opportunities related to this project.
 
