@@ -43,7 +43,7 @@ The following user roles are involved in the system:
 3. **Business Company Representative:** Represents a company that donates products for campaigns.
 4. **Social Activists:** Twitter users who actively promote campaigns.
 
-## User Stories and their implementation
+## :framed_picture: User Stories and their implementation
 
 1. As a non-profit organization representative, I want to register in the system to create a campaign.
    - Provide organization details such as name, email, and website link.
