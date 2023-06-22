@@ -17,6 +17,7 @@ PromoIt is a system to promote social campaigns and drive positive change. By on
   - C#
   - Entity Framework
 - Authentication: Auth0
+- Pacman and Swagger to test API
 ### Frontend:
 - Blazor
 
@@ -36,7 +37,9 @@ The following user roles are involved in the system:
 
 1. As a non-profit organization representative, I want to register in the system to create a campaign.
    - Provide organization details such as name, email, and website link.
-  
+
+<img src="https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/febf4134-d0a4-4823-96da-876f1ec4f6c7" alt="2023-06-22_17-20-57" style="width: 300px;">
+
 ![2023-06-22_17-20-57](https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/febf4134-d0a4-4823-96da-876f1ec4f6c7)
 
 2. As a non-profit organization representative, I want to create a campaign.
@@ -58,13 +61,10 @@ The following user roles are involved in the system:
 6. As a business company representative, I want to notify the system when I have sent a product to a user.
    - Mark the transaction as completed in the system.
 
-
-
 7. As a social activist, I want to register in the system to earn money and utilize it to purchase products.
    - Provide personal details such as email, address, and phone number.
 
 ![image](https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/dbb3f188-06cd-4b71-a540-3b67f10e0abb)
-
 
 8. As a social activist, I want to promote campaigns by tweeting about them to earn money.
    
@@ -78,11 +78,10 @@ The following user roles are involved in the system:
 
 12. As a social activist, I want to view my earning status to keep track of my balance.
 
-
-
 14. As a social activist, I want to donate a product to my chosen campaign to further promote it.
    - By earning money, purchasing a product, and donating it, I can increase the campaign's product inventory.
 
+![image](https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/0fc32849-f4b4-44e0-a336-da88050316f4)
 
 
 14. As the ProLobby owner, I want the system to generate reports on the following:
