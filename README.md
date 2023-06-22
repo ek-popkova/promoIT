@@ -5,10 +5,10 @@ PromoIt is a system to promote social campaigns and drive positive change. By on
 ## Table of Contents
 
 - [Technologies Used](#Technologies-used)
-- [System architecture](#System architecture)
-- [System Users](#System Users)
-- [User Stories and their implementation](#User Stories and their implementation)
-- [Project Team](#Project Team)
+- [System architecture](#System-architecture)
+- [System Users](#System-Users)
+- [User Stories and their implementation](#User-Stories-and-their-implementation)
+- [Project Team](#Project-Team)
 
 ## Technologies Used
 
