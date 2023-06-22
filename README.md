@@ -40,12 +40,10 @@ The following user roles are involved in the system:
 
 <img src="https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/febf4134-d0a4-4823-96da-876f1ec4f6c7" alt="2023-06-22_17-20-57" style="width: 700px;">
 
-![2023-06-22_17-20-57](https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/febf4134-d0a4-4823-96da-876f1ec4f6c7)
-
 2. As a non-profit organization representative, I want to create a campaign.
    - Specify the campaign landing page URL and a unique campaign hashtag.
 
-![2023-06-22_17-23-36](https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/e8ddda7c-6dee-4e2c-b151-8479660aa571)
+<img src="https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/e8ddda7c-6dee-4e2c-b151-8479660aa571" alt="2023-06-22_17-23-36" style="width: 700px;">
 
 3. As a business company representative, I want to register in the system to donate products.
    - Provide necessary information for registration.
