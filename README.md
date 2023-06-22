@@ -31,7 +31,7 @@ PromoIt is a system to promote social campaigns and drive positive change. By on
 ## System architecture
 The system architecture is based on a combination of technologies that communicate with each other using the HTTP protocol. The application follows a multilayer architecture. Client-side requests (Blazor) are routed to the server-side (Node.js and .NET) based on their type. The business logic layer (controllers) on the server-side handles data management and modification. Services and helpers are employed to make targeted adjustments to the controllers in order to achieve the desired data model. Furthermore, database connection classes constitute an additional layer responsible for performing all data operations, encompassing creation, retrieval, updating, and deletion.
 
-![2023-06-22_19-42-23](https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/549bfc87-ac1e-4594-941d-12905744c61d)
+<img src="https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/549bfc87-ac1e-4594-941d-12905744c61d" alt="2023-06-22_16-27-39" style="width: 700px;">
 
 
 ## System Users
