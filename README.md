@@ -1,8 +1,8 @@
-# promoIT
+# :raising_hand: promoIT
 
 PromoIt is a system to promote social campaigns and drive positive change. By onboarding business organizations, non-profit organizations, and social activists on Twitter, PromoIt facilitates collaboration and amplifies the impact of social initiatives. With a focus on simplicity and leveraging the power of social media, PromoIt empowers users to create a better society through effective promotion and engagement. Join us as we revolutionize social campaigns and make a lasting difference.
 
-## Table of Contents
+## :scroll: Table of Contents
 
 - [Technologies Used](#Technologies-used)
 - [System architecture](#System-architecture)
@@ -10,7 +10,7 @@ PromoIt is a system to promote social campaigns and drive positive change. By on
 - [User Stories and their implementation](#User-Stories-and-their-implementation)
 - [Project Team](#Project-Team)
 
-## Technologies Used
+## :hammer_and_wrench: Technologies Used
 
 ### Database:
 - MS SQL database hosted in Azure Cloud
@@ -28,13 +28,13 @@ PromoIt is a system to promote social campaigns and drive positive change. By on
 ### Frontend:
 - Blazor
 
-## System architecture
+## :building_construction: System architecture
 The system architecture is based on a combination of technologies that communicate with each other using the HTTP protocol. The application follows a multilayer architecture. Client-side requests (Blazor) are routed to the server-side (Node.js and .NET) based on their type. The business logic layer (controllers) on the server-side handles data management and modification. Services and helpers are employed to make targeted adjustments to the controllers in order to achieve the desired data model. Furthermore, database connection classes constitute an additional layer responsible for performing all data operations, encompassing creation, retrieval, updating, and deletion.
 
 <img src="https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/549bfc87-ac1e-4594-941d-12905744c61d" alt="2023-06-22_16-27-39" style="width: 700px;">
 
 
-## System Users
+## :speaking_head: System Users
 
 The following user roles are involved in the system:
 
