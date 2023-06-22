@@ -101,7 +101,7 @@ The following user roles are involved in the system:
 <img src="https://github.com/ek-popkova/promoIT-fullstack-web-app/assets/111788752/55dc8a11-1f13-404d-b2e7-5cbcdf4e04fc" alt="image" style="width: 700px;">
 
 
-## Project Team
+## :globe_with_meridians: Project Team
 
 This project is performed by the following team members:
 
