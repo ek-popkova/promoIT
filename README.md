@@ -24,7 +24,7 @@ PromoIt is a system to promote social campaigns and drive positive change. By on
   - C#
   - Entity Framework
 - Authentication: Auth0
-- Pacman and Swagger to test API
+- Postman and Swagger to test API
 ### Frontend:
 - Blazor
 
